@@ -28,174 +28,39 @@ fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    var showSampleProfile by remember { mutableStateOf(false) }
     
-    // Load the specific profile when profileId changes
     LaunchedEffect(profileId) {
         viewModel.loadProfile(profileId)
     }
     
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { 
-                    Column {
-                        val isEditing = profileId != null && profileId != "new"
-                        Text(if (isEditing) "Edit Profile ✨" else "Create Profile ✨")
-                        Text(
-                            text = "${uiState.currentProfile.profileCompletion.completedFields}/${uiState.currentProfile.profileCompletion.totalFields} fields • ${uiState.currentProfile.profileCompletion.accuracyLevel.name} accuracy",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
+            ProfileTopBar(
+                isEditing = profileId != null && profileId != "new",
+                completion = uiState.currentProfile.profileCompletion,
+                isSaving = uiState.isSaving,
+                onNavigateBack = onNavigateBack,
+                onSave = { viewModel.saveProfile() },
+                onLoadTier = { tier -> 
+                    when(tier) {
+                        0 -> viewModel.loadTier0Profile()
+                        1 -> viewModel.loadTier1Profile()
+                        2 -> viewModel.loadTier2Profile()
+                        3 -> viewModel.loadTier3Profile()
                     }
                 },
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-                    }
-                },
-                actions = {
-                    // Developer QA overflow menu
-                    var showMenu by remember { mutableStateOf(false) }
-                    IconButton(onClick = { showMenu = true }) {
-                        Icon(Icons.Default.MoreVert, contentDescription = "More")
-                    }
-                    DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
-                        DropdownMenuItem(
-                            text = { Text("Load Tier 0 (3-9 fields → 300 words)") },
-                            onClick = { viewModel.loadTier0Profile(); showMenu = false }
-                        )
-                        DropdownMenuItem(
-                            text = { Text("Load Tier 1 (10-18 fields → 900 words)") },
-                            onClick = { viewModel.loadTier1Profile(); showMenu = false }
-                        )
-                        DropdownMenuItem(
-                            text = { Text("Load Tier 2 (19-27 fields → 1800 words)") },
-                            onClick = { viewModel.loadTier2Profile(); showMenu = false }
-                        )
-                        DropdownMenuItem(
-                            text = { Text("Load Tier 3 (28-36 fields → 2700 words)") },
-                            onClick = { viewModel.loadTier3Profile(); showMenu = false }
-                        )
-                        Divider()
-                        DropdownMenuItem(
-                            text = { Text(if (showSampleProfile) "Clear Demo" else "Load Demo") },
-                            onClick = { 
-                                if (showSampleProfile) viewModel.clearProfile() else viewModel.loadDemoProfile()
-                                showSampleProfile = !showSampleProfile
-                                showMenu = false
-                            }
-                        )
-                    }
-
-                    TextButton(
-                        onClick = { 
-                            android.util.Log.d("SpiritAtlas", "Save button clicked in UI")
-                            viewModel.saveProfile() 
-                        },
-                        enabled = !uiState.isSaving
-                    ) {
-                        if (uiState.isSaving) {
-                            Text("🔄 Saving...")
-                        } else {
-                            Text("💾 Save")
-                        }
-                    }
-                }
+                onLoadDemo = { viewModel.loadDemoProfile() },
+                onClear = { viewModel.clearProfile() }
             )
         }
     ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .verticalScroll(rememberScrollState())
-        ) {
-            // Save success/error messages
-            uiState.errorMessage?.let { error ->
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer)
-                ) {
-                    Text(
-                        text = "⚠️ $error",
-                        modifier = Modifier.padding(16.dp),
-                        color = MaterialTheme.colorScheme.onErrorContainer
-                    )
-                }
-                Spacer(modifier = Modifier.height(8.dp))
-            }
-            
-            if (uiState.saveSuccess) {
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
-                ) {
-                    Text(
-                        text = "✨ Profile saved successfully!",
-                        modifier = Modifier.padding(16.dp),
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                }
-                Spacer(modifier = Modifier.height(8.dp))
-            }
-            
-            // Accuracy indicator
-            AccuracyIndicator(uiState.currentProfile.profileCompletion)
-            
-            Spacer(modifier = Modifier.height(16.dp))
-            
-            // Section tabs
-            ProfileSectionTabs(
-                activeSection = uiState.activeSection,
-                onSectionSelected = { viewModel.setActiveSection(it) }
-            )
-            
-            Spacer(modifier = Modifier.height(16.dp))
-            
-            // Section content
-            when (uiState.activeSection) {
-                ProfileSection.CORE -> CoreIdentitySection(
-                    profile = uiState.currentProfile,
-                    onProfileUpdate = { viewModel.updateProfile(it) }
-                )
-                ProfileSection.NAMES -> AdditionalNamesSection(
-                    profile = uiState.currentProfile, 
-                    onProfileUpdate = { viewModel.updateProfile(it) }
-                )
-                ProfileSection.FAMILY -> FamilyAncestrySection(
-                    profile = uiState.currentProfile,
-                    onProfileUpdate = { viewModel.updateProfile(it) }
-                )
-                ProfileSection.PHYSICAL -> PhysicalEnergeticSection(
-                    profile = uiState.currentProfile,
-                    onProfileUpdate = { viewModel.updateProfile(it) }
-                )
-                ProfileSection.TIMING -> TimingCyclesSection(
-                    profile = uiState.currentProfile,
-                    onProfileUpdate = { viewModel.updateProfile(it) }
-                )
-                ProfileSection.ENVIRONMENTAL -> EnvironmentalSection(
-                    profile = uiState.currentProfile,
-                    onProfileUpdate = { viewModel.updateProfile(it) }
-                )
-                ProfileSection.LIFE_PATTERNS -> LifePatternsSection(
-                    profile = uiState.currentProfile,
-                    onProfileUpdate = { viewModel.updateProfile(it) }
-                )
-                ProfileSection.PREFERENCES -> PreferencesSection(
-                    profile = uiState.currentProfile,
-                    onProfileUpdate = { viewModel.updateProfile(it) }
-                )
-            }
-            
-            Spacer(modifier = Modifier.height(100.dp))
-        }
+        ProfileContent(
+            modifier = Modifier.padding(paddingValues),
+            uiState = uiState,
+            onProfileUpdate = { viewModel.updateProfile(it) },
+            onSectionSelected = { viewModel.setActiveSection(it) },
+            onClearError = { viewModel.clearError() }
+        )
     }
 }
 
@@ -556,6 +421,173 @@ fun ProfileTextField(
             .fillMaxWidth()
             .padding(vertical = 4.dp)
     )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ProfileTopBar(
+    isEditing: Boolean,
+    completion: ProfileCompletion,
+    isSaving: Boolean,
+    onNavigateBack: () -> Unit,
+    onSave: () -> Unit,
+    onLoadTier: (Int) -> Unit,
+    onLoadDemo: () -> Unit,
+    onClear: () -> Unit
+) {
+    var showMenu by remember { mutableStateOf(false) }
+    
+    TopAppBar(
+        title = { 
+            Column {
+                Text(if (isEditing) "Edit Profile ✨" else "Create Profile ✨")
+                Text(
+                    text = "${completion.completedFields}/${completion.totalFields} fields • ${completion.accuracyLevel.name}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        },
+        navigationIcon = {
+            IconButton(onClick = onNavigateBack) {
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+            }
+        },
+        actions = {
+            IconButton(onClick = { showMenu = true }) {
+                Icon(Icons.Default.MoreVert, contentDescription = "More")
+            }
+            DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
+                (0..3).forEach { tier ->
+                    DropdownMenuItem(
+                        text = { Text("Tier $tier (${getTierDescription(tier)})") },
+                        onClick = { onLoadTier(tier); showMenu = false }
+                    )
+                }
+                HorizontalDivider()
+                DropdownMenuItem(
+                    text = { Text("Load Demo") },
+                    onClick = { onLoadDemo(); showMenu = false }
+                )
+                DropdownMenuItem(
+                    text = { Text("Clear Profile") },
+                    onClick = { onClear(); showMenu = false }
+                )
+            }
+            
+            TextButton(
+                onClick = onSave,
+                enabled = !isSaving
+            ) {
+                Text(if (isSaving) "🔄 Saving..." else "💾 Save")
+            }
+        }
+    )
+}
+
+@Composable
+fun ProfileContent(
+    modifier: Modifier = Modifier,
+    uiState: ProfileUiState,
+    onProfileUpdate: (UserProfile) -> Unit,
+    onSectionSelected: (ProfileSection) -> Unit,
+    onClearError: () -> Unit
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+    ) {
+        StatusMessages(
+            errorMessage = uiState.errorMessage,
+            saveSuccess = uiState.saveSuccess,
+            onClearError = onClearError
+        )
+        
+        AccuracyIndicator(uiState.currentProfile.profileCompletion)
+        Spacer(modifier = Modifier.height(16.dp))
+        
+        ProfileSectionTabs(
+            activeSection = uiState.activeSection,
+            onSectionSelected = onSectionSelected
+        )
+        
+        Spacer(modifier = Modifier.height(16.dp))
+        
+        ProfileSectionContent(
+            activeSection = uiState.activeSection,
+            profile = uiState.currentProfile,
+            onProfileUpdate = onProfileUpdate
+        )
+        
+        Spacer(modifier = Modifier.height(100.dp))
+    }
+}
+
+@Composable
+fun StatusMessages(
+    errorMessage: String?,
+    saveSuccess: Boolean,
+    onClearError: () -> Unit
+) {
+    errorMessage?.let { error ->
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer)
+        ) {
+            Text(
+                text = "⚠️ $error",
+                modifier = Modifier.padding(16.dp),
+                color = MaterialTheme.colorScheme.onErrorContainer
+            )
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+    }
+    
+    if (saveSuccess) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+        ) {
+            Text(
+                text = "✨ Profile saved successfully!",
+                modifier = Modifier.padding(16.dp),
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                fontWeight = FontWeight.SemiBold
+            )
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+    }
+}
+
+@Composable
+fun ProfileSectionContent(
+    activeSection: ProfileSection,
+    profile: UserProfile,
+    onProfileUpdate: (UserProfile) -> Unit
+) {
+    when (activeSection) {
+        ProfileSection.CORE -> CoreIdentitySection(profile, onProfileUpdate)
+        ProfileSection.NAMES -> AdditionalNamesSection(profile, onProfileUpdate)
+        ProfileSection.FAMILY -> FamilyAncestrySection(profile, onProfileUpdate)
+        ProfileSection.PHYSICAL -> PhysicalEnergeticSection(profile, onProfileUpdate)
+        ProfileSection.TIMING -> TimingCyclesSection(profile, onProfileUpdate)
+        ProfileSection.ENVIRONMENTAL -> EnvironmentalSection(profile, onProfileUpdate)
+        ProfileSection.LIFE_PATTERNS -> LifePatternsSection(profile, onProfileUpdate)
+        ProfileSection.PREFERENCES -> PreferencesSection(profile, onProfileUpdate)
+    }
+}
+
+fun getTierDescription(tier: Int): String = when (tier) {
+    0 -> "3-9 fields, 300 words"
+    1 -> "10-18 fields, 900 words"
+    2 -> "19-27 fields, 1800 words"
+    3 -> "28-36 fields, 2700 words"
+    else -> "Unknown tier"
 }
 
 

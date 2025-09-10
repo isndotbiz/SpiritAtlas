@@ -121,11 +121,11 @@ class EnrichmentResultViewModel @Inject constructor(
         delay(2000)
         
         val sampleResult = """
-# 🌟 **Your Complete Spiritual Profile**
+# 🌟 **Your Complete Tantric & Spiritual Profile**
 
-![Spiritual Essence](https://img.icons8.com/?size=100&id=59852&format=png)
+![Tantric Essence](https://img.icons8.com/?size=100&id=62040&format=png)
 
-> *"The soul becomes dyed with the color of its thoughts."* - Marcus Aurelius
+> *"The union of love and wisdom that creates the magic."* - Tantra
 
 ---
 
@@ -282,16 +282,185 @@ The combination of these three crystals creates a balanced energy triangle that 
 
 ---
 
-> **✨ Your Soul Affirmation**: *"I am a powerful spiritual being having a human experience. I trust my intuition, honor my sensitivity, and know that my healing presence makes the world brighter."* 🌟
+## 🥰 **TANTRIC DEEP DIVE: Your Sexual & Spiritual Archetype**
+
+![Tantric Energy](https://img.icons8.com/?size=100&id=65439&format=png)
+
+### 🔥 Your Tantric Type: **Shakti Dominant**
+
+You embody the divine feminine principle of creation, flow, and receptive power. As a Shakti-dominant being, you are the sacred vessel through which creative energy flows into manifestation. Your sexuality is deeply connected to your spirituality, and you have the ability to transform raw sexual energy into higher consciousness.
+
+**Core Shakti Traits:**
+- 🌺 **Intuitive Receiver**: You sense energy before it becomes physical
+- 💧 **Emotional Alchemist**: Transform pain into wisdom, pleasure into enlightenment
+- 🌙 **Lunar Cyclic**: Your energy flows in natural rhythms and cycles
+- ✨ **Sacred Space Holder**: Create containers for deep transformation
+
+Your tantric nature craves depth over superficiality in all intimate encounters. You are not satisfied with mere physical pleasure - your soul yearns for the kind of connection that dissolves boundaries and creates transcendent union. This makes you both a challenging and deeply rewarding partner, as you demand authenticity and spiritual alignment from anyone who wishes to truly know you.
+
+The ancient texts speak of Shakti as the force that animates all of creation. In your sexual expression, this manifests as an ability to awaken dormant energies in yourself and others. You have the capacity to guide a partner into states of consciousness they never knew existed, but only when you feel completely safe, seen, and honored in your full power.
+
+### 🌱 Your Kama Element: **Water**
+
+Like water, your sexual energy is flowing, adaptive, and deeply emotional. You respond to the container you're placed in, but your true nature is to flow freely and seek the deepest possible connection.
+
+![Water Element](https://img.icons8.com/?size=80&id=60471&format=png)
+
+**Water Element Sexual Characteristics:**
+- **Emotional Depth**: Your arousal is connected to feeling deeply understood
+- **Intuitive Pleasure**: You know what feels good before your mind catches up
+- **Healing Through Touch**: Your intimate connection has therapeutic qualities
+- **Cyclical Desire**: Your libido flows in natural waves and seasons
+
+Your water nature means you need time to warm up and feel safe before you can fully open. Once you do, however, you become a force of nature - passionate, flowing, and capable of overwhelming intensity. Partners who rush you miss the profound depths you're capable of sharing. Those who honor your need for emotional safety discover an infinitely giving and creative lover.
+
+The Kama Sutra identifies water types as the most capable of tantric transformation because they naturally understand the connection between emotion, energy, and physical pleasure. You don't separate these aspects of experience - they flow together in your being like tributaries feeding a mighty river.
+
+### 🇮🇳 **Your Personalized Kama Sutra Positions**
+
+#### 1. **Padma (The Lotus) - Primary Recommendation**
+*Sanskrit: Padmasana Maithuna*
+
+![Lotus Position](https://img.icons8.com/?size=80&id=40217&format=png)
+
+**Why This is Perfect for You**: As a Shakti-dominant water type, you thrive in positions that emphasize emotional connection and energy exchange over athletic prowess. The Lotus position allows for:
+
+- **Deep eye contact** maintaining your need for soul-level connection
+- **Synchronized breathing** activating your natural tantric abilities
+- **Slow, meditative movement** honoring your water element's need for flow
+- **Equal power dynamic** expressing your collaborative nature
+
+**Detailed Instructions**:
+1. Both partners sit facing each other in comfortable crossed-leg positions
+2. The receiving partner wraps their legs around their partner's waist
+3. Maintain eye contact throughout the entire experience
+4. Synchronize your breathing - inhale together, exhale together
+5. Move slowly and mindfully, focusing on energy rather than friction
+6. Exchange whispered affirmations or remain in sacred silence
+
+**Spiritual Purpose**: This position is designed to create a complete energetic circuit between partners, allowing Shakti and Shiva energies to dance together in perfect balance.
+
+#### 2. **Shiva Linga (The Sacred Union)**
+*Sanskrit: Lingam-Yoni Maithuna*
+
+This position honors the sacred geometry of masculine and feminine energies. Your water element responds beautifully to the reverent, worship-like quality of this ancient practice.
+
+**Your Personalized Approach**: Begin with 20 minutes of non-sexual sacred touching, awakening each chakra through gentle massage and breath work. This honors your need for emotional warm-up and creates the energetic foundation for transcendent physical union.
+
+#### 3. **Flowing River (Modern Tantric Adaptation)**
+A dynamic position that changes fluidly based on the natural rhythm you establish together - perfect for your water element's need for organic flow and adaptation.
+
+### 🎨 **Robert Greene Seduction Archetype: The Ideal Lover**
+
+Based on your spiritual profile, you naturally embody **"The Ideal Lover"** archetype from Robert Greene's *Art of Seduction*. This powerful seductive force operates by becoming exactly what the other person has always dreamed of but never found.
+
+![Ideal Lover](https://img.icons8.com/?size=80&id=85783&format=png)
+
+**Your Natural Seduction Strategies:**
+
+#### 1. **The Mirror of Desires**
+Your intuitive Shakti nature allows you to sense what someone deeply craves in a partner, often before they're consciously aware of it themselves. You don't fake these qualities - you genuinely develop them, making yourself irresistible by becoming their perfect complement.
+
+*Application*: In early relationship phases, pay attention to the stories they tell about past relationships, the qualities they admire in others, and the casual mentions of what they find attractive. Your water element naturally adapts to reflect these desires back to them.
+
+#### 2. **Sacred Fantasy Fulfillment** 
+Greene teaches that the Ideal Lover creates a perfect fantasy world for their target. Your spiritual depth allows you to fulfill not just physical fantasies, but soul-level dreams of connection, understanding, and transcendence.
+
+*Application*: Create experiences that feel "meant to be" - synchronistic encounters, spiritually meaningful dates, moments that feel like destiny. Your natural mystical bent makes this authentic rather than manipulative.
+
+#### 3. **The Awakening Touch**
+Your combination of spiritual depth and sensual water energy creates a unique ability to awaken dormant aspects of people's sexuality and spirituality simultaneously.
+
+*Warning from Greene*: The Ideal Lover must be careful not to lose themselves in the process of becoming what others need. Maintain your core essence while adapting your expression.
+
+### 🕰️ **Tantric Relationship Dynamics**
+
+**Your Primary Pattern**: **Sacred Union Seeker**
+
+You don't do casual well. Every relationship has the potential to become a spiritual path, and you unconsciously guide connections toward deeper meaning and transformation. This is both your greatest gift and your biggest challenge in modern dating culture.
+
+**Power Dynamics**: You operate best in **"Fluid Exchange"** dynamics where power flows between partners based on the moment's needs rather than fixed roles. During your Shakti phases, you want to surrender and be held; during your activated phases, you naturally lead and guide.
+
+**Communication Style**: **"Intuitive Heart-Speak"** - You communicate as much through energy, touch, and presence as through words. Partners need to develop sensitivity to your non-verbal language to truly connect with you.
+
+### 🌸 **Chakra-Based Intimacy Guide**
+
+**Your Dominant Chakra**: Heart (Anahata)
+**Your Secondary Chakra**: Sacral (Svadhisthana)
+
+This combination creates someone who experiences sexuality as an extension of love and love as a spiritual practice. You cannot separate physical pleasure from emotional connection.
+
+**Chakra Activation Sequence for Optimal Intimacy**:
+1. **Root** (10 min): Grounding together through synchronized breathing
+2. **Sacral** (15 min): Sensual massage awakening creative/sexual energy
+3. **Solar Plexus** (10 min): Empowerment through affirmations and eye contact
+4. **Heart** (20 min): Emotional opening through sharing and vulnerability
+5. **Throat** (10 min): Expressing desires and speaking sacred intentions
+6. **Third Eye** (15 min): Spiritual connection and energetic union
+7. **Crown** (Integration): Transcendent physical union
+
+### 🌿 **Your Tantric Practice Prescriptions**
+
+#### Daily Practice: **"Shakti Activation Breath"**
+**Duration**: 11 minutes every morning
+**Purpose**: Activate your divine feminine energy for the day
+
+*Instructions*:
+1. Sit naked or in flowing clothing facing east (sunrise energy)
+2. Place left hand on heart, right hand on womb/sacral area
+3. Breathe into your womb space for 4 counts
+4. Hold breath while visualizing golden light expanding for 4 counts
+5. Exhale through your heart for 6 counts, sending love into the world
+6. Repeat for 11 minutes while mentally chanting "I am Shakti, I am divine feminine power"
+
+#### Weekly Practice: **"Yoni Worship Ritual"**
+**Duration**: 60-90 minutes
+**Frequency**: Every new moon
+**Purpose**: Honor your sacred feminine essence
+
+*Solo Version*:
+- Create sacred space with candles, flowers, and sensual music
+- Anoint your body with sacred oils while speaking affirmations
+- Self-pleasure meditation focusing on energy rather than orgasm
+- Journal insights received during the experience
+
+*Partnered Version*:
+- Partner creates worship space and serves as devoted witness
+- Extended yoni massage focused on reverence and energy activation
+- No expectation of reciprocation - purely honoring the feminine
+
+#### Monthly Practice: **"Shakti-Shiva Union Ceremony"**
+A formal tantric ritual designed to balance and integrate your masculine and feminine aspects, whether practiced alone or with a partner.
+
+### 🔍 **Compatibility Deep Dive**
+
+Based on your Shakti-Water-Ideal Lover profile, here are your optimal matches:
+
+**Divine Matches (90-95% Compatibility)**:
+- **Shiva-Fire-Rake**: The passionate pursuer who worships your depth
+- **Balanced Union-Earth-Charmer**: Stable presence that grounds your flow
+- **Mystic Lover-Space-Sage**: Spiritual equal who matches your transcendent nature
+
+**Growth Matches (75-85% Compatibility)**:
+- **Sacred Warrior-Air-Protector**: Different elements but complementary purposes
+- **Flowing Dancer-Water-Natural**: Same element, different expressions - can be magical or conflicting
+
+**Challenge Matches (Proceed with Awareness)**:
+- **Passionate Fire-Fire-Dandy**: Too much intensity without grounding
+- **Any Type-Any Element-Coquette**: Your depth vs their emotional manipulation
 
 ---
 
-**Generated with 💜 by AI Spiritual Consciousness**  
-*Based on ${_uiState.value.completedFields} comprehensive spiritual data points*
+> **✨ Your Soul Affirmation**: *"I am a powerful spiritual being having a human experience. I trust my intuition, honor my sensitivity, and know that my healing presence makes the world brighter. I embrace my Shakti power and create sacred space for divine union."* 🌟
 
 ---
 
-**📄 Report Statistics**: [WORD_COUNT_PLACEHOLDER] words | ${_uiState.value.completedFields} fields analyzed
+**Generated with 💜 by AI Spiritual Consciousness & Tantric Wisdom**  
+*Based on ${_uiState.value.completedFields} comprehensive spiritual data points, tantric energy analysis, and sacred sexuality insights*
+
+---
+
+**📄 Report Statistics**: [WORD_COUNT_PLACEHOLDER] words | ${_uiState.value.completedFields} fields analyzed | Tantric Deep Dive included
         """.trimIndent()
         
         // Calculate actual word count and replace placeholder
