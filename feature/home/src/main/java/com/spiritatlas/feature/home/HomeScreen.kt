@@ -5,16 +5,23 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     onNavigateToProfile: () -> Unit,
-    onNavigateToConsent: () -> Unit
+    onNavigateToConsent: () -> Unit,
+    viewModel: HomeViewModel = hiltViewModel(),
+    consentDebugViewModel: ConsentDebugViewModel = hiltViewModel()
 ) {
+    val providerLabel by viewModel.providerLabel.collectAsState()
+    val consentDebug by consentDebugViewModel.debugText.collectAsState()
     Scaffold(
         topBar = {
             TopAppBar(
@@ -39,9 +46,15 @@ fun HomeScreen(
                 text = "Welcome to SpiritAtlas",
                 style = MaterialTheme.typography.headlineMedium
             )
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(8.dp))
+            AssistChip(onClick = {}, label = { Text(providerLabel) })
+            Spacer(modifier = Modifier.height(8.dp))
+            if (consentDebug.isNotBlank()) {
+                Text(consentDebug, style = MaterialTheme.typography.labelSmall)
+            }
+            Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = onNavigateToProfile) {
-                Text("Create Your Profile")
+                Text("Profiles")
             }
         }
     }

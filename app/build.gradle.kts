@@ -29,9 +29,13 @@ android {
         if (localPropertiesFile.exists()) {
             localProperties.load(localPropertiesFile.inputStream())
         }
+        fun sanitize(raw: String?): String = (raw ?: "").trim().trim('"')
+        val openRouterKey = sanitize(localProperties.getProperty("openrouter.api.key"))
+        val ollamaRaw = sanitize(localProperties.getProperty("ollama.base.url"))
+        val ollamaUrl = if (ollamaRaw.isBlank()) "http://localhost:11434" else ollamaRaw
         
-        buildConfigField("String", "OPENROUTER_API_KEY", "\"${localProperties.getProperty("openrouter.api.key", "")}\"")
-        buildConfigField("String", "OLLAMA_BASE_URL", "\"${localProperties.getProperty("ollama.base.url", "http://localhost:11434")}\"")
+        buildConfigField("String", "OPENROUTER_API_KEY", "\"$openRouterKey\"")
+        buildConfigField("String", "OLLAMA_BASE_URL", "\"$ollamaUrl\"")
     }
 
     buildTypes {

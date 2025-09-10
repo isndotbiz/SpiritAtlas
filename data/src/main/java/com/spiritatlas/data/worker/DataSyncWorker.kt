@@ -1,6 +1,7 @@
 package com.spiritatlas.data.worker
 
 import android.content.Context
+import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.ListenableWorker
@@ -8,10 +9,10 @@ import androidx.work.WorkerParameters
 import com.spiritatlas.domain.ai.AiTextProvider
 import com.spiritatlas.domain.repository.ConsentRepository
 import com.spiritatlas.domain.repository.ConsentType
+import com.spiritatlas.domain.model.ConsentStatus
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.first
-import timber.log.Timber
 
 /**
  * Background worker that syncs user data and generates AI insights
@@ -27,29 +28,29 @@ class DataSyncWorker @AssistedInject constructor(
 
     override suspend fun doWork(): ListenableWorker.Result {
         return try {
-            Timber.d("Starting data sync work")
+            Log.d("DataSyncWorker", "Starting data sync work")
             
             // Check if user has consented to AI processing
             val aiConsent = consentRepository.getConsentStatus(ConsentType.AI_ENRICHMENT).first()
-            if (!aiConsent.isGranted) {
-                Timber.d("AI processing consent not granted, skipping AI sync")
+            if (aiConsent != ConsentStatus.GRANTED) {
+                Log.d("DataSyncWorker", "AI processing consent not granted, skipping AI sync")
                 return ListenableWorker.Result.success()
             }
             
             // Check if AI provider is available
             if (!aiProvider.isAvailable()) {
-                Timber.w("AI provider not available, will retry later")
+                Log.w("DataSyncWorker", "AI provider not available, will retry later")
                 return ListenableWorker.Result.retry()
             }
             
             // Perform background sync operations
             performDataSync()
             
-            Timber.d("Data sync completed successfully")
+            Log.d("DataSyncWorker", "Data sync completed successfully")
             ListenableWorker.Result.success()
             
         } catch (e: Exception) {
-            Timber.e(e, "Data sync failed")
+            Log.e("DataSyncWorker", "Data sync failed", e)
             ListenableWorker.Result.failure()
         }
     }
@@ -61,7 +62,7 @@ class DataSyncWorker @AssistedInject constructor(
         // 3. Update cached recommendations
         // 4. Clear expired data
         
-        Timber.d("Performing background data synchronization")
+        Log.d("DataSyncWorker", "Performing background data synchronization")
         
         // This is where you'd implement actual sync logic
         // For now, we'll just log that the work was performed

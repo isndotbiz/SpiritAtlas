@@ -15,13 +15,22 @@ android {
     defaultConfig {
         minSdk = 26
         
-        // Generate BuildConfig fields from local.properties
-        val props = Properties().apply {
-            val f = rootProject.file("local.properties")
-            if (f.exists()) load(f.inputStream())
+        // BuildConfig fields for API configuration
+        val localProps = Properties()
+        val localPropsFile = rootProject.file("local.properties")
+        if (localPropsFile.exists()) {
+            localProps.load(localPropsFile.inputStream())
         }
-        buildConfigField("String", "OPENROUTER_API_KEY", "\"${props.getProperty("openrouter.api.key", "")}\"")
-        buildConfigField("String", "OLLAMA_BASE_URL", "\"${props.getProperty("ollama.base.url", "http://localhost:11434")}\"")
+        fun sanitize(raw: String?): String {
+            val v = (raw ?: "").trim().trim('"')
+            return v
+        }
+        val openRouterKey = sanitize(localProps.getProperty("openrouter.api.key"))
+        val ollamaRaw = sanitize(localProps.getProperty("ollama.base.url"))
+        val ollamaUrl = if (ollamaRaw.isBlank()) "http://localhost:11434" else ollamaRaw
+        buildConfigField("String", "OPENROUTER_API_KEY", "\"$openRouterKey\"")
+        buildConfigField("String", "OPENROUTER_BASE_URL", "\"https://openrouter.ai/\"")
+        buildConfigField("String", "OLLAMA_BASE_URL", "\"$ollamaUrl\"")
     }
     
     compileOptions {
@@ -62,8 +71,6 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
     
-    // Logging
-    implementation(libs.timber)
 }
 
 

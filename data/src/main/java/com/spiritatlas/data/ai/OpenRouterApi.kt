@@ -14,7 +14,9 @@ interface OpenRouterApi {
 
 data class CompletionRequest(
     val model: String,
-    val messages: List<Message>
+    val messages: List<Message>,
+    @com.squareup.moshi.Json(name = "max_tokens")
+    val maxTokens: Int? = null
 )
 
 data class Message(

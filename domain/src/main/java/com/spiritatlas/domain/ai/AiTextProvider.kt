@@ -13,7 +13,11 @@ interface AiTextProvider {
 data class EnrichmentContext(
     val numerology: Map<String, Any>,
     val astrology: Map<String, Any>,
-    val energyProfile: Map<String, Any>
+    val energyProfile: Map<String, Any>,
+    val personalDetails: Map<String, Any>, // Name, birth info, family, etc.
+    val completedFields: Int,
+    val totalFields: Int,
+    val accuracyLevel: String
 )
 
 data class EnrichmentResult(

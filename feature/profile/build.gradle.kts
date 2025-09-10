@@ -37,6 +37,13 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
     kapt(libs.hilt.compiler)
     implementation(libs.compose.material.icons.extended)
+    
+    // WorkManager for AI enrichment
+    implementation(libs.androidx.work.runtime)
+    implementation(project(":data"))
+    
+    // Image loading for custom markdown renderer
+    implementation("io.coil-kt:coil-compose:2.7.0")
 }
 
 
