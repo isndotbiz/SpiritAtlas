@@ -1,0 +1,35 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Additional Android & Security
+*.apk
+*.aab
+*.dex
+*.log
+
+# API Keys and Secrets (NEVER COMMIT!)
+secrets.properties
+keystore.properties
+api_keys.properties
+
+# Temporary and backup files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# OS files
+Thumbs.db

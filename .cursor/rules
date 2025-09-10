@@ -1,0 +1,144 @@
+# SpiritAtlas Android Project Rules
+
+## Architecture Enforcement
+- Use Clean Architecture with clear module boundaries
+- Domain module has NO Android dependencies
+- Data module implements domain interfaces
+- Feature modules depend on domain, not on each other
+- No circular dependencies between modules
+
+## Module Structure
+REQUIRED_MODULES = [
+  ":app",
+  ":core:ui",
+  ":core:common", 
+  ":core:numerology",
+  ":core:astro",
+  ":core:humandesign",
+  ":domain",
+  ":data",
+  ":feature:home",
+  ":feature:profile",
+  ":feature:consent"
+]
+
+## Dependency Versions (Minimum)
+- AGP: 8.2.0
+- Kotlin: 1.9.21
+- Compose BOM: 2024.02.00
+- Material3: latest from BOM
+- Hilt: 2.48
+- AndroidX Security: 1.1.0-alpha06
+- WorkManager: 2.9.0
+- Retrofit: 2.9.0
+
+## Code Style
+- Kotlin official style guide
+- Compose function names start with capital letter
+- ViewModels use StateFlow, not LiveData
+- Prefer sealed classes over enums with properties
+- Extension functions in dedicated files
+
+## Privacy Guardrails
+- NO hardcoded API keys (use BuildConfig from local.properties)
+- NO skin tone profiling for personality/archetype determination
+- Skin tone is ONLY for UI theme preference
+- ALL network calls require explicit user consent
+- Use EncryptedSharedPreferences for ANY user data
+- No analytics without consent
+
+## AI Integration Rules
+- Abstract AI providers behind AiTextProvider interface
+- Support both OpenRouter (cloud) and Ollama (local)
+- Never send PII directly - derive symbolic representations
+- Implement rate limiting and error handling
+- Cache AI responses to minimize API calls
+
+## Material 3 Requirements  
+- Use dynamic color on Android 12+
+- Provide fallback theme for older versions
+- Follow Material 3 spacing and typography
+- Use Material 3 components, not Material 2
+- Support both light and dark themes
+
+## Testing Requirements
+- Unit test ALL calculation logic (numerology, astro)
+- Minimum 80% coverage for calculation modules
+- Use JUnit 5 for tests
+- MockK for mocking
+- No flaky tests
+
+## Documentation Requirements
+ALL of these files MUST exist:
+- README.md - project overview and setup
+- DISCLAIMER.md - legal disclaimers
+- SECURITY.md - security considerations  
+- TEST_PLAN.md - testing strategy
+- FORMULAS.md - calculation formulas
+- DATA_SOURCES.md - data attribution
+
+## Script Requirements
+- MUST generate scripts/bootstrap.sh
+- Script must be idempotent
+- Use here-docs for file generation
+- Include gradlew build at end
+- Must work on Linux/Mac
+
+## Compose Best Practices
+- Use remember for expensive computations
+- Stable/Immutable annotations on data classes
+- Avoid recomposition in loops
+- LaunchedEffect for side effects
+- Use Modifier parameter (default Modifier)
+
+## Hilt Requirements
+- @HiltAndroidApp on Application class
+- @AndroidEntryPoint on all Activities/Fragments
+- @Module with @InstallIn for each module
+- Prefer constructor injection
+- Use @Binds for interface implementations
+
+## Security Requirements
+- Certificate pinning for API calls
+- No logging of sensitive data
+- Different behavior for debug/release
+- Validate all user input
+- SQL injection prevention (use Room)
+
+## Human Design-like Module Rules
+- Use GENERIC terminology only
+- Do NOT use proprietary Human Design terms
+- Present as "energy profiling" or similar
+- Include clear disclaimer about inspiration
+
+## Required Formulas/Calculations
+- Chaldean numerology mapping (1-8 system)
+- Pythagorean numerology mapping (1-9 system)  
+- Life Path, Expression, Soul Urge numbers
+- Sidereal zodiac with Lahiri ayanamsa
+- Tropical zodiac positions
+- Major aspects: conjunction, sextile, square, trine, opposition
+- Basic house calculations (Placidus or Whole Sign)
+
+## Accessibility
+- All images have contentDescription
+- Semantic properties for screen readers
+- Sufficient color contrast (WCAG AA)
+- Touch targets ≥48dp
+- Focus order makes sense
+
+## Performance Guidelines
+- Lazy load heavy computations
+- Use remember and derivedStateOf appropriately
+- Baseline profiles for startup optimization
+- Avoid blocking main thread
+- Profile before optimizing
+
+## Error Handling
+- Never crash - catch and handle all exceptions
+- Meaningful error messages for users
+- Different messages for debug/release
+- Log errors appropriately (no PII)
+- Fallback states for all features
+
+

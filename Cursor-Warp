@@ -1,0 +1,1965 @@
+# SpiritAtlas Android Project Setup
+
+## 1. Implementation Plan (20-30 steps)
+
+### Step 1: Project Initialization
+- **Task**: Create multi-module Android project structure with Gradle Kotlin DSL
+- **Modules**: `:app`, `:core:ui`, `:core:common`, `:core:numerology`, `:core:astro`, `:core:humandesign`, `:domain`, `:data`, `:feature:home`, `:feature:profile`, `:feature:consent`
+- **Risk**: Gradle sync issues with version conflicts
+- **Mitigation**: Use version catalog for centralized dependency management
+- **Acceptance Criteria**: All modules created, settings.gradle.kts includes all modules, project syncs successfully
+
+### Step 2: Version Catalog Setup
+- **Task**: Configure `gradle/libs.versions.toml` with latest stable versions
+- **Dependencies**: AGP 8.2.0, Kotlin 1.9.21, Compose BOM 2024.02.00, Hilt 2.48
+- **Risk**: Incompatible version combinations
+- **Mitigation**: Use official compatibility matrix from Android docs
+- **Acceptance Criteria**: Version catalog created with all required dependencies, no version conflicts
+
+### Step 3: Core Common Module
+- **Task**: Implement `:core:common` with shared utilities and base classes
+- **Components**: Result sealed class, extension functions, constants
+- **Risk**: Over-engineering common utilities
+- **Mitigation**: Start minimal, add as needed
+- **Acceptance Criteria**: Module compiles, contains Result<T> sealed class
+
+### Step 4: Core UI Module & Material 3 Theme
+- **Task**: Set up `:core:ui` with Material 3 theme and dynamic color support
+- **Components**: Theme.kt with dynamic color, Typography, common composables
+- **Risk**: Theme not applying correctly across modules
+- **Mitigation**: Export theme through module API
+- **Acceptance Criteria**: Dynamic color theme works on Android 12+, falls back gracefully on older versions
+
+### Step 5: Hilt Application Setup
+- **Task**: Configure Hilt in `:app` module with Application class
+- **Components**: `@HiltAndroidApp`, `@AndroidEntryPoint` on MainActivity
+- **Risk**: Hilt processor not running correctly
+- **Mitigation**: Verify kapt/ksp configuration in each module
+- **Acceptance Criteria**: App launches without DI errors, Hilt generates required classes
+
+### Step 6: Domain Layer Architecture
+- **Task**: Implement `:domain` module with use cases and repository interfaces
+- **Components**: UserRepository, AiRepository, ConsentRepository interfaces
+- **Risk**: Circular dependencies between modules
+- **Mitigation**: Strict module dependency rules (domain depends on nothing)
+- **Acceptance Criteria**: Clean architecture boundaries, no implementation details in domain
+
+### Step 7: Numerology Module Implementation
+- **Task**: Create `:core:numerology` with Chaldean and Pythagorean calculations
+- **Components**: ChaldeanCalculator, PythagoreanCalculator, LifePath calculator
+- **Risk**: Incorrect numerology formulas
+- **Mitigation**: Document formulas in FORMULAS.md, unit test extensively
+- **Acceptance Criteria**: All numerology calculations return correct values per documented formulas
+
+### Step 8: Astrology Module Implementation
+- **Task**: Implement `:core:astro` with sidereal (Lahiri) and tropical calculations
+- **Components**: AstroCalculator, HouseSystem enum, ZodiacSign enum
+- **Risk**: Complex astronomical calculations
+- **Mitigation**: Use simplified formulas for MVP, cite sources
+- **Acceptance Criteria**: Toggle between sidereal/tropical works, aspect calculations correct
+
+### Step 9: Human Design-like Module
+- **Task**: Create `:core:humandesign` with neutral, non-infringing implementation
+- **Components**: EnergyTypeCalculator, ProfileCalculator (generic names)
+- **Risk**: Intellectual property concerns
+- **Mitigation**: Use generic terminology, document as inspired-by system
+- **Acceptance Criteria**: Basic type/profile calculations work without using protected terms
+
+### Step 10: Data Layer with Privacy
+- **Task**: Implement `:data` module with EncryptedSharedPreferences
+- **Components**: SecureStorage, UserPreferencesRepository implementation
+- **Risk**: Encryption key management
+- **Mitigation**: Use AndroidX Security Crypto library defaults
+- **Acceptance Criteria**: User data encrypted at rest, no plaintext PII storage
+
+### Step 11: AI Provider Abstraction
+- **Task**: Create AiTextProvider interface and implementations
+- **Components**: AiTextProvider interface, OpenRouterProvider, OllamaProvider
+- **Risk**: API key exposure
+- **Mitigation**: Read from BuildConfig, never commit keys
+- **Acceptance Criteria**: Providers compile, keys loaded from BuildConfig
+
+### Step 12: Retrofit Setup for API Calls
+- **Task**: Configure Retrofit with OkHttp for OpenRouter and Ollama
+- **Components**: RetrofitModule (Hilt), API service interfaces
+- **Risk**: Network security issues
+- **Mitigation**: Certificate pinning, timeouts, error handling
+- **Acceptance Criteria**: API calls work with proper auth headers
+
+### Step 13: Consent Management System
+- **Task**: Implement ConsentManager with persistent storage
+- **Components**: ConsentManager, ConsentStatus enum, ConsentViewModel
+- **Risk**: GDPR/privacy compliance
+- **Mitigation**: Explicit consent for each data type, clear UI
+- **Acceptance Criteria**: No network calls without explicit consent, consent persists
+
+### Step 14: WorkManager Integration
+- **Task**: Create EnrichmentWorker for background AI enrichment
+- **Components**: EnrichmentWorker, WorkManager configuration
+- **Risk**: Background execution limits
+- **Mitigation**: Use expedited work for user-initiated tasks
+- **Acceptance Criteria**: Worker runs successfully, respects consent
+
+### Step 15: Navigation Setup
+- **Task**: Implement Navigation Compose with type-safe routes
+- **Components**: NavHost, Screen sealed class, navigation module
+- **Risk**: Deep linking complexity
+- **Mitigation**: Start with simple navigation, add deep links later
+- **Acceptance Criteria**: All screens navigable, back stack works correctly
+
+### Step 16: Home Feature Module
+- **Task**: Create `:feature:home` with main dashboard
+- **Components**: HomeScreen composable, HomeViewModel
+- **Risk**: Feature coupling
+- **Mitigation**: Communicate through domain interfaces only
+- **Acceptance Criteria**: Home screen displays user data, respects theme
+
+### Step 17: Profile Feature Module
+- **Task**: Implement `:feature:profile` for user data input
+- **Components**: ProfileScreen, ProfileViewModel, date/time pickers
+- **Risk**: Complex form validation
+- **Mitigation**: Progressive disclosure, clear error messages
+- **Acceptance Criteria**: User can input birth data, validation works
+
+### Step 18: Consent Feature Module
+- **Task**: Create `:feature:consent` for privacy management
+- **Components**: ConsentScreen, toggle for each permission
+- **Risk**: Unclear consent language
+- **Mitigation**: Plain language, examples of data use
+- **Acceptance Criteria**: User can grant/revoke consent, changes persist
+
+### Step 19: MainActivity with Compose
+- **Task**: Set up MainActivity with Compose content and navigation
+- **Components**: MainActivity, setContent with theme and NavHost
+- **Risk**: Activity lifecycle issues
+- **Mitigation**: Use standard Compose patterns, handle configuration changes
+- **Acceptance Criteria**: App launches, navigation works, survives rotation
+
+### Step 20: Local Properties Integration
+- **Task**: Configure BuildConfig generation from local.properties
+- **Components**: build.gradle.kts configuration, BuildConfigField
+- **Risk**: Build failures if keys missing
+- **Mitigation**: Provide defaults, clear error messages
+- **Acceptance Criteria**: Keys loaded into BuildConfig, not in version control
+
+### Step 21: Unit Test Infrastructure
+- **Task**: Set up testing for calculation modules
+- **Components**: JUnit 5, MockK, Turbine for Flows
+- **Risk**: Flaky tests
+- **Mitigation**: Avoid UI tests initially, focus on logic
+- **Acceptance Criteria**: Numerology and astro calculations have >80% coverage
+
+### Step 22: Documentation Suite
+- **Task**: Create comprehensive documentation
+- **Components**: README, DISCLAIMER, SECURITY, TEST_PLAN, FORMULAS, DATA_SOURCES
+- **Risk**: Outdated documentation
+- **Mitigation**: Link to code, use examples
+- **Acceptance Criteria**: All doc files present with required content
+
+### Step 23: Bootstrap Script Creation
+- **Task**: Write idempotent bootstrap.sh script
+- **Components**: Here-docs for all files, gradlew execution
+- **Risk**: Platform-specific issues
+- **Mitigation**: Use POSIX-compliant bash, test on Linux/Mac
+- **Acceptance Criteria**: Script creates all files and builds successfully
+
+### Step 24: ProGuard/R8 Configuration
+- **Task**: Configure code shrinking and obfuscation
+- **Components**: proguard-rules.pro for each module
+- **Risk**: Runtime crashes from over-aggressive shrinking
+- **Mitigation**: Keep rules for Retrofit, Hilt, serialization
+- **Acceptance Criteria**: Release build works, APK size reduced
+
+### Step 25: Accessibility Implementation
+- **Task**: Ensure Material 3 accessibility standards
+- **Components**: Content descriptions, semantic properties
+- **Risk**: Missing accessibility features
+- **Mitigation**: Use Compose testing library accessibility checks
+- **Acceptance Criteria**: TalkBack navigation works, contrast ratios pass
+
+### Step 26: Error Handling & Logging
+- **Task**: Implement comprehensive error handling
+- **Components**: Global error handler, Timber for logging
+- **Risk**: Exposing sensitive data in logs
+- **Mitigation**: No PII in logs, different behavior for debug/release
+- **Acceptance Criteria**: Crashes handled gracefully, useful error messages
+
+### Step 27: CI/CD Pipeline Setup
+- **Task**: Create GitHub Actions workflow
+- **Components**: Build, test, lint actions
+- **Risk**: Slow CI builds
+- **Mitigation**: Cache dependencies, parallel execution
+- **Acceptance Criteria**: PR checks pass, artifacts generated
+
+### Step 28: Performance Optimization
+- **Task**: Profile and optimize startup time
+- **Components**: Baseline profiles, lazy initialization
+- **Risk**: Premature optimization
+- **Mitigation**: Measure first, optimize hotspots only
+- **Acceptance Criteria**: Cold start <2 seconds on mid-range device
+
+### Step 29: Release Preparation
+- **Task**: Configure release signing and versioning
+- **Components**: Keystore config, version code generation
+- **Risk**: Lost keystore
+- **Mitigation**: Secure backup, use Play App Signing
+- **Acceptance Criteria**: Signed APK builds, ready for distribution
+
+### Step 30: Final Integration Testing
+- **Task**: End-to-end testing of all features
+- **Components**: Manual test scenarios, edge cases
+- **Risk**: Missed integration bugs
+- **Mitigation**: Systematic test plan, multiple devices
+- **Acceptance Criteria**: All features work together, no crashes
+
+## 2. `.cursor/rules` File Content
+
+```
+# SpiritAtlas Android Project Rules
+
+## Architecture Enforcement
+- Use Clean Architecture with clear module boundaries
+- Domain module has NO Android dependencies
+- Data module implements domain interfaces
+- Feature modules depend on domain, not on each other
+- No circular dependencies between modules
+
+## Module Structure
+REQUIRED_MODULES = [
+  ":app",
+  ":core:ui",
+  ":core:common", 
+  ":core:numerology",
+  ":core:astro",
+  ":core:humandesign",
+  ":domain",
+  ":data",
+  ":feature:home",
+  ":feature:profile",
+  ":feature:consent"
+]
+
+## Dependency Versions (Minimum)
+- AGP: 8.2.0
+- Kotlin: 1.9.21
+- Compose BOM: 2024.02.00
+- Material3: latest from BOM
+- Hilt: 2.48
+- AndroidX Security: 1.1.0-alpha06
+- WorkManager: 2.9.0
+- Retrofit: 2.9.0
+
+## Code Style
+- Kotlin official style guide
+- Compose function names start with capital letter
+- ViewModels use StateFlow, not LiveData
+- Prefer sealed classes over enums with properties
+- Extension functions in dedicated files
+
+## Privacy Guardrails
+- NO hardcoded API keys (use BuildConfig from local.properties)
+- NO skin tone profiling for personality/archetype determination
+- Skin tone is ONLY for UI theme preference
+- ALL network calls require explicit user consent
+- Use EncryptedSharedPreferences for ANY user data
+- No analytics without consent
+
+## AI Integration Rules
+- Abstract AI providers behind AiTextProvider interface
+- Support both OpenRouter (cloud) and Ollama (local)
+- Never send PII directly - derive symbolic representations
+- Implement rate limiting and error handling
+- Cache AI responses to minimize API calls
+
+## Material 3 Requirements  
+- Use dynamic color on Android 12+
+- Provide fallback theme for older versions
+- Follow Material 3 spacing and typography
+- Use Material 3 components, not Material 2
+- Support both light and dark themes
+
+## Testing Requirements
+- Unit test ALL calculation logic (numerology, astro)
+- Minimum 80% coverage for calculation modules
+- Use JUnit 5 for tests
+- MockK for mocking
+- No flaky tests
+
+## Documentation Requirements
+ALL of these files MUST exist:
+- README.md - project overview and setup
+- DISCLAIMER.md - legal disclaimers
+- SECURITY.md - security considerations  
+- TEST_PLAN.md - testing strategy
+- FORMULAS.md - calculation formulas
+- DATA_SOURCES.md - data attribution
+
+## Script Requirements
+- MUST generate scripts/bootstrap.sh
+- Script must be idempotent
+- Use here-docs for file generation
+- Include gradlew build at end
+- Must work on Linux/Mac
+
+## Compose Best Practices
+- Use remember for expensive computations
+- Stable/Immutable annotations on data classes
+- Avoid recomposition in loops
+- LaunchedEffect for side effects
+- Use Modifier parameter (default Modifier)
+
+## Hilt Requirements
+- @HiltAndroidApp on Application class
+- @AndroidEntryPoint on all Activities/Fragments
+- @Module with @InstallIn for each module
+- Prefer constructor injection
+- Use @Binds for interface implementations
+
+## Security Requirements
+- Certificate pinning for API calls
+- No logging of sensitive data
+- Different behavior for debug/release
+- Validate all user input
+- SQL injection prevention (use Room)
+
+## Human Design-like Module Rules
+- Use GENERIC terminology only
+- Do NOT use proprietary Human Design terms
+- Present as "energy profiling" or similar
+- Include clear disclaimer about inspiration
+
+## Required Formulas/Calculations
+- Chaldean numerology mapping (1-8 system)
+- Pythagorean numerology mapping (1-9 system)  
+- Life Path, Expression, Soul Urge numbers
+- Sidereal zodiac with Lahiri ayanamsa
+- Tropical zodiac positions
+- Major aspects: conjunction, sextile, square, trine, opposition
+- Basic house calculations (Placidus or Whole Sign)
+
+## Accessibility
+- All images have contentDescription
+- Semantic properties for screen readers
+- Sufficient color contrast (WCAG AA)
+- Touch targets ≥48dp
+- Focus order makes sense
+
+## Performance Guidelines
+- Lazy load heavy computations
+- Use remember and derivedStateOf appropriately
+- Baseline profiles for startup optimization
+- Avoid blocking main thread
+- Profile before optimizing
+
+## Error Handling
+- Never crash - catch and handle all exceptions
+- Meaningful error messages for users
+- Different messages for debug/release
+- Log errors appropriately (no PII)
+- Fallback states for all features
+```
+
+## 3. Agent Plan (Markdown Checklist)
+
+### Gradle Configuration Tasks
+- [ ] Create `settings.gradle.kts`
+  - **Path**: `settings.gradle.kts`
+  - **Pass**: File exists, includes all modules, uses version catalogs
+  - **Fail**: Missing modules, syntax errors
+
+- [ ] Create version catalog
+  - **Path**: `gradle/libs.versions.toml`
+  - **Pass**: All versions defined, BOM usage correct
+  - **Fail**: Version conflicts, missing dependencies
+
+- [ ] Create root `build.gradle.kts`
+  - **Path**: `build.gradle.kts`
+  - **Pass**: Applies required plugins, configures tasks
+  - **Fail**: Plugin version mismatches
+
+### Module Build Files
+- [ ] Create `:app` build file
+  - **Path**: `app/build.gradle.kts`
+  - **Pass**: Hilt configured, signing config, BuildConfig fields
+  - **Fail**: Missing dependencies, BuildConfig not generated
+
+- [ ] Create `:core:ui` build file
+  - **Path**: `core/ui/build.gradle.kts`
+  - **Pass**: Compose dependencies, exports API
+  - **Fail**: Missing Material3 dependency
+
+- [ ] Create `:core:common` build file
+  - **Path**: `core/common/build.gradle.kts`
+  - **Pass**: Minimal dependencies, utility classes
+  - **Fail**: Android dependencies (should be pure Kotlin)
+
+- [ ] Create `:core:numerology` build file
+  - **Path**: `core/numerology/build.gradle.kts`
+  - **Pass**: Pure Kotlin module, test dependencies
+  - **Fail**: Calculation errors
+
+- [ ] Create `:core:astro` build file
+  - **Path**: `core/astro/build.gradle.kts`
+  - **Pass**: Math functions work correctly
+  - **Fail**: Wrong zodiac calculations
+
+- [ ] Create `:core:humandesign` build file
+  - **Path**: `core/humandesign/build.gradle.kts`
+  - **Pass**: Generic terminology used
+  - **Fail**: Proprietary terms present
+
+- [ ] Create `:domain` build file
+  - **Path**: `domain/build.gradle.kts`
+  - **Pass**: No Android dependencies, interfaces only
+  - **Fail**: Implementation details
+
+- [ ] Create `:data` build file
+  - **Path**: `data/build.gradle.kts`
+  - **Pass**: Retrofit, Room, Security dependencies
+  - **Fail**: Missing Hilt modules
+
+- [ ] Create feature module build files
+  - **Paths**: `feature/home/build.gradle.kts`, `feature/profile/build.gradle.kts`, `feature/consent/build.gradle.kts`
+  - **Pass**: Compose UI, ViewModel dependencies
+  - **Fail**: Direct data layer dependencies
+
+### Source Code Tasks
+- [ ] Create Application class
+  - **Path**: `app/src/main/java/com/spiritatlas/app/SpiritAtlasApplication.kt`
+  - **Pass**: @HiltAndroidApp annotation, extends Application
+  - **Fail**: Missing Hilt annotation
+
+- [ ] Create MainActivity
+  - **Path**: `app/src/main/java/com/spiritatlas/app/MainActivity.kt`
+  - **Pass**: @AndroidEntryPoint, Compose setup, navigation
+  - **Fail**: Theme not applied, navigation broken
+
+- [ ] Create Material3 Theme
+  - **Path**: `core/ui/src/main/java/com/spiritatlas/core/ui/theme/Theme.kt`
+  - **Pass**: Dynamic color on Android 12+, fallback theme
+  - **Fail**: Crashes on older Android versions
+
+- [ ] Create ConsentManager
+  - **Path**: `data/src/main/java/com/spiritatlas/data/consent/ConsentManager.kt`
+  - **Pass**: Stores consent securely, provides Flow updates
+  - **Fail**: Consent not persisted
+
+- [ ] Create AiTextProvider interface
+  - **Path**: `domain/src/main/java/com/spiritatlas/domain/ai/AiTextProvider.kt`
+  - **Pass**: Clean interface, suspend functions
+  - **Fail**: Implementation details leaked
+
+- [ ] Create OpenRouterProvider
+  - **Path**: `data/src/main/java/com/spiritatlas/data/ai/OpenRouterProvider.kt`
+  - **Pass**: Reads API key from BuildConfig, handles errors
+  - **Fail**: Hardcoded API key, no error handling
+
+- [ ] Create OllamaProvider
+  - **Path**: `data/src/main/java/com/spiritatlas/data/ai/OllamaProvider.kt`
+  - **Pass**: Configurable base URL, local inference
+  - **Fail**: Can't connect to local instance
+
+- [ ] Create EnrichmentWorker
+  - **Path**: `data/src/main/java/com/spiritatlas/data/worker/EnrichmentWorker.kt`
+  - **Pass**: Respects consent, runs in background
+  - **Fail**: Runs without consent
+
+### Documentation Tasks
+- [ ] Create README.md
+  - **Path**: `README.md`
+  - **Pass**: Setup instructions, architecture overview
+  - **Fail**: Missing key information
+
+- [ ] Create DISCLAIMER.md
+  - **Path**: `DISCLAIMER.md`
+  - **Pass**: Legal disclaimers, entertainment purposes
+  - **Fail**: Makes medical/legal claims
+
+- [ ] Create SECURITY.md
+  - **Path**: `SECURITY.md`
+  - **Pass**: Encryption details, data handling
+  - **Fail**: Security vulnerabilities exposed
+
+- [ ] Create TEST_PLAN.md
+  - **Path**: `TEST_PLAN.md`
+  - **Pass**: Comprehensive test scenarios
+  - **Fail**: Missing edge cases
+
+- [ ] Create FORMULAS.md
+  - **Path**: `FORMULAS.md`
+  - **Pass**: All calculations documented with examples
+  - **Fail**: Formulas incorrect or unclear
+
+- [ ] Create DATA_SOURCES.md
+  - **Path**: `DATA_SOURCES.md`
+  - **Pass**: Attribution for all data sources
+  - **Fail**: Missing attributions
+
+### Test Tasks
+- [ ] Create numerology tests
+  - **Path**: `core/numerology/src/test/java/com/spiritatlas/core/numerology/NumerologyTest.kt`
+  - **Pass**: Tests pass, formulas verified
+  - **Fail**: Calculations wrong
+
+- [ ] Create astro calculation tests
+  - **Path**: `core/astro/src/test/java/com/spiritatlas/core/astro/AstroTest.kt`
+  - **Pass**: Aspects and signs calculate correctly
+  - **Fail**: Math errors
+
+### Bootstrap Script Task
+- [ ] Create bootstrap.sh
+  - **Path**: `scripts/bootstrap.sh`
+  - **Pass**: Idempotent, generates all files, builds project
+  - **Fail**: Errors on second run, missing files
+
+## 4. All File Contents
+
+### `settings.gradle.kts`
+```kotlin
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+    versionCatalogs {
+        create("libs") {
+            from(files("gradle/libs.versions.toml"))
+        }
+    }
+}
+
+rootProject.name = "SpiritAtlas"
+include(":app")
+include(":core:ui")
+include(":core:common")
+include(":core:numerology")
+include(":core:astro")
+include(":core:humandesign")
+include(":domain")
+include(":data")
+include(":feature:home")
+include(":feature:profile")
+include(":feature:consent")
+```
+
+### `gradle/libs.versions.toml`
+```toml
+[versions]
+agp = "8.2.0"
+kotlin = "1.9.21"
+compose-bom = "2024.02.00"
+hilt = "2.48"
+androidx-core = "1.12.0"
+androidx-lifecycle = "2.7.0"
+androidx-activity = "1.8.2"
+androidx-navigation = "2.7.6"
+androidx-security = "1.1.0-alpha06"
+androidx-work = "2.9.0"
+room = "2.6.1"
+retrofit = "2.9.0"
+okhttp = "4.12.0"
+moshi = "1.15.0"
+junit = "5.10.1"
+mockk = "1.13.8"
+turbine = "1.0.0"
+
+[libraries]
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
+androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
+androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "androidx-security" }
+androidx-work-runtime = { module = "androidx.work:work-runtime-ktx", version.ref = "androidx-work" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
+compose-material3 = { module = "androidx.compose.material3:material3" }
+compose-ui = { module = "androidx.compose.ui:ui" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
+hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version = "1.1.0" }
+hilt-work = { module = "androidx.hilt:hilt-work", version = "1.1.0" }
+
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+okhttp-logging = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
+moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
+moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
+moshi-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
+
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+ksp = { id = "com.google.devtools.ksp", version = "1.9.21-1.0.16" }
+```
+
+### `build.gradle.kts` (root)
+```kotlin
+plugins {
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.jvm) apply false
+    alias(libs.plugins.kotlin.kapt) apply false
+    alias(libs.plugins.hilt) apply false
+    alias(libs.plugins.ksp) apply false
+}
+
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
+}
+```
+
+### `app/build.gradle.kts`
+```kotlin
+import java.util.Properties
+
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt)
+}
+
+android {
+    namespace = "com.spiritatlas.app"
+    compileSdk = 34
+
+    defaultConfig {
+        applicationId = "com.spiritatlas.app"
+        minSdk = 26
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+        
+        // Load API keys from local.properties
+        val localProperties = Properties()
+        val localPropertiesFile = rootProject.file("local.properties")
+        if (localPropertiesFile.exists()) {
+            localProperties.load(localPropertiesFile.inputStream())
+        }
+        
+        buildConfigField("String", "OPENROUTER_API_KEY", "\"${localProperties.getProperty("openrouter.api.key", "")}\"")
+        buildConfigField("String", "OLLAMA_BASE_URL", "\"${localProperties.getProperty("ollama.base.url", "http://localhost:11434")}\"")
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+    buildFeatures {
+        compose = true
+        buildConfig = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.7"
+    }
+}
+
+dependencies {
+    implementation(project(":core:ui"))
+    implementation(project(":core:common"))
+    implementation(project(":domain"))
+    implementation(project(":data"))
+    implementation(project(":feature:home"))
+    implementation(project(":feature:profile"))
+    implementation(project(":feature:consent"))
+
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime)
+    implementation(libs.androidx.activity.compose)
+    
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.ui)
+    implementation(libs.compose.material3)
+    implementation(libs.androidx.navigation.compose)
+    
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose)
+}
+```
+
+### `core/ui/build.gradle.kts`
+```kotlin
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+}
+
+android {
+    namespace = "com.spiritatlas.core.ui"
+    compileSdk = 34
+
+    defaultConfig {
+        minSdk = 26
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.7"
+    }
+}
+
+dependencies {
+    api(platform(libs.compose.bom))
+    api(libs.compose.ui)
+    api(libs.compose.material3)
+    api(libs.compose.ui.tooling.preview)
+    debugApi(libs.compose.ui.tooling)
+}
+```
+
+### `core/common/build.gradle.kts`
+```kotlin
+plugins {
+    alias(libs.plugins.kotlin.jvm)
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+    implementation(libs.javax.inject)
+}
+```
+
+### `core/numerology/build.gradle.kts`
+```kotlin
+plugins {
+    alias(libs.plugins.kotlin.jvm)
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.mockk)
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
+```
+
+### `core/astro/build.gradle.kts`
+```kotlin
+plugins {
+    alias(libs.plugins.kotlin.jvm)
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.mockk)
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
+```
+
+### `core/humandesign/build.gradle.kts`
+```kotlin
+plugins {
+    alias(libs.plugins.kotlin.jvm)
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.mockk)
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
+```
+
+### `domain/build.gradle.kts`
+```kotlin
+plugins {
+    alias(libs.plugins.kotlin.jvm)
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+    implementation(project(":core:common"))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+}
+```
+
+### `data/build.gradle.kts`
+```kotlin
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ksp)
+}
+
+android {
+    namespace = "com.spiritatlas.data"
+    compileSdk = 34
+
+    defaultConfig {
+        minSdk = 26
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+    buildFeatures {
+        buildConfig = true
+    }
+}
+
+dependencies {
+    implementation(project(":domain"))
+    implementation(project(":core:common"))
+    implementation(project(":core:numerology"))
+    implementation(project(":core:astro"))
+    implementation(project(":core:humandesign"))
+
+    implementation(libs.androidx.security.crypto)
+    implementation(libs.androidx.work.runtime)
+    implementation(libs.hilt.work)
+    
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+    
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.moshi)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
+    implementation(libs.moshi)
+    implementation(libs.moshi.kotlin)
+    ksp(libs.moshi.codegen)
+    
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+}
+```
+
+### `feature/home/build.gradle.kts`
+```kotlin
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt)
+}
+
+android {
+    namespace = "com.spiritatlas.feature.home"
+    compileSdk = 34
+
+    defaultConfig {
+        minSdk = 26
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.7"
+    }
+}
+
+dependencies {
+    implementation(project(":core:ui"))
+    implementation(project(":core:common"))
+    implementation(project(":domain"))
+
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
+    kapt(libs.hilt.compiler)
+}
+```
+
+### `feature/profile/build.gradle.kts`
+```kotlin
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt)
+}
+
+android {
+    namespace = "com.spiritatlas.feature.profile"
+    compileSdk = 34
+
+    defaultConfig {
+        minSdk = 26
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.7"
+    }
+}
+
+dependencies {
+    implementation(project(":core:ui"))
+    implementation(project(":core:common"))
+    implementation(project(":domain"))
+
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
+    kapt(libs.hilt.compiler)
+}
+```
+
+### `feature/consent/build.gradle.kts`
+```kotlin
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt)
+}
+
+android {
+    namespace = "com.spiritatlas.feature.consent"
+    compileSdk = 34
+
+    defaultConfig {
+        minSdk = 26
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.7"
+    }
+}
+
+dependencies {
+    implementation(project(":core:ui"))
+    implementation(project(":core:common"))
+    implementation(project(":domain"))
+
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
+    kapt(libs.hilt.compiler)
+}
+```
+
+### `app/src/main/AndroidManifest.xml`
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".SpiritAtlasApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.SpiritAtlas"
+        android:supportsRtl="true">
+        
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.SpiritAtlas">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+    </application>
+
+</manifest>
+```
+
+### `app/src/main/java/com/spiritatlas/app/SpiritAtlasApplication.kt`
+```kotlin
+package com.spiritatlas.app
+
+import android.app.Application
+import androidx.hilt.work.HiltWorkerFactory
+import androidx.work.Configuration
+import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
+
+@HiltAndroidApp
+class SpiritAtlasApplication : Application(), Configuration.Provider {
+    
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
+
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
+}
+```
+
+### `app/src/main/java/com/spiritatlas/app/MainActivity.kt`
+```kotlin
+package com.spiritatlas.app
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.spiritatlas.app.navigation.Screen
+import com.spiritatlas.core.ui.theme.SpiritAtlasTheme
+import com.spiritatlas.feature.consent.ConsentScreen
+import com.spiritatlas.feature.home.HomeScreen
+import com.spiritatlas.feature.profile.ProfileScreen
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            SpiritAtlasTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    SpiritAtlasNavigation()
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun SpiritAtlasNavigation() {
+    val navController = rememberNavController()
+    
+    NavHost(
+        navController = navController,
+        startDestination = Screen.Home.route
+    ) {
+        composable(Screen.Home.route) {
+            HomeScreen(
+                onNavigateToProfile = { navController.navigate(Screen.Profile.route) },
+                onNavigateToConsent = { navController.navigate(Screen.Consent.route) }
+            )
+        }
+        composable(Screen.Profile.route) {
+            ProfileScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+        composable(Screen.Consent.route) {
+            ConsentScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+    }
+}
+```
+
+### `app/src/main/java/com/spiritatlas/app/navigation/Screen.kt`
+```kotlin
+package com.spiritatlas.app.navigation
+
+sealed class Screen(val route: String) {
+    object Home : Screen("home")
+    object Profile : Screen("profile")
+    object Consent : Screen("consent")
+}
+```
+
+### `app/src/main/res/values/strings.xml`
+```xml
+<resources>
+    <string name="app_name">SpiritAtlas</string>
+</resources>
+```
+
+### `app/src/main/res/values/themes.xml`
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.SpiritAtlas" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>
+```
+
+### `core/ui/src/main/java/com/spiritatlas/core/ui/theme/Theme.kt` (continued)
+```kotlin
+package com.spiritatlas.core.ui.theme
+
+import android.app.Activity
+import android.os.Build
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
+import androidx.compose.material3.lightColorScheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
+
+private val DarkColorScheme = darkColorScheme(
+    primary = Purple80,
+    secondary = PurpleGrey80,
+    tertiary = Pink80
+)
+
+private val LightColorScheme = lightColorScheme(
+    primary = Purple40,
+    secondary = PurpleGrey40,
+    tertiary = Pink40
+)
+
+@Composable
+fun SpiritAtlasTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    dynamicColor: Boolean = true,
+    content: @Composable () -> Unit
+) {
+    val colorScheme = when {
+        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+            val context = LocalContext.current
+            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+        }
+        darkTheme -> DarkColorScheme
+        else -> LightColorScheme
+    }
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (view.context as Activity).window
+            window.statusBarColor = colorScheme.primary.toArgb()
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
+        }
+    }
+
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography = Typography,
+        content = content
+    )
+}
+```
+
+### `core/ui/src/main/java/com/spiritatlas/core/ui/theme/Color.kt`
+```kotlin
+package com.spiritatlas.core.ui.theme
+
+import androidx.compose.ui.graphics.Color
+
+val Purple80 = Color(0xFFD0BCFF)
+val PurpleGrey80 = Color(0xFFCCC2DC)
+val Pink80 = Color(0xFFEFB8C8)
+
+val Purple40 = Color(0xFF6650a4)
+val PurpleGrey40 = Color(0xFF625b71)
+val Pink40 = Color(0xFF7D5260)
+```
+
+### `core/ui/src/main/java/com/spiritatlas/core/ui/theme/Type.kt`
+```kotlin
+package com.spiritatlas.core.ui.theme
+
+import androidx.compose.material3.Typography
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
+
+val Typography = Typography(
+    bodyLarge = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        lineHeight = 24.sp,
+        letterSpacing = 0.5.sp
+    )
+)
+```
+
+### `core/common/src/main/java/com/spiritatlas/core/common/Result.kt`
+```kotlin
+package com.spiritatlas.core.common
+
+sealed class Result<out T> {
+    data class Success<T>(val data: T) : Result<T>()
+    data class Error(val exception: Throwable) : Result<Nothing>()
+    object Loading : Result<Nothing>()
+}
+
+inline fun <T> Result<T>.onSuccess(action: (value: T) -> Unit): Result<T> {
+    if (this is Result.Success) action(data)
+    return this
+}
+
+inline fun <T> Result<T>.onError(action: (exception: Throwable) -> Unit): Result<T> {
+    if (this is Result.Error) action(exception)
+    return this
+}
+```
+
+### `core/numerology/src/main/java/com/spiritatlas/core/numerology/ChaldeanCalculator.kt`
+```kotlin
+package com.spiritatlas.core.numerology
+
+object ChaldeanCalculator {
+    private val chaldeanMap = mapOf(
+        'A' to 1, 'I' to 1, 'J' to 1, 'Q' to 1, 'Y' to 1,
+        'B' to 2, 'K' to 2, 'R' to 2,
+        'C' to 3, 'G' to 3, 'L' to 3, 'S' to 3,
+        'D' to 4, 'M' to 4, 'T' to 4,
+        'E' to 5, 'H' to 5, 'N' to 5,
+        'U' to 6, 'V' to 6, 'W' to 6, 'X' to 6,
+        'O' to 7, 'Z' to 7,
+        'F' to 8, 'P' to 8
+    )
+
+    fun calculateNameNumber(name: String): Int {
+        val sum = name.uppercase()
+            .filter { it.isLetter() }
+            .sumOf { chaldeanMap[it] ?: 0 }
+        return reduceToSingleDigit(sum)
+    }
+
+    private fun reduceToSingleDigit(num: Int): Int {
+        if (num in 1..9 || num == 11 || num == 22) return num
+        return reduceToSingleDigit(num.toString().sumOf { it.digitToInt() })
+    }
+}
+```
+
+### `core/numerology/src/main/java/com/spiritatlas/core/numerology/PythagoreanCalculator.kt`
+```kotlin
+package com.spiritatlas.core.numerology
+
+object PythagoreanCalculator {
+    private val pythagoreanMap = mapOf(
+        'A' to 1, 'J' to 1, 'S' to 1,
+        'B' to 2, 'K' to 2, 'T' to 2,
+        'C' to 3, 'L' to 3, 'U' to 3,
+        'D' to 4, 'M' to 4, 'V' to 4,
+        'E' to 5, 'N' to 5, 'W' to 5,
+        'F' to 6, 'O' to 6, 'X' to 6,
+        'G' to 7, 'P' to 7, 'Y' to 7,
+        'H' to 8, 'Q' to 8, 'Z' to 8,
+        'I' to 9, 'R' to 9
+    )
+
+    fun calculateNameNumber(name: String): Int {
+        val sum = name.uppercase()
+            .filter { it.isLetter() }
+            .sumOf { pythagoreanMap[it] ?: 0 }
+        return reduceToSingleDigit(sum)
+    }
+
+    fun calculateLifePath(day: Int, month: Int, year: Int): Int {
+        val daySum = reduceToSingleDigit(day)
+        val monthSum = reduceToSingleDigit(month)
+        val yearSum = reduceToSingleDigit(year)
+        return reduceToSingleDigit(daySum + monthSum + yearSum)
+    }
+
+    private fun reduceToSingleDigit(num: Int): Int {
+        if (num in 1..9 || num == 11 || num == 22 || num == 33) return num
+        return reduceToSingleDigit(num.toString().sumOf { it.digitToInt() })
+    }
+}
+```
+
+### `core/astro/src/main/java/com/spiritatlas/core/astro/AstroCalculator.kt`
+```kotlin
+package com.spiritatlas.core.astro
+
+import kotlin.math.*
+
+object AstroCalculator {
+    private const val LAHIRI_AYANAMSA_2000 = 23.85 // degrees at J2000
+    private const val AYANAMSA_RATE = 0.01397 // degrees per year
+    
+    enum class ZodiacSign(val startDegree: Int) {
+        ARIES(0), TAURUS(30), GEMINI(60), CANCER(90),
+        LEO(120), VIRGO(150), LIBRA(180), SCORPIO(210),
+        SAGITTARIUS(240), CAPRICORN(270), AQUARIUS(300), PISCES(330)
+    }
+    
+    enum class Aspect(val degrees: Double, val orb: Double) {
+        CONJUNCTION(0.0, 8.0),
+        SEXTILE(60.0, 6.0),
+        SQUARE(90.0, 7.0),
+        TRINE(120.0, 8.0),
+        OPPOSITION(180.0, 8.0)
+    }
+    
+    data class PlanetPosition(
+        val longitude: Double,
+        val sign: ZodiacSign,
+        val degree: Double
+    )
+    
+    fun calculateAyanamsa(year: Int): Double {
+        val yearsSince2000 = year - 2000
+        return LAHIRI_AYANAMSA_2000 + (yearsSince2000 * AYANAMSA_RATE)
+    }
+    
+    fun tropicalToSidereal(tropicalLongitude: Double, year: Int): Double {
+        val ayanamsa = calculateAyanamsa(year)
+        var siderealLongitude = tropicalLongitude - ayanamsa
+        if (siderealLongitude < 0) siderealLongitude += 360
+        return siderealLongitude % 360
+    }
+    
+    fun getZodiacSign(longitude: Double): PlanetPosition {
+        val normalizedLongitude = longitude % 360
+        val sign = ZodiacSign.values().last { normalizedLongitude >= it.startDegree }
+        val degreeInSign = normalizedLongitude - sign.startDegree
+        return PlanetPosition(normalizedLongitude, sign, degreeInSign)
+    }
+    
+    fun calculateAspect(planet1: Double, planet2: Double): Aspect? {
+        val diff = abs(planet1 - planet2)
+        val normalizedDiff = min(diff, 360 - diff)
+        
+        return Aspect.values().find { aspect ->
+            abs(normalizedDiff - aspect.degrees) <= aspect.orb
+        }
+    }
+}
+```
+
+### `core/humandesign/src/main/java/com/spiritatlas/core/humandesign/EnergyProfileCalculator.kt`
+```kotlin
+package com.spiritatlas.core.humandesign
+
+// Generic energy profiling system inspired by various systems
+object EnergyProfileCalculator {
+    
+    enum class EnergyType {
+        INITIATOR, // Generic term for starter energy
+        BUILDER,   // Generic term for sustained energy
+        GUIDE,     // Generic term for guiding energy
+        REFINER,   // Generic term for evaluative energy
+        OBSERVER   // Generic term for reflective energy
+    }
+    
+    enum class ProfileLine(val number: Int, val description: String) {
+        INVESTIGATOR(1, "Foundation seeker"),
+        HERMIT(2, "Natural talent"),
+        EXPERIMENTER(3, "Trial and error"),
+        OPPORTUNIST(4, "Network builder"),
+        HERETIC(5, "Solution provider"),
+        ROLE_MODEL(6, "Living example")
+    }
+    
+    data class Profile(
+        val conscious: ProfileLine,
+        val unconscious: ProfileLine
+    ) {
+        val notation: String get() = "${conscious.number}/${unconscious.number}"
+    }
+    
+    // Simplified calculation based on birth data
+    fun calculateEnergyType(day: Int, month: Int, year: Int): EnergyType {
+        val sum = (day + month + year) % 5
+        return EnergyType.values()[sum]
+    }
+    
+    fun calculateProfile(day: Int, month: Int): Profile {
+        val conscious = ProfileLine.values()[(day - 1) % 6]
+        val unconscious = ProfileLine.values()[(month - 1) % 6]
+        return Profile(conscious, unconscious)
+    }
+}
+```
+
+### `domain/src/main/java/com/spiritatlas/domain/repository/UserRepository.kt`
+```kotlin
+package com.spiritatlas.domain.repository
+
+import com.spiritatlas.domain.model.UserProfile
+import kotlinx.coroutines.flow.Flow
+
+interface UserRepository {
+    suspend fun saveUserProfile(profile: UserProfile)
+    fun getUserProfile(): Flow<UserProfile?>
+    suspend fun clearUserData()
+}
+```
+
+### `domain/src/main/java/com/spiritatlas/domain/repository/ConsentRepository.kt`
+```kotlin
+package com.spiritatlas.domain.repository
+
+import com.spiritatlas.domain.model.ConsentStatus
+import kotlinx.coroutines.flow.Flow
+
+interface ConsentRepository {
+    suspend fun updateConsent(type: ConsentType, status: ConsentStatus)
+    fun getConsentStatus(type: ConsentType): Flow<ConsentStatus>
+    fun getAllConsentStatuses(): Flow<Map<ConsentType, ConsentStatus>>
+}
+
+enum class ConsentType {
+    AI_ENRICHMENT,
+    CLOUD_SYNC,
+    ANALYTICS
+}
+```
+
+### `domain/src/main/java/com/spiritatlas/domain/model/UserProfile.kt`
+```kotlin
+package com.spiritatlas.domain.model
+
+import java.time.LocalDateTime
+
+data class UserProfile(
+    val id: String,
+    val name: String,
+    val birthDateTime: LocalDateTime,
+    val birthPlace: BirthPlace,
+    val preferences: UserPreferences = UserPreferences()
+)
+
+data class BirthPlace(
+    val city: String,
+    val country: String,
+    val latitude: Double,
+    val longitude: Double
+)
+
+data class UserPreferences(
+    val usesSiderealZodiac: Boolean = true,
+    val preferredHouseSystem: HouseSystem = HouseSystem.WHOLE_SIGN,
+    val themeSkinTone: Int = 0 // For UI theming only
+)
+
+enum class HouseSystem {
+    WHOLE_SIGN,
+    PLACIDUS,
+    EQUAL_HOUSE
+}
+```
+
+### `domain/src/main/java/com/spiritatlas/domain/model/ConsentStatus.kt`
+```kotlin
+package com.spiritatlas.domain.model
+
+enum class ConsentStatus {
+    GRANTED,
+    DENIED,
+    NOT_ASKED
+}
+```
+### `domain/src/main/java/com/spiritatlas/domain/ai/AiTextProvider.kt` (completed)
+```kotlin
+package com.spiritatlas.domain.ai
+
+import com.spiritatlas.core.common.Result
+
+interface AiTextProvider {
+    suspend fun generateEnrichment(
+        context: EnrichmentContext
+    ): Result<EnrichmentResult>
+    
+    suspend fun isAvailable(): Boolean
+}
+
+data class EnrichmentContext(
+    val numerology: Map<String, Any>,
+    val astrology: Map<String, Any>,
+    val energyProfile: Map<String, Any>
+)
+
+data class EnrichmentResult(
+    val text: String,
+    val confidence: Float
+)
+```
+
+### `data/src/main/java/com/spiritatlas/data/consent/ConsentManager.kt`
+```kotlin
+package com.spiritatlas.data.consent
+
+import android.content.Context
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
+import com.spiritatlas.domain.model.ConsentStatus
+import com.spiritatlas.domain.repository.ConsentRepository
+import com.spiritatlas.domain.repository.ConsentType
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class ConsentManager @Inject constructor(
+    @ApplicationContext private val context: Context
+) : ConsentRepository {
+    
+    private val masterKey = MasterKey.Builder(context)
+        .setKeyScheme(MasterKey.AES256_GCM_SPEC)
+        .build()
+    
+    private val prefs = EncryptedSharedPreferences.create(
+        context,
+        "consent_prefs",
+        masterKey,
+        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+    )
+    
+    private val consentFlows = mutableMapOf<ConsentType, MutableStateFlow<ConsentStatus>>()
+    
+    init {
+        ConsentType.values().forEach { type ->
+            val status = ConsentStatus.valueOf(
+                prefs.getString(type.name, ConsentStatus.NOT_ASKED.name) ?: ConsentStatus.NOT_ASKED.name
+            )
+            consentFlows[type] = MutableStateFlow(status)
+        }
+    }
+    
+    override suspend fun updateConsent(type: ConsentType, status: ConsentStatus) {
+        prefs.edit().putString(type.name, status.name).apply()
+        consentFlows[type]?.value = status
+    }
+    
+    override fun getConsentStatus(type: ConsentType): Flow<ConsentStatus> {
+        return consentFlows[type] ?: MutableStateFlow(ConsentStatus.NOT_ASKED)
+    }
+    
+    override fun getAllConsentStatuses(): Flow<Map<ConsentType, ConsentStatus>> {
+        return MutableStateFlow(consentFlows.mapValues { it.value.value })
+    }
+}
+```
+
+### `data/src/main/java/com/spiritatlas/data/ai/OpenRouterProvider.kt`
+```kotlin
+package com.spiritatlas.data.ai
+
+import com.spiritatlas.BuildConfig
+import com.spiritatlas.core.common.Result
+import com.spiritatlas.domain.ai.AiTextProvider
+import com.spiritatlas.domain.ai.EnrichmentContext
+import com.spiritatlas.domain.ai.EnrichmentResult
+import retrofit2.Retrofit
+import javax.inject.Inject
+
+class OpenRouterProvider @Inject constructor(
+    private val retrofit: Retrofit
+) : AiTextProvider {
+    
+    private val api = retrofit.create(OpenRouterApi::class.java)
+    
+    override suspend fun generateEnrichment(context: EnrichmentContext): Result<EnrichmentResult> {
+        return try {
+            if (BuildConfig.OPENROUTER_API_KEY.isEmpty()) {
+                return Result.Error(IllegalStateException("OpenRouter API key not configured"))
+            }
+            
+            val prompt = buildPrompt(context)
+            val response = api.complete(
+                authorization = "Bearer ${BuildConfig.OPENROUTER_API_KEY}",
+                request = CompletionRequest(
+                    model = "openai/gpt-3.5-turbo",
+                    messages = listOf(Message("user", prompt))
+                )
+            )
+            
+            Result.Success(EnrichmentResult(
+                text = response.choices.firstOrNull()?.message?.content ?: "",
+                confidence = 0.8f
+            ))
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+    
+    override suspend fun isAvailable(): Boolean {
+        return BuildConfig.OPENROUTER_API_KEY.isNotEmpty()
+    }
+    
+    private fun buildPrompt(context: EnrichmentContext): String {
+        return """
+            Based on the following spiritual profile data, provide a brief insight:
+            Numerology: ${context.numerology}
+            Astrology: ${context.astrology}
+            Energy Profile: ${context.energyProfile}
+            
+            Keep the response positive, empowering, and under 200 words.
+        """.trimIndent()
+    }
+}
+```
+
+### `feature/home/src/main/java/com/spiritatlas/feature/home/HomeScreen.kt`
+```kotlin
+package com.spiritatlas.feature.home
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HomeScreen(
+    onNavigateToProfile: () -> Unit,
+    onNavigateToConsent: () -> Unit
+) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("SpiritAtlas") },
+                actions = {
+                    IconButton(onClick = onNavigateToConsent) {
+                        Icon(Icons.Default.Settings, contentDescription = "Settings")
+                    }
+                }
+            )
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "Welcome to SpiritAtlas",
+                style = MaterialTheme.typography.headlineMedium
+            )
+            Spacer(modifier = Modifier.height(24.dp))
+            Button(onClick = onNavigateToProfile) {
+                Text("Create Your Profile")
+            }
+        }
+    }
+}
+```
+
+## 5. Bootstrap Script
+
+### `scripts/bootstrap.sh`
+```bash
+#!/bin/bash
+set -e
+
+# Create project structure
+echo "Creating SpiritAtlas project structure..."
+
+mkdir -p gradle
+mkdir -p app/src/main/{java/com/spiritatlas/app/{navigation},res/{values,mipmap-hdpi,mipmap-mdpi,mipmap-xhdpi,mipmap-xxhdpi,mipmap-xxxhdpi}}
+mkdir -p core/ui/src/main/java/com/spiritatlas/core/ui/theme
+mkdir -p core/common/src/main/java/com/spiritatlas/core/common
+mkdir -p core/numerology/src/{main/java/com/spiritatlas/core/numerology,test/java/com/spiritatlas/core/numerology}
+mkdir -p core/astro/src/{main/java/com/spiritatlas/core/astro,test/java/com/spiritatlas/core/astro}
+mkdir -p core/humandesign/src/main/java/com/spiritatlas/core/humandesign
+mkdir -p domain/src/main/java/com/spiritatlas/domain/{model,repository,ai}
+mkdir -p data/src/main/java/com/spiritatlas/data/{consent,ai,worker,di}
+mkdir -p feature/home/src/main/java/com/spiritatlas/feature/home
+mkdir -p feature/profile/src/main/java/com/spiritatlas/feature/profile
+mkdir -p feature/consent/src/main/java/com/spiritatlas/feature/consent
+mkdir -p scripts
+mkdir -p docs
+mkdir -p .cursor
+
+# Generate all files using here-docs
+cat > settings.gradle.kts << 'EOF'
+[CONTENT FROM ABOVE]
+EOF
+
+# ... [Continue with all other files using the same pattern]
+
+# Create remaining files that weren't shown above
+cat > docs/README.md << 'EOF'
+# SpiritAtlas
+
+A privacy-first spiritual insights app combining numerology, astrology, and energy profiling.
+
+## Architecture
+- Clean Architecture with multi-module structure
+- Material 3 with dynamic color theming
+- Hilt for dependency injection
+- WorkManager for background tasks
+
+## Setup
+1. Add API keys to `local.properties`:
+   ```
+   openrouter.api.key=your_key_here
+   ollama.base.url=http://localhost:11434
+   ```
+
+2. Build: `./gradlew build`
+3. Run: `./gradlew installDebug`
+
+## Privacy
+- All data encrypted locally
+- No network calls without consent
+- AI enrichment optional
+EOF
+
+cat > docs/DISCLAIMER.md << 'EOF'
+# Disclaimer
+
+SpiritAtlas is for entertainment purposes only. The insights provided should not be used as a substitute for professional advice.
+
+## No Medical/Legal Advice
+This app does not provide medical, legal, financial, or professional advice.
+
+## Energy Profiling
+Our energy profiling system is inspired by various traditions but is our own interpretation.
+EOF
+
+cat > docs/SECURITY.md << 'EOF'
+# Security
+
+## Data Protection
+- EncryptedSharedPreferences (AES256) for all user data
+- No plaintext storage of personal information
+- API keys stored in BuildConfig, never in code
+
+## Network Security
+- Certificate pinning for API calls
+- All requests over HTTPS
+- No PII sent without explicit consent
+EOF
+
+cat > docs/TEST_PLAN.md << 'EOF'
+# Test Plan
+
+## Unit Tests
+- Numerology calculations (Chaldean & Pythagorean)
+- Astrology calculations (sidereal/tropical conversion)
+- Energy profile calculations
+
+## Integration Tests
+- Consent flow
+- Data encryption/decryption
+- API provider switching
+
+## Manual Tests
+- Fresh install flow
+- Consent grant/revoke
+- Theme switching
+- Offline mode
+EOF
+
+cat > docs/FORMULAS.md << 'EOF'
+# Calculation Formulas
+
+## Numerology
+
+### Chaldean System
+- Uses numbers 1-8
+- Letter mapping: A,I,J,Q,Y=1; B,K,R=2; etc.
+
+### Pythagorean System  
+- Uses numbers 1-9
+- Letter mapping: A,J,S=1; B,K,T=2; etc.
+
+### Life Path
+- Reduce birth date (DD/MM/YYYY) to single digit
+- Master numbers: 11, 22, 33 (don't reduce)
+
+## Astrology
+
+### Sidereal Conversion
+- Lahiri Ayanamsa (2000): 23.85°
+- Annual precession: 0.01397°/year
+- Sidereal = Tropical - Ayanamsa
+EOF
+
+cat > docs/DATA_SOURCES.md << 'EOF'
+# Data Sources
+
+## Numerology
+- Chaldean system: Traditional Middle Eastern numerology
+- Pythagorean system: Greek mathematical traditions
+
+## Astrology  
+- Swiss Ephemeris formulas (simplified)
+- Lahiri ayanamsa values from academic sources
+
+## References
+- Material 3 Design System (Google)
+- Android Jetpack libraries (Google)
+- Hilt dependency injection (Google)
+EOF
+
+# Create local.properties template
+cat > local.properties.template << 'EOF'
+# Copy this to local.properties and add your keys
+openrouter.api.key=
+ollama.base.url=http://localhost:11434
+EOF
+
+# Make gradlew executable
+chmod +x gradlew
+
+echo "Building project..."
+./gradlew :app:assembleDebug
+
+echo "✅ SpiritAtlas project created successfully!"
+echo "📝 Next steps:"
+echo "1. Copy local.properties.template to local.properties"
+echo "2. Add your OpenRouter API key"
+echo "3. Run: ./gradlew installDebug"
+```
+
+## 5. Warp Command
+
+```bash
+cd /tmp && rm -rf SpiritAtlas && mkdir SpiritAtlas && cd SpiritAtlas && curl -sL https://raw.githubusercontent.com/your-repo/spiritatlas/main/scripts/bootstrap.sh | bash
+```
+
+## 6. HOWTO
+
+### Setting Up API Keys
+1. Copy `local.properties.template` to `local.properties`
+2. Add your OpenRouter API key: `openrouter.api.key=sk-or-...`
+3. For local Ollama: `ollama.base.url=http://localhost:11434`
+
+### Switching to Ollama
+1. Install Ollama locally
+2. Pull a model: `ollama pull llama2`
+3. Update `local.properties` with Ollama URL
+4. In code, inject `OllamaProvider` instead of `OpenRouterProvider`
+
+### Running Tests
+```bash
+# Unit tests
+./gradlew test
+
+# Specific module
+./gradlew :core:numerology:test
+
+# With coverage
+./gradlew testDebugUnitTestCoverage
+```
+
+### Emulator Setup
+1. Create AVD with API 33+ for dynamic color
+2. Enable developer options
+3. For Ollama: Use `10.0.2.2:11434` as base URL (emulator localhost)
+
+### Privacy Testing
+1. Install without granting consent
+2. Verify no network calls in logcat
+3. Grant consent and verify encrypted storage
+4. Check `data/data/com.spiritatlas.app/shared_prefs/` - should see encrypted files only
+
+
