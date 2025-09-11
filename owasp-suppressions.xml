@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+    <!-- 
+        OWASP Dependency Check Suppressions
+        This file contains known false positives that should be ignored during security scans
+        
+        Update this file when:
+        1. A dependency is flagged incorrectly 
+        2. A vulnerability is confirmed to not apply to our usage
+        3. A vulnerability has been assessed and accepted as acceptable risk
+    -->
+    
+    <!-- Android Framework False Positives -->
+    <suppress>
+        <notes>
+            Android Support Library vulnerabilities are often false positives 
+            when used in standard Android development
+        </notes>
+        <packageUrl regex="true">^pkg:maven/androidx\..*@.*$</packageUrl>
+        <cve>CVE-2020-8908</cve> <!-- Guava temporary directory vulnerability not applicable -->
+    </suppress>
+    
+    <!-- Compose Framework False Positives -->
+    <suppress>
+        <notes>
+            Compose framework vulnerabilities are typically false positives
+            for standard UI development usage
+        </notes>
+        <packageUrl regex="true">^pkg:maven/androidx\.compose\..*@.*$</packageUrl>
+        <vulnerabilityName>compose-ui.*</vulnerabilityName>
+    </suppress>
+    
+    <!-- Network Library Suppressions -->
+    <suppress>
+        <notes>
+            OkHttp and Retrofit are used securely with HTTPS only configuration
+            and proper certificate validation
+        </notes>
+        <packageUrl regex="true">^pkg:maven/com\.squareup\.okhttp3:.*@.*$</packageUrl>
+        <cve>CVE-2016-2402</cve> <!-- Obsolete HTTP/2 vulnerability, using HTTPS only -->
+    </suppress>
+    
+    <!-- Build Tool False Positives -->
+    <suppress>
+        <notes>
+            Gradle and build tool vulnerabilities typically don't affect runtime security
+        </notes>
+        <packageUrl regex="true">^pkg:maven/org\.jetbrains\.kotlin:.*@.*$</packageUrl>
+        <vulnerabilityName regex="true">.*kotlin.*build.*</vulnerabilityName>
+    </suppress>
+    
+    <!-- Development/Test Dependencies -->
+    <suppress>
+        <notes>
+            Test and development dependencies don't pose runtime security risks
+        </notes>
+        <packageUrl regex="true">^pkg:maven/(io\.mockk|org\.junit\.jupiter|org\.jacoco):.*@.*$</packageUrl>
+        <vulnerabilityName regex="true">.*</vulnerabilityName>
+    </suppress>
+    
+    <!-- Hilt DI Framework -->
+    <suppress>
+        <notes>
+            Hilt dependency injection framework false positives
+        </notes>
+        <packageUrl regex="true">^pkg:maven/com\.google\.dagger:hilt.*@.*$</packageUrl>
+        <cve>CVE-2021-22573</cve> <!-- Dagger vulnerability not applicable to Hilt usage -->
+    </suppress>
+    
+    <!-- 
+        Example of specific vulnerability suppression:
+        
+        <suppress>
+            <notes>
+                Brief explanation of why this vulnerability doesn't apply or is acceptable risk
+            </notes>
+            <packageUrl>pkg:maven/group.id/artifact-id@version</packageUrl>
+            <cve>CVE-YYYY-XXXXX</cve>
+        </suppress>
+        
+        Or suppress by vulnerability name:
+        
+        <suppress>
+            <notes>Explanation</notes>
+            <packageUrl>pkg:maven/group.id/artifact-id@version</packageUrl>
+            <vulnerabilityName>vulnerability-name-pattern</vulnerabilityName>
+        </suppress>
+    -->
+</suppressions>

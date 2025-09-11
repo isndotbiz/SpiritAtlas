@@ -14,6 +14,14 @@
 .cxx
 local.properties
 
+# Module build directories
+*/build/
+app/build/
+core/*/build/
+feature/*/build/
+data/build/
+domain/build/
+
 # Additional Android & Security
 *.apk
 *.aab
