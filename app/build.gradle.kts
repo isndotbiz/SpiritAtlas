@@ -71,6 +71,7 @@ dependencies {
     implementation(project(":feature:home"))
     implementation(project(":feature:profile"))
     implementation(project(":feature:consent"))
+    implementation(project(":feature:compatibility"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime)
