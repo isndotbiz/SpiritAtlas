@@ -30,4 +30,5 @@ include(":data")
 include(":feature:home")
 include(":feature:profile")
 include(":feature:consent")
- 
+include(":feature:tantric")
+include(":feature:compatibility")

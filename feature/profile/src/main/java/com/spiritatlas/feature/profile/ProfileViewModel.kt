@@ -27,6 +27,9 @@ class ProfileViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(ProfileUiState())
     val uiState: StateFlow<ProfileUiState> = _uiState.asStateFlow()
     
+    private val _navigationEvent = MutableStateFlow<ProfileNavigationEvent?>(null)
+    val navigationEvent: StateFlow<ProfileNavigationEvent?> = _navigationEvent.asStateFlow()
+    
     init {
         // Don't auto-load in init - wait for explicit call from UI
     }
@@ -192,6 +195,13 @@ class ProfileViewModel @Inject constructor(
     }
     
     /**
+     * Clear navigation event after handling
+     */
+    fun clearNavigationEvent() {
+        _navigationEvent.value = null
+    }
+    
+    /**
      * Generate compatibility report between two profiles
      */
     fun generateCompatibilityReport(profile1Id: String, profile2Id: String) {
@@ -201,14 +211,14 @@ class ProfileViewModel @Inject constructor(
                 val profile2 = userRepository.getProfileById(profile2Id)
                 
                 if (profile1 != null && profile2 != null) {
-                    // Check if both profiles have enrichment results
-                    if (profile1.enrichmentResult != null && profile2.enrichmentResult != null) {
-                        // TODO: Navigate to compatibility comparison screen
-                        // For now, we'll just log this
-                        Log.d("SpiritAtlas", "Both profiles have enrichment results. Ready for compatibility analysis.")
+                    // Check if both profiles have sufficient data for compatibility analysis
+                    if (profile1.profileCompletion.completedFields >= 3 && profile2.profileCompletion.completedFields >= 3) {
+                        // Navigate to compatibility analysis screen
+                        _navigationEvent.value = ProfileNavigationEvent.NavigateToCompatibility(profile1Id, profile2Id)
+                        Log.d("SpiritAtlas", "Navigating to compatibility analysis for profiles: $profile1Id, $profile2Id")
                     } else {
                         _uiState.value = _uiState.value.copy(
-                            errorMessage = "Both profiles need enrichment results for compatibility analysis. Please generate reports first."
+                            errorMessage = "Both profiles need at least 3 completed fields for compatibility analysis. Please complete more profile information first."
                         )
                     }
                 } else {
@@ -272,4 +282,11 @@ enum class ProfileSection(val displayName: String, val icon: String) {
     ENVIRONMENTAL("Environment", "🌙"),
     LIFE_PATTERNS("Patterns", "🌱"),
     PREFERENCES("Settings", "⚙️")
+}
+
+/**
+ * Navigation events for profile screen
+ */
+sealed class ProfileNavigationEvent {
+    data class NavigateToCompatibility(val profile1Id: String, val profile2Id: String) : ProfileNavigationEvent()
 }

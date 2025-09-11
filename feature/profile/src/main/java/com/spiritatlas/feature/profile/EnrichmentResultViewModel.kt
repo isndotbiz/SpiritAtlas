@@ -493,11 +493,98 @@ Based on your Shakti-Water-Ideal Lover profile, here are your optimal matches:
         startEnrichment(profileId)
     }
     
-    fun shareResult() {
-        // TODO: Implement sharing functionality
+    fun shareResult(context: android.content.Context) {
         viewModelScope.launch {
-            // Could share to social media, email, etc.
+            val result = _uiState.value.result
+            if (!result.isNullOrBlank()) {
+                try {
+                    // Create a shareable version of the result (remove excessive formatting)
+                    val shareableText = createShareableContent(result)
+                    
+                    // Create share intent
+                    val shareIntent = android.content.Intent().apply {
+                        action = android.content.Intent.ACTION_SEND
+                        putExtra(android.content.Intent.EXTRA_TEXT, shareableText)
+                        putExtra(android.content.Intent.EXTRA_SUBJECT, "My SpiritAtlas Enrichment Report")
+                        type = "text/plain"
+                    }
+                    
+                    // Create chooser to show available apps
+                    val chooserIntent = android.content.Intent.createChooser(
+                        shareIntent, 
+                        "Share your spiritual insights"
+                    )
+                    
+                    // Start the chooser activity
+                    context.startActivity(chooserIntent)
+                    
+                    android.util.Log.d("EnrichmentResult", "Share intent created successfully")
+                } catch (e: Exception) {
+                    android.util.Log.e("EnrichmentResult", "Failed to share result: ${e.message}", e)
+                }
+            }
         }
+    }
+    
+    /**
+     * Create a cleaner version of the content suitable for sharing
+     */
+    private fun createShareableContent(fullResult: String): String {
+        // Extract key insights for sharing (remove excessive formatting)
+        val lines = fullResult.lines()
+        val shareableLines = mutableListOf<String>()
+        
+        // Add header
+        shareableLines.add("🔮 My SpiritAtlas Spiritual Profile 🔮")
+        shareableLines.add("")
+        
+        // Extract key sections (simplified for sharing)
+        var inImportantSection = false
+        for (line in lines) {
+            when {
+                line.contains("### 🎆 **Your Spiritual Blueprint**") -> {
+                    inImportantSection = true
+                    shareableLines.add("🎆 My Spiritual Blueprint:")
+                }
+                line.contains("### 💫 **Life Path & Purpose**") -> {
+                    inImportantSection = true  
+                    shareableLines.add("")
+                    shareableLines.add("💫 Life Path & Purpose:")
+                }
+                line.contains("### 🌹 **Love & Relationship Profile**") -> {
+                    inImportantSection = true
+                    shareableLines.add("")
+                    shareableLines.add("🌹 Love & Relationships:")
+                }
+                line.contains("**Soul Affirmation**") -> {
+                    inImportantSection = true
+                    shareableLines.add("")
+                    shareableLines.add("✨ My Soul Affirmation:")
+                }
+                line.startsWith("---") || line.startsWith("**Generated with") -> {
+                    inImportantSection = false
+                }
+                inImportantSection && line.isNotBlank() -> {
+                    // Clean up markdown and add key insights
+                    val cleanLine = line
+                        .replace(Regex("\\*\\*(.*?)\\*\\*"), "$1") // Remove bold formatting
+                        .replace(Regex("\\*(.*?)\\*"), "$1") // Remove italic formatting
+                        .replace(Regex("^#+\\s*"), "") // Remove headers
+                        .trim()
+                    
+                    if (cleanLine.isNotBlank() && !cleanLine.startsWith(">")) {
+                        shareableLines.add(cleanLine)
+                    }
+                }
+            }
+        }
+        
+        // Add footer
+        shareableLines.add("")
+        shareableLines.add("Created with SpiritAtlas - AI-powered spiritual insights")
+        shareableLines.add("🔗 Get your own report at SpiritAtlas.app")
+        
+        return shareableLines.joinToString("\n")
     }
     
     /**

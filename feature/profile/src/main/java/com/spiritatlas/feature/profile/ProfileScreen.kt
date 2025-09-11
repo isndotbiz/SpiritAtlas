@@ -3,19 +3,16 @@ package com.spiritatlas.feature.profile
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.spiritatlas.core.ui.components.DateTimePicker
+import com.spiritatlas.core.ui.components.ModernDropdown
 import com.spiritatlas.domain.model.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -64,59 +61,6 @@ fun ProfileScreen(
     }
 }
 
-@Composable
-fun AccuracyIndicator(completion: ProfileCompletion) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = when (completion.accuracyLevel) {
-                AccuracyLevel.MINIMAL -> MaterialTheme.colorScheme.errorContainer
-                AccuracyLevel.BASIC -> MaterialTheme.colorScheme.surfaceVariant
-                AccuracyLevel.GOOD -> MaterialTheme.colorScheme.primaryContainer
-                AccuracyLevel.EXCELLENT -> MaterialTheme.colorScheme.secondaryContainer
-                AccuracyLevel.MAXIMUM -> MaterialTheme.colorScheme.tertiaryContainer
-            }
-        )
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    text = when (completion.accuracyLevel) {
-                        AccuracyLevel.MINIMAL -> "⚠️ Need at least 3 fields"
-                        AccuracyLevel.BASIC -> "✅ Basic accuracy - Add more for deeper insights!"
-                        AccuracyLevel.GOOD -> "🌟 Good accuracy - Nice progress!"
-                        AccuracyLevel.EXCELLENT -> "✨ Excellent accuracy - Amazing detail!"
-                        AccuracyLevel.MAXIMUM -> "🔮 Maximum accuracy - Perfect spiritual profile!"
-                    },
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.SemiBold,
-                    textAlign = TextAlign.Center
-                )
-            }
-            
-            Spacer(modifier = Modifier.height(8.dp))
-            
-            // Progress bar
-            LinearProgressIndicator(
-                progress = (completion.completionPercentage / 100f).toFloat(),
-                modifier = Modifier.fillMaxWidth()
-            )
-            
-            Spacer(modifier = Modifier.height(4.dp))
-            
-            Text(
-                text = "${completion.completionPercentage.toInt()}% complete (${completion.completedFields}/${completion.totalFields} fields)",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-    }
-}
 
 @Composable
 fun ProfileSectionTabs(
@@ -288,12 +232,24 @@ fun FamilyAncestrySection(profile: UserProfile, onProfileUpdate: (UserProfile) -
 @Composable
 fun PhysicalEnergeticSection(profile: UserProfile, onProfileUpdate: (UserProfile) -> Unit) {
     SectionCard("⚡ Physical & Energetic", "Energy flow patterns") {
-        // Gender dropdown (simplified)
-        ProfileTextField(
-            value = profile.gender?.toString(),
-            onValueChange = { /* TODO: Implement dropdown */ },
+        // Gender dropdown with modern UI
+        ModernDropdown(
+            selectedValue = profile.gender,
+            onValueChange = { newGender ->
+                onProfileUpdate(profile.copy(gender = newGender))
+            },
+            options = Gender.values().toList(),
             label = "Gender Energy",
-            placeholder = "Select gender energy type"
+            placeholder = "Select gender energy type",
+            displayTransform = { gender ->
+                when (gender) {
+                    Gender.MASCULINE -> "♂️ Masculine Energy"
+                    Gender.FEMININE -> "♀️ Feminine Energy"  
+                    Gender.NON_BINARY -> "⚧️ Non-Binary Energy"
+                    Gender.PREFER_NOT_TO_SAY -> "🌟 Prefer Not to Say"
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
         )
         ProfileTextField(
             value = profile.eyeColor,
@@ -423,67 +379,6 @@ fun ProfileTextField(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ProfileTopBar(
-    isEditing: Boolean,
-    completion: ProfileCompletion,
-    isSaving: Boolean,
-    onNavigateBack: () -> Unit,
-    onSave: () -> Unit,
-    onLoadTier: (Int) -> Unit,
-    onLoadDemo: () -> Unit,
-    onClear: () -> Unit
-) {
-    var showMenu by remember { mutableStateOf(false) }
-    
-    TopAppBar(
-        title = { 
-            Column {
-                Text(if (isEditing) "Edit Profile ✨" else "Create Profile ✨")
-                Text(
-                    text = "${completion.completedFields}/${completion.totalFields} fields • ${completion.accuracyLevel.name}",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-        },
-        navigationIcon = {
-            IconButton(onClick = onNavigateBack) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-            }
-        },
-        actions = {
-            IconButton(onClick = { showMenu = true }) {
-                Icon(Icons.Default.MoreVert, contentDescription = "More")
-            }
-            DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
-                (0..3).forEach { tier ->
-                    DropdownMenuItem(
-                        text = { Text("Tier $tier (${getTierDescription(tier)})") },
-                        onClick = { onLoadTier(tier); showMenu = false }
-                    )
-                }
-                HorizontalDivider()
-                DropdownMenuItem(
-                    text = { Text("Load Demo") },
-                    onClick = { onLoadDemo(); showMenu = false }
-                )
-                DropdownMenuItem(
-                    text = { Text("Clear Profile") },
-                    onClick = { onClear(); showMenu = false }
-                )
-            }
-            
-            TextButton(
-                onClick = onSave,
-                enabled = !isSaving
-            ) {
-                Text(if (isSaving) "🔄 Saving..." else "💾 Save")
-            }
-        }
-    )
-}
 
 @Composable
 fun ProfileContent(

@@ -1,1 +1,0 @@
-com.spiritatlas.core.ui

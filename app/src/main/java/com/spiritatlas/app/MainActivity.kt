@@ -22,6 +22,7 @@ import androidx.navigation.navArgument
 import com.spiritatlas.app.navigation.Screen
 import com.spiritatlas.core.ui.theme.SpiritAtlasTheme
 import com.spiritatlas.data.worker.EnrichmentWorker
+import com.spiritatlas.feature.compatibility.CompatibilityScreen
 import com.spiritatlas.feature.consent.ConsentScreen
 import com.spiritatlas.feature.home.HomeScreen
 import com.spiritatlas.feature.profile.ProfileScreen
@@ -60,7 +61,8 @@ fun SpiritAtlasNavigation() {
         composable(Screen.Home.route) {
             HomeScreen(
                 onNavigateToProfile = { navController.navigate(Screen.ProfileList.route) },
-                onNavigateToConsent = { navController.navigate(Screen.Consent.route) }
+                onNavigateToConsent = { navController.navigate(Screen.Consent.route) },
+                onNavigateToCompatibility = { navController.navigate(Screen.Compatibility.route) }
             )
         }
         
@@ -71,6 +73,9 @@ fun SpiritAtlasNavigation() {
                 },
                 onNavigateToComparison = { profileId1, profileId2 ->
                     navController.navigate(Screen.ProfileComparison.createRoute(profileId1, profileId2))
+                },
+                onNavigateToCompatibility = {
+                    navController.navigate(Screen.Compatibility.route)
                 },
                 onNavigateBack = { navController.popBackStack() },
                 onNavigateToEnrichment = { profileId ->
@@ -119,6 +124,12 @@ fun SpiritAtlasNavigation() {
         
         composable(Screen.Consent.route) {
             ConsentScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+        
+        composable(Screen.Compatibility.route) {
+            CompatibilityScreen(
                 onNavigateBack = { navController.popBackStack() }
             )
         }

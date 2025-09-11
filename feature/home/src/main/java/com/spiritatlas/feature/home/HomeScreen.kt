@@ -17,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 fun HomeScreen(
     onNavigateToProfile: () -> Unit,
     onNavigateToConsent: () -> Unit,
+    onNavigateToCompatibility: () -> Unit = {},
     viewModel: HomeViewModel = hiltViewModel(),
     consentDebugViewModel: ConsentDebugViewModel = hiltViewModel()
 ) {
@@ -53,8 +54,20 @@ fun HomeScreen(
                 Text(consentDebug, style = MaterialTheme.typography.labelSmall)
             }
             Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = onNavigateToProfile) {
-                Text("Profiles")
+            Button(
+                onClick = onNavigateToProfile,
+                modifier = Modifier.fillMaxWidth(0.8f)
+            ) {
+                Text("✨ Spiritual Profiles")
+            }
+            
+            Spacer(modifier = Modifier.height(12.dp))
+            
+            Button(
+                onClick = onNavigateToCompatibility,
+                modifier = Modifier.fillMaxWidth(0.8f)
+            ) {
+                Text("💫 Compatibility Analysis")
             }
         }
     }

@@ -1,18 +1,26 @@
 package com.spiritatlas.feature.profile
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.spiritatlas.core.ui.components.SpiritualMarkdown
+import com.spiritatlas.core.ui.components.SpiritualGradientBackground
+import com.spiritatlas.core.ui.components.SpiritualGradientType
+import com.spiritatlas.core.ui.theme.SpiritualPurple
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -22,7 +30,8 @@ fun EnrichmentResultScreen(
     onNavigateBack: () -> Unit,
     viewModel: EnrichmentResultViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState = viewModel.uiState.collectAsState().value
+    val context = LocalContext.current
     
     LaunchedEffect(profileId) {
         viewModel.loadEnrichmentResult(profileId)
@@ -36,13 +45,13 @@ fun EnrichmentResultScreen(
                 },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 },
                 actions = {
                     if (uiState.result != null) {
                         IconButton(onClick = { 
-                            viewModel.shareResult() 
+                            viewModel.shareResult(context) 
                         }) {
                             Icon(Icons.Default.Share, contentDescription = "Share")
                         }
@@ -91,7 +100,7 @@ fun EnrichmentResultScreen(
                                     contentAlignment = Alignment.Center
                                 ) {
                                     CircularProgressIndicator(
-                                        progress = uiState.progress / 100f,
+                                        progress = { uiState.progress / 100f },
                                         modifier = Modifier.size(120.dp),
                                         strokeWidth = 8.dp,
                                         color = MaterialTheme.colorScheme.primary
@@ -116,7 +125,7 @@ fun EnrichmentResultScreen(
                                 Spacer(modifier = Modifier.height(16.dp))
                                 
                                 LinearProgressIndicator(
-                                    progress = uiState.progress / 100f,
+                                    progress = { uiState.progress / 100f },
                                     modifier = Modifier.fillMaxWidth(),
                                     color = MaterialTheme.colorScheme.tertiary
                                 )
@@ -150,7 +159,7 @@ fun EnrichmentResultScreen(
                                 )
                                 Spacer(modifier = Modifier.height(16.dp))
                                 Text(
-                                    text = uiState.error!!,
+                                    text = uiState.error ?: "Unknown error",
                                     style = MaterialTheme.typography.bodyMedium,
                                     textAlign = TextAlign.Center,
                                     color = MaterialTheme.colorScheme.onErrorContainer
@@ -203,18 +212,11 @@ fun EnrichmentResultScreen(
                             }
                         }
                         
-                        // Rich Markdown content card with custom renderer
-                        Card(
+                        // Beautiful Spiritual Markdown content
+                        SpiritualMarkdown(
+                            content = uiState.result ?: "",
                             modifier = Modifier.fillMaxWidth()
-                        ) {
-                            RichMarkdownText(
-                                markdown = uiState.result!!,
-                                modifier = Modifier.padding(20.dp),
-                                baseStyle = MaterialTheme.typography.bodyMedium.copy(
-                                    lineHeight = MaterialTheme.typography.bodyMedium.lineHeight * 1.4
-                                )
-                            )
-                        }
+                        )
                         
                         Spacer(modifier = Modifier.height(80.dp))
                     }

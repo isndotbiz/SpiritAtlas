@@ -19,6 +19,7 @@ sealed class Screen(val route: String) {
         }
     }
     object Consent : Screen("consent")
+    object Compatibility : Screen("compatibility")
 }
 
 
