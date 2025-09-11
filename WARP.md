@@ -1,77 +1,80 @@
 # WARP.md
 
-This file provides guidance to WARP (warp.dev) when working with code in this repository.
+This file provides guidance to Warp (warp.dev) when working with the SpiritAtlas repository.
 
 ## Overview
+SpiritAtlas is a privacy‑first spiritual insights Android app built with multi‑module Clean Architecture. It integrates dual AI providers (cloud and local) with strict consent guardrails.
 
-SpiritAtlas is a privacy-first spiritual insights Android app built with multi-module Clean Architecture. It integrates AI providers (cloud and local) for generating personalized content while maintaining strict privacy guardrails and user consent.
+## Project Map
+Modules (include all current features):
+- :app
+- :core:ui, :core:common, :core:numerology, :core:astro, :core:humandesign
+- :domain
+- :data
+- :feature:home, :feature:profile, :feature:consent, :feature:compatibility, :feature:tantric
+
+Dependency flow:
+```
+app → features → domain
+     ↘ core ↗
+ data → domain
+```
+
+Key principles:
+- Domain has zero Android dependencies
+- Data implements domain interfaces (DI via Hilt)
+- Features depend on domain and core; no circular deps
 
 ## Common Development Commands
 
 ### Setup
 ```bash
-# One-time project setup (creates local.properties if missing)
-scripts/bootstrap.sh
+# One‑time setup (creates local.properties if missing)
+./scripts/bootstrap.sh || true
+
+# Verify toolchain
+./gradlew --version
+java -version
 ```
 
 ### Build
 ```bash
-# Clean build artifacts
-./gradlew clean
+# Clean and assemble
+./gradlew clean :app:assembleDebug
+```
 
-# Build debug APK
-./gradlew :app:assembleDebug
+### Install & Launch
+```bash
+./gradlew installDebug
+adb shell am start -n "com.spiritatlas.app/.MainActivity"
 ```
 
 ### Testing
 ```bash
-# Run unit tests for calculation modules
+# Core calculation unit tests
 ./gradlew :core:numerology:test :core:astro:test
+
+# Unified coverage report
+./gradlew testCoverageReport
 ```
 
-## Architecture
+### Quality & Security
+```bash
+# Linting and static analysis
+./gradlew detekt ktlintCheck lint
 
-### Module Structure
-The app follows Clean Architecture with strict dependency boundaries:
-
-- **`:domain`** - Pure business logic, interfaces, models (no Android dependencies, JVM-only)
-- **`:data`** - Repository implementations, network, storage, WorkManager workers
-- **`:core`** modules - Reusable components:
-  - `:core:ui` - Material 3 theming, shared UI components
-  - `:core:common` - Common utilities and Result types
-  - `:core:numerology` - Chaldean/Pythagorean calculations
-  - `:core:astro` - Sidereal/tropical zodiac calculations
-  - `:core:humandesign` - Generic energy profiling (non-proprietary)
-- **`:feature`** modules - Feature-specific UI and ViewModels:
-  - `:feature:home` - Main dashboard and insights
-  - `:feature:profile` - User profile and calculations
-  - `:feature:consent` - Privacy controls and AI provider selection
-- **`:app`** - Composition root, navigation, DI orchestration
-
-### Dependency Flow
-```
-app → features → domain
-     ↘ core ↗
-data → domain
+# Security and dependency audit
+./gradlew dependencyCheckAggregate
 ```
 
-Key principles:
-- Domain module has **zero** Android dependencies
-- Data implements domain interfaces (dependency inversion)
-- Features depend on domain and core, receive data via DI
-- No circular dependencies between modules
-
-## Privacy-First Design
-
-### Core Principles
-- All user data encrypted at rest via `EncryptedSharedPreferences`
+## Privacy‑First Design
+- All user data encrypted at rest via EncryptedSharedPreferences (AES‑256)
 - No PII sent to AI without explicit user consent
-- `ConsentManager` centrally gates all network operations
+- ConsentManager centrally gates all network operations
 - Default to local processing when possible
 
-### Implementation
 ```kotlin
-// Encrypted storage pattern
+// Encrypted storage pattern example
 val masterKey = MasterKey.Builder(context)
     .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
     .build()
@@ -83,15 +86,12 @@ val prefs = EncryptedSharedPreferences.create(
 ```
 
 ## AI Integration
+Providers:
+- OpenRouterProvider (Cloud)
+- OllamaProvider (Local)
+- CombinedAiProvider (AUTO)
 
-### Provider Architecture
-Dual AI provider system with consent-gated selection:
-
-- **`OpenRouterProvider`** - Cloud-based AI via OpenRouter API
-- **`OllamaProvider`** - Local AI via Ollama
-- **`CombinedAiProvider`** - Intelligent provider selection
-
-### Selection Logic
+Selection logic:
 ```kotlin
 when (settings.aiProviderMode) {
     AUTO -> if (consent.cloudAllowed && openRouterAvailable) cloud else local
@@ -100,111 +100,43 @@ when (settings.aiProviderMode) {
 }
 ```
 
-Users can switch providers via the Consent screen. AUTO mode prefers cloud when available and consented, falls back to local.
-
-## Configuration
-
-### Required Setup
-The app requires `local.properties` in the project root:
-```properties
-# API keys (keep secure, never commit)
-openrouter.api.key=your_openrouter_key_here
-ollama.base.url=http://localhost:11434
-```
-
-`scripts/bootstrap.sh` creates this file with empty values if missing.
-
-### BuildConfig Integration
-Configuration values are injected into `BuildConfig` via Gradle and accessed throughout the data layer for API endpoints and keys.
-
-## Testing
-
-### Scope
-- **Unit tests** for calculation logic in `:core:numerology` and `:core:astro`
-- **80% minimum coverage** requirement for calculation modules
-- Uses **JUnit 5** and **MockK** for mocking
-
-### Commands
+Emulator ↔ Host (Ollama) connectivity:
 ```bash
-# Run calculation tests
-./gradlew :core:numerology:test :core:astro:test
-
-# Test coverage reports (if configured)
-./gradlew testCoverage
+adb reverse tcp:11434 tcp:11434
 ```
-
-Test files are located in `src/test/` within each core module.
 
 ## Background Work
+WorkManager (Hilt‑injected):
+- EnrichmentWorker — AI‑generated insights processing
+- DataSyncWorker — Synchronization
 
-### WorkManager Integration
-- **`EnrichmentWorker`** - Processes AI-generated insights
-- **`DataSyncWorker`** - Handles data synchronization
-- Workers are Hilt-injected and respect consent boundaries
-
-```kotlin
-@HiltWorker
-class EnrichmentWorker @AssistedInject constructor(
-    @Assisted context: Context,
-    @Assisted params: WorkerParameters,
-    private val aiProvider: AiTextProvider,
-    private val consentManager: ConsentManager
-) : CoroutineWorker(context, params)
-```
-
-## Dependency Injection
-
-### Hilt Setup
+## Hilt
 ```kotlin
 @HiltAndroidApp
 class SpiritAtlasApplication : Application()
 
-@AndroidEntryPoint  
+@AndroidEntryPoint
 class MainActivity : ComponentActivity()
 ```
 
-DI modules in `:data:di` bind repository interfaces to implementations, enabling the Clean Architecture dependency inversion.
-
-## Material 3 & UI
-
-- **Material 3** components throughout
-- **Dynamic color** support on Android 12+
-- **Light/dark theme** support
-- Compose-first UI with `androidx.compose.material3`
-
 ## Development Guidelines
+- Maintain strict module boundaries; domain stays Android‑free
+- Use StateFlow in ViewModels; sealed classes for UI state
+- Keep secrets out of VCS; via local.properties → BuildConfig
+- Target 80%+ coverage on core calculation modules
 
-### Architecture Rules
-- Maintain strict module boundaries - no circular dependencies
-- Domain module must remain Android-free (JVM plugin only)
-- Use dependency inversion via Hilt modules
-
-### Privacy Guardrails  
-- No hardcoded API keys or secrets
-- All user data must use `EncryptedSharedPreferences`
-- Network calls require explicit consent checks
-- Minimize data collection and maximize local processing
-
-### Code Quality
-- 80% test coverage minimum for calculation modules
-- Use Kotlin official style guide
-- Prefer `StateFlow` over `LiveData` in ViewModels
-- Use sealed classes for state representation
-
-## Quick Start (Optional)
-
-For convenience, a complete build and install flow:
+## Troubleshooting
 ```bash
-# Clean and build
-./gradlew clean :app:assembleDebug
+# Missing API keys
+printf "openrouter.api.key=sk-or-...\nollama.base.url=http://localhost:11434\n" > local.properties
 
-# Install to device/emulator  
-./gradlew installDebug
-
-# Launch app (update package name if changed)
-adb shell am start -n "com.spiritatlas.app/.MainActivity"
+# Long builds? Try daemon/config cache debug
+./gradlew --stop; ./gradlew --status
+./gradlew clean --no-build-cache
 ```
 
----
-
-**Maintenance Note**: Update this file when module boundaries, AI provider behavior, consent flows, or build commands change.
+## Maintenance
+Update this file when:
+- Module boundaries or feature modules change
+- AI provider behavior or consent flows change
+- Build commands or quality/security tasks change
