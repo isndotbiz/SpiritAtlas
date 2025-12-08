@@ -20,11 +20,8 @@ fun ConsentScreen(
     onNavigateBack: () -> Unit,
     viewModel: ConsentViewModel = hiltViewModel()
 ) {
-    // Auto-grant all consents on screen load
-    androidx.compose.runtime.LaunchedEffect(Unit) {
-        viewModel.autoGrantAllConsents()
-    }
-    
+    val consentMap by viewModel.consentMap.collectAsState()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -54,17 +51,46 @@ fun ConsentScreen(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "✅ All Privacy Settings Enabled",
+                        text = "Privacy & Data Settings",
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                     Text(
-                        text = "AI Enrichment, Analytics, and Cloud Sync are automatically enabled for the best experience.",
+                        text = "Control how your data is used. Your choices are saved locally and encrypted.",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                 }
             }
+
+            // Consent toggles
+            Text(
+                text = "Data Permissions",
+                style = MaterialTheme.typography.headlineSmall
+            )
+
+            ConsentToggle(
+                title = "AI Enrichment",
+                description = "Allow AI to analyze your profile and provide personalized spiritual insights",
+                isEnabled = consentMap[ConsentType.AI_ENRICHMENT] == ConsentStatus.GRANTED,
+                onToggle = { viewModel.toggle(ConsentType.AI_ENRICHMENT, it) }
+            )
+
+            ConsentToggle(
+                title = "Cloud Sync",
+                description = "Sync your profiles across devices using encrypted cloud storage",
+                isEnabled = consentMap[ConsentType.CLOUD_SYNC] == ConsentStatus.GRANTED,
+                onToggle = { viewModel.toggle(ConsentType.CLOUD_SYNC, it) }
+            )
+
+            ConsentToggle(
+                title = "Analytics",
+                description = "Help improve the app by sharing anonymous usage data",
+                isEnabled = consentMap[ConsentType.ANALYTICS] == ConsentStatus.GRANTED,
+                onToggle = { viewModel.toggle(ConsentType.ANALYTICS, it) }
+            )
+
+            HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
             
             // AI Provider selection
             Text(
@@ -149,6 +175,45 @@ fun ConsentScreen(
     }
 }
 
-// ConsentRow removed - using simplified UI with auto-granted consents
+@Composable
+private fun ConsentToggle(
+    title: String,
+    description: String,
+    isEnabled: Boolean,
+    onToggle: (Boolean) -> Unit
+) {
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
+        ) {
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = description,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            Spacer(modifier = Modifier.width(16.dp))
+            Switch(
+                checked = isEnabled,
+                onCheckedChange = onToggle
+            )
+        }
+    }
+}
 
 

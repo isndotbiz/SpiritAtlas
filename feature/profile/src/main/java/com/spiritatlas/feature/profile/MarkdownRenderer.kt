@@ -20,7 +20,14 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BrokenImage
+import androidx.compose.material.icons.filled.Image
+import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
+import coil.request.CachePolicy
+import coil.request.ImageRequest
 
 /**
  * Custom lightweight Markdown renderer for spiritual reports
@@ -91,15 +98,44 @@ fun RichMarkdownText(
                 line.contains("![") && line.contains("](") -> {
                     val imageResult = parseImageMarkdown(line)
                     if (imageResult != null) {
-                        AsyncImage(
-                            model = imageResult.url,
+                        val context = LocalContext.current
+                        SubcomposeAsyncImage(
+                            model = ImageRequest.Builder(context)
+                                .data(imageResult.url)
+                                .crossfade(300)
+                                .memoryCachePolicy(CachePolicy.ENABLED)
+                                .diskCachePolicy(CachePolicy.ENABLED)
+                                .build(),
                             contentDescription = imageResult.alt,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(120.dp)
                                 .padding(vertical = 8.dp)
                                 .clip(RoundedCornerShape(8.dp)),
-                            contentScale = ContentScale.Fit
+                            contentScale = ContentScale.Fit,
+                            loading = {
+                                Box(
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    CircularProgressIndicator(
+                                        modifier = Modifier.size(24.dp),
+                                        strokeWidth = 2.dp
+                                    )
+                                }
+                            },
+                            error = {
+                                Box(
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.BrokenImage,
+                                        contentDescription = "Failed to load image",
+                                        tint = MaterialTheme.colorScheme.error
+                                    )
+                                }
+                            }
                         )
                     }
                     i++

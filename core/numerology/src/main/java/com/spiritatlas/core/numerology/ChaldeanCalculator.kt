@@ -13,6 +13,7 @@ object ChaldeanCalculator {
     )
 
     fun calculateNameNumber(name: String): Int {
+        if (name.isBlank()) return 0
         val sum = name.uppercase()
             .filter { it.isLetter() }
             .sumOf { chaldeanMap[it] ?: 0 }
@@ -20,7 +21,7 @@ object ChaldeanCalculator {
     }
 
     private fun reduceToSingleDigit(num: Int): Int {
-        if (num in 1..9 || num == 11 || num == 22) return num
+        if (num in 1..9 || num == 11 || num == 22 || num == 33) return num
         return reduceToSingleDigit(num.toString().sumOf { it.digitToInt() })
     }
 }

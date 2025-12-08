@@ -5,6 +5,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.spiritatlas.core.ui.components.DateTimePicker
@@ -54,42 +55,42 @@ fun CoreIdentitySection(
     modifier: Modifier = Modifier
 ) {
     SectionCard(
-        title = "✨ Core Identity (Required - Pick 3 minimum)",
+        title = stringResource(R.string.core_identity_title),
         modifier = modifier
     ) {
         ProfileTextField(
             value = profile.name,
             onValueChange = { onProfileUpdate(profile.copy(name = it)) },
-            label = "Full Birth Name *",
-            placeholder = "e.g., Luna Alexandra Moonwhisper",
-            supportingText = "🔢 Essential for numerology calculations"
+            label = stringResource(R.string.full_birth_name_label),
+            placeholder = stringResource(R.string.full_birth_name_placeholder),
+            supportingText = stringResource(R.string.full_birth_name_supporting)
         )
-        
+
         ProfileTextField(
             value = profile.displayName,
             onValueChange = { onProfileUpdate(profile.copy(displayName = it)) },
-            label = "Preferred Name *",
-            placeholder = "e.g., Luna",
-            supportingText = "👤 What you like to be called"
+            label = stringResource(R.string.preferred_name_label),
+            placeholder = stringResource(R.string.preferred_name_placeholder),
+            supportingText = stringResource(R.string.preferred_name_supporting)
         )
-        
+
         // Birth Date/Time with proper picker
         DateTimePicker(
             selectedDateTime = profile.birthDateTime,
             onDateTimeChange = { newDateTime ->
                 onProfileUpdate(profile.copy(birthDateTime = newDateTime))
             },
-            label = "Birth Date & Time *",
+            label = stringResource(R.string.birth_date_time_label),
             modifier = Modifier.fillMaxWidth()
         )
-        
+
         Text(
-            text = "🕐 Exact time crucial for astrology accuracy",
+            text = stringResource(R.string.birth_time_supporting),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(start = 16.dp, top = 4.dp)
         )
-        
+
         // Birth Place (simplified for demo)
         ProfileTextField(
             value = profile.birthPlace?.city,
@@ -103,86 +104,86 @@ fun CoreIdentitySection(
                 )
                 onProfileUpdate(profile.copy(birthPlace = newPlace))
             },
-            label = "Birth City *",
-            placeholder = "e.g., Sedona",
-            supportingText = "🌍 Location affects astrological calculations"
+            label = stringResource(R.string.birth_city_label),
+            placeholder = stringResource(R.string.birth_city_placeholder),
+            supportingText = stringResource(R.string.birth_city_supporting)
         )
     }
 }
 
 @Composable
 fun AdditionalNamesSection(
-    profile: UserProfile, 
+    profile: UserProfile,
     onProfileUpdate: (UserProfile) -> Unit,
     modifier: Modifier = Modifier
 ) {
     SectionCard(
-        title = "🏷️ Additional Names", 
-        subtitle = "Enhance numerology accuracy",
+        title = stringResource(R.string.additional_names_title),
+        subtitle = stringResource(R.string.additional_names_subtitle),
         modifier = modifier
     ) {
         ProfileTextField(
             value = profile.middleName,
             onValueChange = { onProfileUpdate(profile.copy(middleName = it)) },
-            label = "Middle Name(s)",
-            placeholder = "e.g., Alexandra Rose"
+            label = stringResource(R.string.middle_name_label),
+            placeholder = stringResource(R.string.middle_name_placeholder)
         )
         ProfileTextField(
             value = profile.nickname,
             onValueChange = { onProfileUpdate(profile.copy(nickname = it)) },
-            label = "Nickname",
-            placeholder = "e.g., Lunar"
+            label = stringResource(R.string.nickname_label),
+            placeholder = stringResource(R.string.nickname_placeholder)
         )
         ProfileTextField(
             value = profile.spiritualName,
             onValueChange = { onProfileUpdate(profile.copy(spiritualName = it)) },
-            label = "Spiritual Name",
-            placeholder = "e.g., Moonwhisper"
+            label = stringResource(R.string.spiritual_name_label),
+            placeholder = stringResource(R.string.spiritual_name_placeholder)
         )
     }
 }
 
 @Composable
 fun FamilyAncestrySection(
-    profile: UserProfile, 
+    profile: UserProfile,
     onProfileUpdate: (UserProfile) -> Unit,
     modifier: Modifier = Modifier
 ) {
     SectionCard(
-        title = "👨‍👩‍👧‍👦 Family & Ancestry", 
-        subtitle = "Deeper karmic insights",
+        title = stringResource(R.string.family_ancestry_title),
+        subtitle = stringResource(R.string.family_ancestry_subtitle),
         modifier = modifier
     ) {
         ProfileTextField(
             value = profile.motherName,
             onValueChange = { onProfileUpdate(profile.copy(motherName = it)) },
-            label = "Mother's Full Name",
-            placeholder = "e.g., Celeste Maya Starweaver"
+            label = stringResource(R.string.mother_name_label),
+            placeholder = stringResource(R.string.mother_name_placeholder)
         )
         ProfileTextField(
             value = profile.fatherName,
             onValueChange = { onProfileUpdate(profile.copy(fatherName = it)) },
-            label = "Father's Full Name",
-            placeholder = "e.g., Orion David Starweaver"
+            label = stringResource(R.string.father_name_label),
+            placeholder = stringResource(R.string.father_name_placeholder)
         )
         ProfileTextField(
             value = profile.ancestry,
             onValueChange = { onProfileUpdate(profile.copy(ancestry = it)) },
-            label = "Cultural Ancestry",
-            placeholder = "e.g., Celtic-Cherokee-Italian"
+            label = stringResource(R.string.cultural_ancestry_label),
+            placeholder = stringResource(R.string.cultural_ancestry_placeholder)
         )
     }
 }
 
 @Composable
 fun PhysicalEnergeticSection(
-    profile: UserProfile, 
+    profile: UserProfile,
     onProfileUpdate: (UserProfile) -> Unit,
     modifier: Modifier = Modifier
 ) {
     SectionCard(
-        title = "⚡ Physical & Energetic", 
-        subtitle = "Energy flow patterns",
+        title = stringResource(R.string.physical_energetic_title),
+        subtitle = stringResource(R.string.physical_energetic_subtitle),
         modifier = modifier
     ) {
         // Gender dropdown with modern UI
@@ -192,60 +193,60 @@ fun PhysicalEnergeticSection(
                 onProfileUpdate(profile.copy(gender = newGender))
             },
             options = Gender.values().toList(),
-            label = "Gender Energy",
-            placeholder = "Select gender energy type",
+            label = stringResource(R.string.gender_energy_label),
+            placeholder = stringResource(R.string.gender_energy_placeholder),
             displayTransform = { gender ->
                 when (gender) {
-                    Gender.MASCULINE -> "♂️ Masculine Energy"
-                    Gender.FEMININE -> "♀️ Feminine Energy"  
-                    Gender.NON_BINARY -> "⚧️ Non-Binary Energy"
-                    Gender.PREFER_NOT_TO_SAY -> "🌟 Prefer Not to Say"
+                    Gender.MASCULINE -> stringResource(R.string.masculine_energy)
+                    Gender.FEMININE -> stringResource(R.string.feminine_energy)
+                    Gender.NON_BINARY -> stringResource(R.string.non_binary_energy)
+                    Gender.PREFER_NOT_TO_SAY -> stringResource(R.string.prefer_not_to_say)
                 }
             },
             modifier = Modifier.fillMaxWidth()
         )
-        
+
         ProfileTextField(
             value = profile.eyeColor,
             onValueChange = { onProfileUpdate(profile.copy(eyeColor = it)) },
-            label = "Eye Color",
-            placeholder = "e.g., Deep ocean blue with golden flecks"
+            label = stringResource(R.string.eye_color_label),
+            placeholder = stringResource(R.string.eye_color_placeholder)
         )
     }
 }
 
 @Composable
 fun TimingCyclesSection(
-    profile: UserProfile, 
+    profile: UserProfile,
     onProfileUpdate: (UserProfile) -> Unit,
     modifier: Modifier = Modifier
 ) {
     SectionCard(
-        title = "🕐 Key Timing", 
-        subtitle = "Essential life moments",
+        title = stringResource(R.string.key_timing_title),
+        subtitle = stringResource(R.string.key_timing_subtitle),
         modifier = modifier
     ) {
         Text(
-            "Precise timing for key life moments", 
-            style = MaterialTheme.typography.bodyMedium, 
+            stringResource(R.string.precise_timing_description),
+            style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(bottom = 16.dp)
         )
-        
+
         DateTimePicker(
             selectedDateTime = profile.firstBreath,
             onDateTimeChange = { newDateTime ->
                 onProfileUpdate(profile.copy(firstBreath = newDateTime))
             },
-            label = "First Breath Moment",
+            label = stringResource(R.string.first_breath_label),
             modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
         )
-        
+
         DateTimePicker(
             selectedDateTime = profile.firstSteps,
             onDateTimeChange = { newDateTime ->
                 onProfileUpdate(profile.copy(firstSteps = newDateTime))
             },
-            label = "First Steps Date",
+            label = stringResource(R.string.first_steps_label),
             modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
         )
     }
@@ -253,55 +254,55 @@ fun TimingCyclesSection(
 
 @Composable
 fun EnvironmentalSection(
-    profile: UserProfile, 
+    profile: UserProfile,
     onProfileUpdate: (UserProfile) -> Unit,
     modifier: Modifier = Modifier
 ) {
     SectionCard(
-        title = "🌙 Environmental", 
-        subtitle = "Birth environment influences",
+        title = stringResource(R.string.environmental_title),
+        subtitle = stringResource(R.string.environmental_subtitle),
         modifier = modifier
     ) {
         ProfileTextField(
             value = profile.moonPhase,
             onValueChange = { onProfileUpdate(profile.copy(moonPhase = it)) },
-            label = "Moon Phase at Birth",
-            placeholder = "e.g., Waxing Gibbous (84% illumination)"
+            label = stringResource(R.string.moon_phase_label),
+            placeholder = stringResource(R.string.moon_phase_placeholder)
         )
         ProfileTextField(
             value = profile.weatherConditions,
             onValueChange = { onProfileUpdate(profile.copy(weatherConditions = it)) },
-            label = "Weather Conditions",
-            placeholder = "e.g., Clear night, full moon visible"
+            label = stringResource(R.string.weather_conditions_label),
+            placeholder = stringResource(R.string.weather_conditions_placeholder)
         )
         ProfileTextField(
             value = profile.hospitalName,
             onValueChange = { onProfileUpdate(profile.copy(hospitalName = it)) },
-            label = "Hospital/Birth Center",
-            placeholder = "e.g., Sedona Sacred Birth Center"
+            label = stringResource(R.string.hospital_name_label),
+            placeholder = stringResource(R.string.hospital_name_placeholder)
         )
     }
 }
 
 @Composable
 fun LifePatternsSection(
-    profile: UserProfile, 
+    profile: UserProfile,
     onProfileUpdate: (UserProfile) -> Unit,
     modifier: Modifier = Modifier
 ) {
     SectionCard(
-        title = "🌱 Life Patterns", 
-        subtitle = "Personal development markers",
+        title = stringResource(R.string.life_patterns_title),
+        subtitle = stringResource(R.string.life_patterns_subtitle),
         modifier = modifier
     ) {
         ProfileTextField(
             value = profile.firstWord,
             onValueChange = { onProfileUpdate(profile.copy(firstWord = it)) },
-            label = "First Word",
-            placeholder = "e.g., Light"
+            label = stringResource(R.string.first_word_label),
+            placeholder = stringResource(R.string.first_word_placeholder)
         )
         Text(
-            text = "Life events and spiritual awakenings can be added here",
+            text = stringResource(R.string.life_events_description),
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(vertical = 8.dp)
         )
@@ -310,25 +311,31 @@ fun LifePatternsSection(
 
 @Composable
 fun PreferencesSection(
-    profile: UserProfile, 
+    profile: UserProfile,
     onProfileUpdate: (UserProfile) -> Unit,
     modifier: Modifier = Modifier
 ) {
     SectionCard(
-        title = "⚙️ Calculation Preferences", 
-        subtitle = "How to calculate your insights",
+        title = stringResource(R.string.calculation_preferences_title),
+        subtitle = stringResource(R.string.calculation_preferences_subtitle),
         modifier = modifier
     ) {
         Text(
-            "Zodiac System: ${if (profile.preferences.usesSiderealZodiac) "Sidereal" else "Tropical"}", 
+            stringResource(
+                R.string.zodiac_system_format,
+                if (profile.preferences.usesSiderealZodiac)
+                    stringResource(R.string.zodiac_sidereal)
+                else
+                    stringResource(R.string.zodiac_tropical)
+            ),
             style = MaterialTheme.typography.bodyMedium
         )
         Text(
-            "Numerology: ${profile.preferences.numerologySystem}", 
+            stringResource(R.string.numerology_format, profile.preferences.numerologySystem),
             style = MaterialTheme.typography.bodyMedium
         )
         Text(
-            "Detail Level: ${profile.preferences.detailLevel}", 
+            stringResource(R.string.detail_level_format, profile.preferences.detailLevel),
             style = MaterialTheme.typography.bodyMedium
         )
     }

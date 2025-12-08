@@ -3,12 +3,39 @@ package com.spiritatlas.domain.service.optimized
 import com.spiritatlas.domain.model.*
 import com.spiritatlas.domain.tantric.TantricContent
 import com.spiritatlas.domain.tantric.TantricContentType
-import java.util.concurrent.ConcurrentHashMap
+import java.util.Collections
 import kotlin.math.abs
 
 /**
+ * Thread-safe LRU cache implementation with bounded size
+ */
+private class LruCache<K, V>(private val maxSize: Int) {
+    private val cache = Collections.synchronizedMap(
+        object : LinkedHashMap<K, V>(maxSize + 1, 0.75f, true) {
+            override fun removeEldestEntry(eldest: MutableMap.MutableEntry<K, V>?): Boolean {
+                return size > maxSize
+            }
+        }
+    )
+
+    fun get(key: K): V? = cache[key]
+
+    fun put(key: K, value: V): V? = cache.put(key, value)
+
+    fun computeIfAbsent(key: K, mappingFunction: (K) -> V): V {
+        return cache[key] ?: synchronized(cache) {
+            cache[key] ?: mappingFunction(key).also { cache[key] = it }
+        }
+    }
+
+    fun clear() = cache.clear()
+
+    fun size(): Int = cache.size
+}
+
+/**
  * Performance-optimized compatibility analysis engine
- * 
+ *
  * Key optimizations:
  * - Cached calculations to avoid redundant computations
  * - Pre-computed lookup tables for astrological data
@@ -16,13 +43,14 @@ import kotlin.math.abs
  * - Lazy initialization of expensive resources
  * - Pool object reuse where appropriate
  * - Minimized memory allocations in hot paths
+ * - Bounded LRU caches to prevent memory leaks
  */
 class OptimizedCompatibilityAnalysisEngine {
-    
-    // Cached calculations to avoid redundant work
-    private val nameEnergyCache = ConcurrentHashMap<String, Double>()
-    private val signCompatibilityCache = ConcurrentHashMap<Pair<String, String>, Double>()
-    private val profileScoreCache = ConcurrentHashMap<String, CompatibilityScores>()
+
+    // Bounded LRU caches to prevent unbounded memory growth
+    private val nameEnergyCache = LruCache<String, Double>(256)
+    private val signCompatibilityCache = LruCache<Pair<String, String>, Double>(256)
+    private val profileScoreCache = LruCache<String, CompatibilityScores>(256)
     
     // Pre-computed lookup tables for O(1) access
     companion object {
@@ -401,9 +429,9 @@ class OptimizedCompatibilityAnalysisEngine {
      */
     fun getCacheStatistics(): Map<String, Int> {
         return mapOf(
-            "nameEnergyCache" to nameEnergyCache.size,
-            "signCompatibilityCache" to signCompatibilityCache.size,
-            "profileScoreCache" to profileScoreCache.size
+            "nameEnergyCache" to nameEnergyCache.size(),
+            "signCompatibilityCache" to signCompatibilityCache.size(),
+            "profileScoreCache" to profileScoreCache.size()
         )
     }
 }

@@ -47,17 +47,6 @@ class ConsentViewModel @Inject constructor(
     fun setProviderMode(mode: AiProviderMode) {
         viewModelScope.launch { aiSettingsRepository.setMode(mode) }
     }
-    
-    /**
-     * Auto-grant all consents for simplified UX
-     */
-    fun autoGrantAllConsents() {
-        viewModelScope.launch {
-            ConsentType.values().forEach { type ->
-                consentRepository.updateConsent(type, ConsentStatus.GRANTED)
-            }
-        }
-    }
 }
 
 

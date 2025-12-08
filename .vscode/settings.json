@@ -1,0 +1,5 @@
+{
+  "modelContext.disabledServers": [
+    "microsoft/markitdown"
+  ]
+}
