@@ -236,6 +236,19 @@
 }
 
 #===============================================================================
+# GOOGLE CRYPTO TINK & ERROR PRONE
+#===============================================================================
+
+# Keep Tink crypto library classes
+-keep class com.google.crypto.tink.** { *; }
+-dontwarn com.google.crypto.tink.**
+
+# ErrorProne annotations (referenced by Tink)
+-dontwarn com.google.errorprone.annotations.**
+-dontwarn javax.annotation.**
+-dontwarn org.checkerframework.**
+
+#===============================================================================
 # OPTIMIZATION FLAGS
 #===============================================================================
 

@@ -21,6 +21,7 @@ fun ConsentScreen(
     viewModel: ConsentViewModel = hiltViewModel()
 ) {
     val consentMap by viewModel.consentMap.collectAsState()
+    val providerMode by viewModel.providerModeState().collectAsState()
 
     Scaffold(
         topBar = {
@@ -105,7 +106,7 @@ fun ConsentScreen(
                 Card(
                     onClick = { viewModel.setProviderMode(AiProviderMode.LOCAL) },
                     colors = CardDefaults.cardColors(
-                        containerColor = if (viewModel.providerModeState().value == AiProviderMode.LOCAL) {
+                        containerColor = if (providerMode == AiProviderMode.LOCAL) {
                             MaterialTheme.colorScheme.primaryContainer
                         } else {
                             MaterialTheme.colorScheme.surface
@@ -130,7 +131,7 @@ fun ConsentScreen(
                             )
                         }
                         RadioButton(
-                            selected = viewModel.providerModeState().value == AiProviderMode.LOCAL,
+                            selected = providerMode == AiProviderMode.LOCAL,
                             onClick = { viewModel.setProviderMode(AiProviderMode.LOCAL) }
                         )
                     }
@@ -140,7 +141,7 @@ fun ConsentScreen(
                 Card(
                     onClick = { viewModel.setProviderMode(AiProviderMode.CLOUD) },
                     colors = CardDefaults.cardColors(
-                        containerColor = if (viewModel.providerModeState().value == AiProviderMode.CLOUD) {
+                        containerColor = if (providerMode == AiProviderMode.CLOUD) {
                             MaterialTheme.colorScheme.primaryContainer
                         } else {
                             MaterialTheme.colorScheme.surface
@@ -165,7 +166,7 @@ fun ConsentScreen(
                             )
                         }
                         RadioButton(
-                            selected = viewModel.providerModeState().value == AiProviderMode.CLOUD,
+                            selected = providerMode == AiProviderMode.CLOUD,
                             onClick = { viewModel.setProviderMode(AiProviderMode.CLOUD) }
                         )
                     }
