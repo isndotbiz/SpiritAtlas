@@ -224,6 +224,7 @@ fun ModernTextField(
     enabled: Boolean = true,
     leadingIcon: ImageVector? = null,
     trailingIcon: ImageVector? = null,
+    trailingIconContentDescription: String? = null,
     onTrailingIconClick: (() -> Unit)? = null
 ) {
     OutlinedTextField(
@@ -249,7 +250,7 @@ fun ModernTextField(
                 IconButton(onClick = { onTrailingIconClick?.invoke() }) {
                     Icon(
                         imageVector = it,
-                        contentDescription = null,
+                        contentDescription = trailingIconContentDescription,
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }
@@ -286,7 +287,7 @@ fun ChakraIndicator(
         if (isActive) {
             Icon(
                 imageVector = Icons.Default.Star,
-                contentDescription = null,
+                contentDescription = "Active chakra",
                 tint = Color.White,
                 modifier = Modifier.size(12.dp)
             )
@@ -431,18 +432,18 @@ fun <T> ModernDropdown(
     label: String,
     modifier: Modifier = Modifier,
     placeholder: String = "Select an option",
-    displayTransform: (T) -> String = { it.toString() },
+    displayTransform: @Composable (T) -> String = { it.toString() },
     enabled: Boolean = true
 ) {
     var expanded by remember { mutableStateOf(false) }
-    
+
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = { expanded = !expanded && enabled },
         modifier = modifier
     ) {
         ModernTextField(
-            value = selectedValue?.let(displayTransform) ?: "",
+            value = selectedValue?.let { displayTransform(it) } ?: "",
             onValueChange = { }, // Read-only field
             label = label,
             placeholder = placeholder,
@@ -453,7 +454,7 @@ fun <T> ModernDropdown(
                 .menuAnchor()
                 .fillMaxWidth()
         )
-        
+
         ExposedDropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
@@ -510,16 +511,16 @@ fun GlassmorphCard(
         modifier = modifier
             .clip(RoundedCornerShape(20.dp))
             .background(
-                Color.White.copy(alpha = backgroundAlpha)
+                MaterialTheme.colorScheme.surfaceVariant.copy(alpha = backgroundAlpha)
             )
             .border(
                 width = 1.dp,
-                color = Color.White.copy(alpha = borderAlpha),
+                color = MaterialTheme.colorScheme.outline.copy(alpha = borderAlpha),
                 shape = RoundedCornerShape(20.dp)
             ),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White.copy(alpha = 0.1f)
+            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = backgroundAlpha)
         )
     ) {
         Column(
