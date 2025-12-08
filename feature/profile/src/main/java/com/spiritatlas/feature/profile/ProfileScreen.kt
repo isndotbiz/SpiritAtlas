@@ -1,8 +1,7 @@
 package com.spiritatlas.feature.profile
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -388,34 +387,47 @@ fun ProfileContent(
     onSectionSelected: (ProfileSection) -> Unit,
     onClearError: () -> Unit
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+    LazyColumn(
+        modifier = modifier.fillMaxSize()
     ) {
-        StatusMessages(
-            errorMessage = uiState.errorMessage,
-            saveSuccess = uiState.saveSuccess,
-            onClearError = onClearError
-        )
-        
-        AccuracyIndicator(uiState.currentProfile.profileCompletion)
-        Spacer(modifier = Modifier.height(16.dp))
-        
-        ProfileSectionTabs(
-            activeSection = uiState.activeSection,
-            onSectionSelected = onSectionSelected
-        )
-        
-        Spacer(modifier = Modifier.height(16.dp))
-        
-        ProfileSectionContent(
-            activeSection = uiState.activeSection,
-            profile = uiState.currentProfile,
-            onProfileUpdate = onProfileUpdate
-        )
-        
-        Spacer(modifier = Modifier.height(100.dp))
+        item {
+            StatusMessages(
+                errorMessage = uiState.errorMessage,
+                saveSuccess = uiState.saveSuccess,
+                onClearError = onClearError
+            )
+        }
+
+        item {
+            AccuracyIndicator(uiState.currentProfile.profileCompletion)
+        }
+
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+
+        item {
+            ProfileSectionTabs(
+                activeSection = uiState.activeSection,
+                onSectionSelected = onSectionSelected
+            )
+        }
+
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+
+        item {
+            ProfileSectionContent(
+                activeSection = uiState.activeSection,
+                profile = uiState.currentProfile,
+                onProfileUpdate = onProfileUpdate
+            )
+        }
+
+        item {
+            Spacer(modifier = Modifier.height(100.dp))
+        }
     }
 }
 

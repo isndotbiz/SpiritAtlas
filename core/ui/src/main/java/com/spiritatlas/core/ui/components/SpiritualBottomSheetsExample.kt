@@ -15,6 +15,31 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.spiritatlas.core.ui.theme.SpiritAtlasTheme
 
+// Stubs for missing classes and composables
+
+data class SheetOption(val id: String, val label: String, val icon: ImageVector, val isDestructive: Boolean = false)
+
+@Composable
+fun OptionsSheet(visible: Boolean, onDismiss: () -> Unit, options: List<SheetOption>, onOptionSelected: (String) -> Unit, title: String) {}
+
+data class FilterOption(val id: String, val label: String, val icon: ImageVector? = null)
+
+@Composable
+fun FilterSheet(visible: Boolean, onDismiss: () -> Unit, filterCategories: Map<String, List<FilterOption>>, initialFilters: Set<String>, onFiltersChanged: (Set<String>) -> Unit, onApply: () -> Unit) {}
+
+@Composable
+fun ShareSheet(visible: Boolean, onDismiss: () -> Unit, onShareDestination: (String) -> Unit, onCopyLink: () -> Unit, onGenerateQR: () -> Unit, onShareAsImage: () -> Unit) {}
+
+@Composable
+fun ConfirmationSheet(visible: Boolean, onDismiss: () -> Unit, title: String, message: String, confirmText: String, onConfirm: () -> Unit, icon: ImageVector) {}
+
+data class SelectableProfile(val id: String, val name: String, val imageUrl: String, val isSelected: Boolean = false)
+
+@Composable
+fun ProfileSelectorSheet(visible: Boolean, onDismiss: () -> Unit, profiles: List<SelectableProfile>, onProfileSelected: (String) -> Unit, onAddNew: () -> Unit, title: String) {}
+
+@Composable
+fun LanguageAndThemeSheet(visible: Boolean, onDismiss: () -> Unit, currentLanguage: String, availableLanguages: List<String>, onLanguageSelected: (String) -> Unit, currentTheme: String, onThemeSelected: (String) -> Unit) {}
 
 @Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
 @Composable
@@ -181,15 +206,14 @@ fun LanguageAndThemeSheet_Preview() {
     SpiritAtlasTheme {
         var visible by remember { mutableStateOf(true) }
 
-        // TODO: Fix the composable call issues
-        // LanguageAndThemeSheet(
-        //     visible = visible,
-        //     onDismiss = { visible = false },
-        //     currentLanguage = "English",
-        //     availableLanguages = listOf("English", "Español", "Français"),
-        //     onLanguageSelected = {},
-        //     currentTheme = "System Default",
-        //     onThemeSelected = {}
-        // )
+        LanguageAndThemeSheet(
+            visible = visible,
+            onDismiss = { visible = false },
+            currentLanguage = "English",
+            availableLanguages = listOf("English", "Español", "Français"),
+            onLanguageSelected = {},
+            currentTheme = "System Default",
+            onThemeSelected = {}
+        )
     }
 }

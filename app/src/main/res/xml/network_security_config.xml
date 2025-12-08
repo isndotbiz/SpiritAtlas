@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">openrouter.ai</domain>
+        <pin-set expiration="2026-12-31">
+            <!-- openrouter.ai leaf certificate pin -->
+            <pin digest="SHA-256">6QQprYuaKy/2FzTOPfARP9kNXwivBvM/oBNc5l4rlsw=</pin>
+            <!-- Google Trust Services WE1 intermediate CA pin (backup) -->
+            <pin digest="SHA-256">kIdp6NNEd8wsugYyyIYFsi1ylMCED3hZbSR8ZFsa/A4=</pin>
+        </pin-set>
+    </domain-config>
+    <!-- Allow localhost for Ollama (local AI) -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">localhost</domain>
+        <domain includeSubdomains="false">127.0.0.1</domain>
+    </domain-config>
+</network-security-config>
+

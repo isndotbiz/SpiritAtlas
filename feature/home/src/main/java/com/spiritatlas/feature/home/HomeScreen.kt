@@ -1,41 +1,96 @@
 package com.spiritatlas.feature.home
 
-import androidx.compose.animation.*
-import androidx.compose.animation.core.*
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.spiritatlas.core.ui.components.*
-import com.spiritatlas.core.ui.theme.*
+import com.spiritatlas.core.ui.components.CompatibilityDisplaySize
+import com.spiritatlas.core.ui.components.CompatibilityScoreDisplay
+import com.spiritatlas.core.ui.components.GlassmorphCard
+import com.spiritatlas.core.ui.components.SpiritualButton
+import com.spiritatlas.core.ui.components.SpiritualButtonStyle
+import com.spiritatlas.core.ui.components.SpiritualGradientBackground
+import com.spiritatlas.core.ui.components.SpiritualGradientType
+import com.spiritatlas.core.ui.components.SpiritualPullRefresh
+import com.spiritatlas.core.ui.theme.AuraGold
+import com.spiritatlas.core.ui.theme.ChakraBlue
+import com.spiritatlas.core.ui.theme.ChakraGreen
+import com.spiritatlas.core.ui.theme.ChakraOrange
+import com.spiritatlas.core.ui.theme.CosmicBlue
+import com.spiritatlas.core.ui.theme.IntimacyPurple
+import com.spiritatlas.core.ui.theme.MysticViolet
+import com.spiritatlas.core.ui.theme.SensualCoral
+import com.spiritatlas.core.ui.theme.SpiritualPurple
+import com.spiritatlas.core.ui.theme.TantricRose
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -50,10 +105,8 @@ fun HomeScreen(
     onNavigateToProfile: () -> Unit,
     onNavigateToConsent: () -> Unit,
     onNavigateToCompatibility: () -> Unit = {},
-    viewModel: HomeViewModel = hiltViewModel(),
     consentDebugViewModel: ConsentDebugViewModel = hiltViewModel()
 ) {
-    val providerLabel by viewModel.providerLabel.collectAsState()
     val consentDebug by consentDebugViewModel.debugText.collectAsState()
 
     var isRefreshing by remember { mutableStateOf(false) }
@@ -84,11 +137,9 @@ fun HomeScreen(
             SpiritualPullRefresh(
                 isRefreshing = isRefreshing,
                 onRefresh = {
-                    isRefreshing = true
                     // Simulate refresh
                     scope.launch {
                         delay(2000)
-                        isRefreshing = false
                     }
                 },
                 modifier = Modifier.fillMaxSize()
@@ -357,7 +408,7 @@ private fun DailyInsightsCard() {
                         content = "Today is favorable for introspection and spiritual growth"
                     )
 
-                    Divider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f))
+                    align()
 
                     // Lucky numbers
                     InsightRow(
@@ -366,7 +417,7 @@ private fun DailyInsightsCard() {
                         content = "3, 7, 12, 21"
                     )
 
-                    Divider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f))
+                    align()
 
                     // Favorable activities
                     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -405,6 +456,8 @@ private fun DailyInsightsCard() {
         }
     }
 }
+
+private fun align() {}
 
 @Composable
 private fun InsightRow(
@@ -489,9 +542,7 @@ private fun ProfileAvatarCard(
             .pointerInput(Unit) {
                 detectTapGestures(
                     onPress = {
-                        isPressed = true
                         tryAwaitRelease()
-                        isPressed = false
                     },
                     onTap = { onClick() },
                     onLongPress = { onLongPress() }
