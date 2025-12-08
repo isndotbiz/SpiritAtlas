@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.spiritatlas.feature.profile"
+    namespace = "com.spiritatlas.feature.onboarding"
     compileSdk = 35
 
     defaultConfig {
@@ -30,21 +30,12 @@ android {
 dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:common"))
-    implementation(project(":domain"))
-    implementation(project(":core:ayurveda"))
-    implementation(project(":core:humandesign"))
 
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
     kapt(libs.hilt.compiler)
-    implementation(libs.compose.material.icons.extended)
 
-    // WorkManager for AI enrichment
-    implementation(libs.androidx.work.runtime)
-    implementation(project(":data"))
-
-    // Image loading for custom markdown renderer
-    implementation("io.coil-kt:coil-compose:2.7.0")
+    // Compose Foundation for HorizontalPager
+    implementation("androidx.compose.foundation:foundation:1.6.8")
 }
-

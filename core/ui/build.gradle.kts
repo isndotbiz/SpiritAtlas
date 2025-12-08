@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.spiritatlas.core.ui"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 26
@@ -21,20 +21,35 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.14"
+        kotlinCompilerExtensionVersion = "1.5.15"
     }
+
 }
 
 dependencies {
     api(platform(libs.compose.bom))
     api(libs.compose.ui)
     api(libs.compose.material3)
+    implementation(libs.compose.material)
     api(libs.compose.ui.tooling.preview)
     debugApi(libs.compose.ui.tooling)
-    
+
+    // Icons
+    implementation(libs.compose.material.icons.extended)
+
     // Core dependencies for WindowCompat
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
+    
+    // Project dependencies
+    implementation(project(":core:astro"))
+    implementation(project(":core:numerology"))
+    implementation(project(":core:humandesign"))
+    implementation(project(":domain"))
+
+    // Testing dependencies
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.jetbrains.kotlin:kotlin-test")
+    testImplementation("androidx.test:core:1.5.0")
+    testImplementation("org.robolectric:robolectric:4.11.1")
 }
-
-
