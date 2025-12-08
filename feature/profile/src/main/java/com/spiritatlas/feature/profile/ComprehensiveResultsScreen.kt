@@ -16,8 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.spiritatlas.domain.model.EnhancedUserProfile
-import com.spiritatlas.domain.model.Dosha
+import com.spiritatlas.domain.model.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,16 +54,16 @@ fun ComprehensiveResultsScreen(
             }
             
             // Numerology Insights
-            if (profile.numerologyProfile != null) {
+            profile.numerologyProfile?.let { numerologyProfile ->
                 ExpandableInsightSection("🔢 Numerology Insights") {
-                    NumerologyInsights(profile.numerologyProfile)
+                    NumerologyInsights(numerologyProfile)
                 }
             }
-            
+
             // Astrology Insights
-            if (profile.astroProfile != null) {
+            profile.astroProfile?.let { astroProfile ->
                 ExpandableInsightSection("⭐ Astrology Insights") {
-                    AstrologyInsights(profile.astroProfile)
+                    AstrologyInsights(astroProfile)
                 }
             }
             
@@ -90,9 +89,9 @@ fun ComprehensiveResultsScreen(
             }
             
             // Human Design (if available)
-            if (profile.energyProfile != null) {
+            profile.energyProfile?.let { energyProfile ->
                 ExpandableInsightSection("⚡ Energy Profile") {
-                    EnergyProfileInsights(profile.energyProfile)
+                    EnergyProfileInsights(energyProfile)
                 }
             }
         }
@@ -331,7 +330,7 @@ private fun RelationshipInsights(profile: EnhancedUserProfile) {
     }
 }
 
-@Composable 
+@Composable
 private fun NumerologyInsights(numerologyProfile: NumerologyProfile) {
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
         InfoRow("Life Path Number", numerologyProfile.lifePathNumber?.toString() ?: "Not calculated")
@@ -343,9 +342,9 @@ private fun NumerologyInsights(numerologyProfile: NumerologyProfile) {
 @Composable
 private fun AstrologyInsights(astroProfile: AstroProfile) {
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        InfoRow("Sun Sign", astroProfile.sunSign?.toString() ?: "Not calculated")
-        InfoRow("Moon Sign", astroProfile.moonSign?.toString() ?: "Not calculated")
-        InfoRow("Rising Sign", astroProfile.risingSign?.toString() ?: "Not calculated")
+        InfoRow("Sun Sign", astroProfile.sunSign ?: "Not calculated")
+        InfoRow("Moon Sign", astroProfile.moonSign ?: "Not calculated")
+        InfoRow("Rising Sign", astroProfile.risingSign ?: "Not calculated")
         // Add more astrology insights as available
     }
 }
@@ -353,7 +352,7 @@ private fun AstrologyInsights(astroProfile: AstroProfile) {
 @Composable
 private fun EnergyProfileInsights(energyProfile: EnergyProfile) {
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        InfoRow("Energy Type", energyProfile.type?.toString() ?: "Not calculated")
+        InfoRow("Energy Type", energyProfile.type ?: "Not calculated")
         InfoRow("Strategy", energyProfile.strategy ?: "Not available")
         // Add more energy profile insights as available
     }

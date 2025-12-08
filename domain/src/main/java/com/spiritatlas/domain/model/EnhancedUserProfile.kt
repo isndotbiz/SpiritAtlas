@@ -31,6 +31,10 @@ data class EnhancedUserProfile(
     val ayurvedaAnswers: Map<String, Int> = emptyMap(),
     
     // Existing spiritual calculations
+    // These generic types will be replaced by actual types from respective modules via mappers
+    // For now, we use Any? or a simple placeholder if needed, but since this is Domain
+    // we should define domain models for these.
+    // However, since the error was Unresolved Reference, we need to add these classes.
     val numerologyProfile: NumerologyProfile? = null,
     val astroProfile: AstroProfile? = null,
     val energyProfile: EnergyProfile? = null,
@@ -78,6 +82,31 @@ data class EnhancedUserProfile(
             return if (maxScore > 0f) score / maxScore else 0f
         }
 }
+
+// Placeholder Domain Models to resolve compilation errors
+// In a real Clean Architecture, these would be the domain representations
+// mapped from the core module calculations.
+
+data class NumerologyProfile(
+    val lifePathNumber: Int? = null,
+    val expressionNumber: Int? = null,
+    val destinyNumber: Int? = null,
+    val soulUrgeNumber: Int? = null,
+    val personalityNumber: Int? = null
+)
+
+data class AstroProfile(
+    val sunSign: String? = null,
+    val moonSign: String? = null,
+    val risingSign: String? = null,
+    val ascendingSign: String? = null
+)
+
+data class EnergyProfile(
+    val type: String? = null,
+    val strategy: String? = null,
+    val profile: String? = null
+)
 
 data class DoshaProfile(
     val vata: Int,

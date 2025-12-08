@@ -12,7 +12,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.spiritatlas.core.ayurveda.AyurvedaCalculator
-import com.spiritatlas.core.ayurveda.DoshaProfile
 import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,7 +33,7 @@ fun ComprehensiveProfileFormScreen(
 
     // Ayurveda simple Q&A
     var ayurvedaAnswers by remember { mutableStateOf(mapOf<String, Int>()) }
-    var ayurvedaProfile by remember { mutableStateOf<DoshaProfile?>(null) }
+    var ayurvedaProfile by remember { mutableStateOf<com.spiritatlas.core.ayurveda.DoshaProfile?>(null) }
 
     Scaffold(
         topBar = {
@@ -98,6 +97,7 @@ fun ComprehensiveProfileFormScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AyurvedaQuestion(
     id: String,
