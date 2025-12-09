@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.spiritatlas.core.ui.components.*
+import com.spiritatlas.core.ui.components.SacredGeometryBackground
 import com.spiritatlas.core.ui.theme.*
 import com.spiritatlas.domain.model.*
 import kotlinx.coroutines.delay
@@ -72,7 +73,7 @@ fun ProfileLibraryScreen(
         }
     }
 
-    SpiritualGradientBackground(gradientType = SpiritualGradientType.MYSTIC) {
+    SacredGeometryBackground {
         Column(
             modifier = Modifier
                 .fillMaxSize()

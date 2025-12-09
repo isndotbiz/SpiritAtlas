@@ -4,6 +4,8 @@ import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.GenerationConfig
 import com.spiritatlas.core.common.Result
 import com.spiritatlas.data.BuildConfig
+import com.spiritatlas.data.tracking.AiProvider
+import com.spiritatlas.data.tracking.UsageTracker
 import com.spiritatlas.domain.ai.AiTextProvider
 import com.spiritatlas.domain.ai.EnrichmentContext
 import com.spiritatlas.domain.ai.EnrichmentResult
@@ -23,7 +25,9 @@ import javax.inject.Inject
  * - 1M token context window
  * - Fast inference (~2-3 seconds)
  */
-class GeminiProvider @Inject constructor() : AiTextProvider {
+class GeminiProvider @Inject constructor(
+    private val usageTracker: UsageTracker
+) : AiTextProvider {
 
     private val apiKey = BuildConfig.GEMINI_API_KEY
 
@@ -44,10 +48,28 @@ class GeminiProvider @Inject constructor() : AiTextProvider {
             return Result.Error(IllegalStateException("Gemini API key not configured"))
         }
 
+        // Check rate limits before making request
+        if (!usageTracker.canMakeRequest(AiProvider.GEMINI)) {
+            val waitTime = usageTracker.getTimeUntilNextRequest(AiProvider.GEMINI)
+            val waitTimeSeconds = waitTime / 1000
+            val waitTimeMinutes = waitTimeSeconds / 60
+
+            val message = when {
+                waitTimeMinutes > 60 -> "Gemini rate limit reached. Try again in ${waitTimeMinutes / 60}h ${waitTimeMinutes % 60}m"
+                waitTimeMinutes > 0 -> "Gemini rate limit reached. Try again in ${waitTimeMinutes}m ${waitTimeSeconds % 60}s"
+                else -> "Gemini rate limit reached. Try again in ${waitTimeSeconds}s"
+            }
+
+            return Result.Error(RateLimitException(message))
+        }
+
         try {
             val prompt = buildEnrichmentPrompt(context)
             val response = model.generateContent(prompt)
             val text = response.text ?: return Result.Error(IllegalStateException("Empty response from Gemini"))
+
+            // Record successful request
+            usageTracker.recordRequest(AiProvider.GEMINI)
 
             return Result.Success(EnrichmentResult(
                 text = text,
@@ -110,3 +132,8 @@ class GeminiProvider @Inject constructor() : AiTextProvider {
         }.ifBlank { "No data provided" }
     }
 }
+
+/**
+ * Exception thrown when rate limit is exceeded
+ */
+class RateLimitException(message: String) : Exception(message)

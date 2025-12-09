@@ -1,6 +1,8 @@
 package com.spiritatlas.data.ai
 
 import com.spiritatlas.core.common.Result
+import com.spiritatlas.data.tracking.AiProvider
+import com.spiritatlas.data.tracking.UsageTracker
 import com.spiritatlas.domain.ai.AiTextProvider
 import com.spiritatlas.domain.ai.EnrichmentContext
 import com.spiritatlas.domain.ai.EnrichmentResult
@@ -18,8 +20,8 @@ import javax.inject.Inject
  * - Alternative: OpenRouter, Ollama
  *
  * Priority order for AUTO mode:
- * 1. Gemini (app-provided, free tier, excellent reasoning)
- * 2. Groq (app-provided, free tier, ultra-fast)
+ * 1. Gemini (app-provided, free tier, excellent reasoning) - if not rate limited
+ * 2. Groq (app-provided, free tier, ultra-fast) - if not rate limited
  * 3. User-configured providers (OpenAI, Claude)
  * 4. OpenRouter, Ollama
  */
@@ -30,7 +32,8 @@ class CombinedAiProvider @Inject constructor(
     private val claudeProvider: ClaudeProvider,
     private val openRouterProvider: OpenRouterProvider,
     private val ollamaProvider: OllamaProvider,
-    private val aiSettingsRepository: AiSettingsRepository
+    private val aiSettingsRepository: AiSettingsRepository,
+    private val usageTracker: UsageTracker
 ) : AiTextProvider {
 
     private suspend fun selectProvider(): AiTextProvider? {
@@ -43,14 +46,21 @@ class CombinedAiProvider @Inject constructor(
             AiProviderMode.OPENROUTER -> if (openRouterProvider.isAvailable()) openRouterProvider else null
             AiProviderMode.LOCAL -> if (ollamaProvider.isAvailable()) ollamaProvider else null
             AiProviderMode.AUTO -> when {
-                geminiProvider.isAvailable() -> geminiProvider  // Best free default
-                groqProvider.isAvailable() -> groqProvider  // Fast free fallback
-                openAIProvider.isAvailable() -> openAIProvider  // User key
-                claudeProvider.isAvailable() -> claudeProvider  // User key
+                // Prefer Gemini if available and not rate limited
+                geminiProvider.isAvailable() && usageTracker.canMakeRequest(AiProvider.GEMINI) -> geminiProvider
+                // Fall back to Groq if available and not rate limited
+                groqProvider.isAvailable() && usageTracker.canMakeRequest(AiProvider.GROQ) -> groqProvider
+                // Try user-configured providers next
+                openAIProvider.isAvailable() -> openAIProvider
+                claudeProvider.isAvailable() -> claudeProvider
                 openRouterProvider.isAvailable() -> openRouterProvider
                 ollamaProvider.isAvailable() -> ollamaProvider
+                // Last resort: use rate-limited providers (they will handle rate limit errors)
+                geminiProvider.isAvailable() -> geminiProvider
+                groqProvider.isAvailable() -> groqProvider
                 else -> null
             }
+            else -> null
         }
     }
 

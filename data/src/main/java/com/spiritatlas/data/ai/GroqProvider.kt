@@ -2,6 +2,8 @@ package com.spiritatlas.data.ai
 
 import com.spiritatlas.core.common.Result
 import com.spiritatlas.data.BuildConfig
+import com.spiritatlas.data.tracking.AiProvider
+import com.spiritatlas.data.tracking.UsageTracker
 import com.spiritatlas.domain.ai.AiTextProvider
 import com.spiritatlas.domain.ai.EnrichmentContext
 import com.spiritatlas.domain.ai.EnrichmentResult
@@ -32,7 +34,8 @@ import javax.inject.Singleton
  */
 @Singleton
 class GroqProvider @Inject constructor(
-    private val okHttpClient: OkHttpClient
+    private val okHttpClient: OkHttpClient,
+    private val usageTracker: UsageTracker
 ) : AiTextProvider {
 
     private val apiKey: String
@@ -43,6 +46,21 @@ class GroqProvider @Inject constructor(
     override suspend fun generateEnrichment(context: EnrichmentContext): Result<EnrichmentResult> = withContext(Dispatchers.IO) {
         if (!isAvailable()) {
             return@withContext Result.Error(IllegalStateException("Groq API key not configured"))
+        }
+
+        // Check rate limits before making request
+        if (!usageTracker.canMakeRequest(AiProvider.GROQ)) {
+            val waitTime = usageTracker.getTimeUntilNextRequest(AiProvider.GROQ)
+            val waitTimeSeconds = waitTime / 1000
+            val waitTimeMinutes = waitTimeSeconds / 60
+
+            val message = when {
+                waitTimeMinutes > 60 -> "Groq rate limit reached. Try again in ${waitTimeMinutes / 60}h ${waitTimeMinutes % 60}m"
+                waitTimeMinutes > 0 -> "Groq rate limit reached. Try again in ${waitTimeMinutes}m ${waitTimeSeconds % 60}s"
+                else -> "Groq rate limit reached. Try again in ${waitTimeSeconds}s"
+            }
+
+            return@withContext Result.Error(RateLimitException(message))
         }
 
         try {
@@ -85,6 +103,9 @@ class GroqProvider @Inject constructor(
                 .getJSONObject(0)
                 .getJSONObject("message")
                 .getString("content")
+
+            // Record successful request
+            usageTracker.recordRequest(AiProvider.GROQ)
 
             Result.Success(EnrichmentResult(
                 text = content,

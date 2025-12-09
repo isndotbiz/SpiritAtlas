@@ -1,33 +1,102 @@
 package com.spiritatlas.domain.service
 
+import com.spiritatlas.core.common.Result
+import com.spiritatlas.domain.ai.AnalysisType
 import com.spiritatlas.domain.model.*
 import com.spiritatlas.domain.tantric.TantricContent
 import com.spiritatlas.domain.tantric.TantricContentType
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 import kotlin.math.abs
 import kotlin.random.Random
 
 /**
  * Core engine for analyzing compatibility between two user profiles
- * Integrates numerology, astrology, and tantric insights to generate comprehensive reports
+ * Integrates numerology, astrology, tantric insights, and AI-powered analysis
+ *
+ * This engine enhances calculated compatibility scores with optional AI insights
+ * for deeper, multi-perspective analysis. Falls back gracefully if AI unavailable.
  */
-class CompatibilityAnalysisEngine {
-    
+class CompatibilityAnalysisEngine @Inject constructor(
+    private val aiCompatibilityService: AiCompatibilityService? = null // Optional AI service
+) {
+
     /**
      * Analyzes complete compatibility between two profiles
+     *
+     * @param profileA First person's profile
+     * @param profileB Second person's profile
+     * @param tantricContent Tantric content for analysis
+     * @param includeAiInsights Whether to include AI-powered insights (if available)
+     * @param aiAnalysisType Type of AI analysis (quick/standard/comprehensive)
+     * @return Complete compatibility report with optional AI insights
      */
-    fun analyzeCompatibility(
+    suspend fun analyzeCompatibility(
         profileA: UserProfile,
         profileB: UserProfile,
-        tantricContent: List<TantricContent> = emptyList()
-    ): CompatibilityReport {
-        
+        tantricContent: List<TantricContent> = emptyList(),
+        includeAiInsights: Boolean = true,
+        aiAnalysisType: AnalysisType = AnalysisType.STANDARD
+    ): CompatibilityReport = withContext(Dispatchers.Default) {
+
+        // Calculate base compatibility scores
         val scores = calculateCompatibilityScores(profileA, profileB)
         val insights = generateRelationshipInsights(profileA, profileB, scores)
         val strengths = identifyStrengths(profileA, profileB, scores)
         val challenges = identifyChallenges(profileA, profileB, scores)
         val recommendations = generateRecommendations(profileA, profileB, scores, challenges)
         val tantricMatches = analyzeTantricCompatibility(profileA, profileB, tantricContent)
-        
+
+        // Optionally enhance with AI insights
+        val aiInsights = if (includeAiInsights && aiCompatibilityService != null) {
+            try {
+                when (val result = aiCompatibilityService.analyzeCompatibility(
+                    profileA = profileA,
+                    profileB = profileB,
+                    calculatedScores = scores,
+                    analysisType = aiAnalysisType
+                )) {
+                    is Result.Success -> result.data
+                    else -> null // Gracefully fall back if AI unavailable
+                }
+            } catch (e: Exception) {
+                null // Gracefully fall back on error
+            }
+        } else {
+            null
+        }
+
+        return@withContext CompatibilityReport(
+            profileA = profileA,
+            profileB = profileB,
+            overallScore = scores,
+            insights = insights,
+            strengths = strengths,
+            challenges = challenges,
+            recommendations = recommendations,
+            tantricMatches = tantricMatches,
+            aiInsights = aiInsights
+        )
+    }
+
+    /**
+     * Synchronous version for backward compatibility
+     * Note: This version cannot include AI insights as they require suspend context
+     */
+    fun analyzeCompatibilitySync(
+        profileA: UserProfile,
+        profileB: UserProfile,
+        tantricContent: List<TantricContent> = emptyList()
+    ): CompatibilityReport {
+
+        val scores = calculateCompatibilityScores(profileA, profileB)
+        val insights = generateRelationshipInsights(profileA, profileB, scores)
+        val strengths = identifyStrengths(profileA, profileB, scores)
+        val challenges = identifyChallenges(profileA, profileB, scores)
+        val recommendations = generateRecommendations(profileA, profileB, scores, challenges)
+        val tantricMatches = analyzeTantricCompatibility(profileA, profileB, tantricContent)
+
         return CompatibilityReport(
             profileA = profileA,
             profileB = profileB,
@@ -36,7 +105,8 @@ class CompatibilityAnalysisEngine {
             strengths = strengths,
             challenges = challenges,
             recommendations = recommendations,
-            tantricMatches = tantricMatches
+            tantricMatches = tantricMatches,
+            aiInsights = null // No AI in sync version
         )
     }
     

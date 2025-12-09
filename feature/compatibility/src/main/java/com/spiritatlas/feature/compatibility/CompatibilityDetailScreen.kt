@@ -37,6 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.spiritatlas.core.ui.components.*
+import com.spiritatlas.core.ui.components.CosmicConnectionBackground
 import com.spiritatlas.core.ui.theme.*
 import com.spiritatlas.domain.model.*
 import kotlinx.coroutines.delay
@@ -71,16 +72,17 @@ fun CompatibilityDetailScreen(
 ) {
     val context = LocalContext.current
 
-    Scaffold(
-        topBar = {
-            CompatibilityDetailTopBar(
-                onBack = onBack,
-                onSave = onSave,
-                onShare = onShare
-            )
-        },
-        containerColor = MaterialTheme.colorScheme.background
-    ) { paddingValues ->
+    CosmicConnectionBackground {
+        Scaffold(
+            topBar = {
+                CompatibilityDetailTopBar(
+                    onBack = onBack,
+                    onSave = onSave,
+                    onShare = onShare
+                )
+            },
+            containerColor = Color.Transparent
+        ) { paddingValues ->
         when (viewMode) {
             CompatibilityViewMode.VERTICAL_SCROLL -> {
                 VerticalScrollView(
@@ -94,6 +96,7 @@ fun CompatibilityDetailScreen(
                     modifier = modifier.padding(paddingValues)
                 )
             }
+        }
         }
     }
 }
