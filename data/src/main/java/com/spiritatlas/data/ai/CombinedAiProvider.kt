@@ -12,13 +12,22 @@ import javax.inject.Inject
 /**
  * Combined AI provider that routes requests to the appropriate provider based on user settings
  *
+ * Architecture:
+ * - Built-in free providers: Gemini (app key), Groq (app key)
+ * - User providers: OpenAI (user key/OAuth), Claude (user key/OAuth)
+ * - Alternative: OpenRouter, Ollama
+ *
  * Priority order for AUTO mode:
- * 1. Gemini (free, excellent reasoning, 15 RPM)
- * 2. OpenRouter (paid/free models)
- * 3. Ollama (local, offline)
+ * 1. Gemini (app-provided, free tier, excellent reasoning)
+ * 2. Groq (app-provided, free tier, ultra-fast)
+ * 3. User-configured providers (OpenAI, Claude)
+ * 4. OpenRouter, Ollama
  */
 class CombinedAiProvider @Inject constructor(
     private val geminiProvider: GeminiProvider,
+    private val groqProvider: GroqProvider,
+    private val openAIProvider: OpenAIProvider,
+    private val claudeProvider: ClaudeProvider,
     private val openRouterProvider: OpenRouterProvider,
     private val ollamaProvider: OllamaProvider,
     private val aiSettingsRepository: AiSettingsRepository
@@ -28,11 +37,16 @@ class CombinedAiProvider @Inject constructor(
         val mode = aiSettingsRepository.observeMode().first()
         return when (mode) {
             AiProviderMode.GEMINI -> if (geminiProvider.isAvailable()) geminiProvider else null
+            AiProviderMode.GROQ -> if (groqProvider.isAvailable()) groqProvider else null
+            AiProviderMode.OPENAI -> if (openAIProvider.isAvailable()) openAIProvider else null
+            AiProviderMode.CLAUDE -> if (claudeProvider.isAvailable()) claudeProvider else null
             AiProviderMode.OPENROUTER -> if (openRouterProvider.isAvailable()) openRouterProvider else null
             AiProviderMode.LOCAL -> if (ollamaProvider.isAvailable()) ollamaProvider else null
-            AiProviderMode.GROQ -> null // TODO: Implement Groq provider
             AiProviderMode.AUTO -> when {
-                geminiProvider.isAvailable() -> geminiProvider  // Free tier, best default
+                geminiProvider.isAvailable() -> geminiProvider  // Best free default
+                groqProvider.isAvailable() -> groqProvider  // Fast free fallback
+                openAIProvider.isAvailable() -> openAIProvider  // User key
+                claudeProvider.isAvailable() -> claudeProvider  // User key
                 openRouterProvider.isAvailable() -> openRouterProvider
                 ollamaProvider.isAvailable() -> ollamaProvider
                 else -> null
@@ -46,7 +60,12 @@ class CombinedAiProvider @Inject constructor(
     }
 
     override suspend fun isAvailable(): Boolean {
-        return geminiProvider.isAvailable() || openRouterProvider.isAvailable() || ollamaProvider.isAvailable()
+        return geminiProvider.isAvailable() ||
+                groqProvider.isAvailable() ||
+                openAIProvider.isAvailable() ||
+                claudeProvider.isAvailable() ||
+                openRouterProvider.isAvailable() ||
+                ollamaProvider.isAvailable()
     }
 }
 

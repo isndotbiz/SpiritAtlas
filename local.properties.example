@@ -4,34 +4,73 @@
 ## SDK Location (required for Android builds)
 sdk.dir=/Users/YOUR_USERNAME/Library/Android/sdk
 
-## AI Provider API Keys
-## Note: At least ONE provider must be configured for AI features to work
+## =================================================================
+## AI PROVIDER API KEYS - App-Level (Built-in for all users)
+## =================================================================
+## These keys are bundled into the app and used by default.
+## Recommended: Add at least ONE free provider for production.
 
-# Google Gemini (RECOMMENDED - FREE TIER)
+# Google Gemini (⭐ HIGHLY RECOMMENDED - FREE TIER)
 # Get your free API key from: https://ai.google.dev
-# Free tier: 15 RPM, 1500 requests/day, no credit card required
-# Leave blank or comment out if not using Gemini
+# Free tier: 15 RPM, 1M TPM, 1500 requests/day
+# No credit card required, permanent free tier
+# Best for: Analytical reasoning, spiritual insights
 gemini.api.key=YOUR_GEMINI_API_KEY_HERE
+
+# Groq (⭐ RECOMMENDED - FREE & ULTRA-FAST)
+# Get your free API key from: https://console.groq.com
+# Free tier: 30 RPM, 6K-30K TPM
+# No credit card required
+# Best for: Fast inference (800+ tok/s), Llama 3.3 70B
+groq.api.key=YOUR_GROQ_API_KEY_HERE
 
 # OpenRouter (Optional - Multiple Models)
 # Get API key from: https://openrouter.ai
-# Free and paid models available
-# Leave blank or comment out if not using OpenRouter
+# Free and paid models available (DeepSeek R1, Llama, etc.)
 #openrouter.api.key=YOUR_OPENROUTER_API_KEY_HERE
 
 # Ollama (Optional - Local/Offline AI)
-# Run Ollama locally for privacy-focused, offline AI
+# Run Ollama locally for complete privacy
 # Default: http://localhost:11434
-# Leave blank to use default, or set custom endpoint
 #ollama.base.url=http://localhost:11434
 
-## Priority for AUTO mode:
-## 1. Gemini (best free option)
-## 2. OpenRouter (if configured)
-## 3. Ollama (if running locally)
+## =================================================================
+## USER-PROVIDED KEYS (via Settings UI)
+## =================================================================
+## These are NOT configured here - users add them via app settings:
+## - OpenAI (GPT-4o, GPT-4o-mini) - User provides API key or OAuth
+## - Claude (Opus, Sonnet, Haiku) - User provides API key or OAuth
+##
+## This allows users to bring their own premium AI accounts for
+## unlimited usage while keeping app costs low.
 
-## Quick Start:
-## 1. Get a free Gemini API key from https://ai.google.dev
-## 2. Copy this file to "local.properties"
-## 3. Replace YOUR_GEMINI_API_KEY_HERE with your actual key
-## 4. Build and run the app
+## =================================================================
+## PRIORITY FOR AUTO MODE
+## =================================================================
+## 1. Gemini (app key, free tier, excellent reasoning)
+## 2. Groq (app key, free tier, ultra-fast)
+## 3. OpenAI (user key/OAuth, premium quality)
+## 4. Claude (user key/OAuth, best reasoning)
+## 5. OpenRouter (app/user key, multiple models)
+## 6. Ollama (local, privacy-focused)
+
+## =================================================================
+## BUSINESS MODEL NOTES
+## =================================================================
+## FREE USERS: Use Gemini/Groq with shared app keys (1500+30 req/day)
+## PREMIUM USERS: Add their own OpenAI/Claude keys for unlimited usage
+## PRIVACY USERS: Run Ollama locally (completely offline)
+##
+## This keeps operating costs LOW while offering premium options.
+
+## =================================================================
+## QUICK START (Production-Ready)
+## =================================================================
+## 1. Get FREE Gemini key: https://ai.google.dev (30 seconds)
+## 2. Get FREE Groq key: https://console.groq.com (30 seconds)
+## 3. Copy this file to "local.properties"
+## 4. Replace YOUR_*_API_KEY_HERE with actual keys
+## 5. Build and run - AI works automatically!
+##
+## Total cost for app: $0/month (stays free up to 45K requests/month)
+## Users can upgrade to premium AI by adding their own keys
