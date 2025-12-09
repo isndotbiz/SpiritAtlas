@@ -16,8 +16,8 @@ You are working with a ComfyUI server that has Flux models and LoRAs installed f
 - ComfyUI installed with Flux model support
 
 **Available Models:**
-- Flux1-schnell (4-8 steps, fast, Apache 2.0 commercial license) - RECOMMENDED
-- Flux1.dev (35-50 steps, high quality, non-commercial license)
+- Flux1.dev (35-50 steps, highest quality, non-commercial license) - RECOMMENDED
+- Flux1-schnell (4-8 steps, fast, Apache 2.0 commercial license) - Alternative
 
 **Available LoRAs:**
 1. **Glowing Bioluminescent World** - For chakra, aura, and energy effects
@@ -25,6 +25,8 @@ You are working with a ComfyUI server that has Flux models and LoRAs installed f
 3. **Cosmic Background** - For nebula and space atmospheres
 
 **Required Settings:**
+- Model: Flux1.dev (non-commercial, highest quality)
+- Steps: 40 (recommended for quality/speed balance)
 - CFG Scale: 1.0 (Flux requirement)
 - Guidance Scale: 3.5
 - Sampler: Euler or DPM++ 2M

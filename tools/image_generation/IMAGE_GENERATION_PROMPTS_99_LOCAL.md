@@ -1,8 +1,10 @@
 # SpiritAtlas - Comprehensive 99 Image Prompts for Local Flux Generation
 
-**Document Purpose:** Ultra-comprehensive AI image generation prompts for local Flux1-schnell/dev with LoRA enhancements.
+**Document Purpose:** Ultra-comprehensive AI image generation prompts for local Flux1.dev with LoRA enhancements.
 
 **Optimization:** Designed for 24GB GPU with ComfyUI batch generation.
+
+**Recommended Model:** Flux1.dev (best quality, non-commercial license for development)
 
 **LoRA Stack Recommendations:**
 - **Primary:** Glowing Bioluminescent World (strength 0.7) - for chakra/aura effects
@@ -17,8 +19,8 @@
 - **Elements:** `#F97316` (Fire Orange), `#22C55E` (Earth Green), `#06B6D4` (Air Cyan)
 
 **Generation Settings:**
-- Model: Flux1-schnell (Apache 2.0 commercial license) or Flux1.dev (non-commercial)
-- Steps: 35-50 (dev), 4-8 (schnell)
+- Model: Flux1.dev (non-commercial license, highest quality)
+- Steps: 35-50 (recommended: 40)
 - CFG Scale: 1.0 (Flux requirement)
 - Guidance: 3.5
 - Format: PNG with transparency where noted
@@ -1044,8 +1046,8 @@ Pull-to-refresh droplet icon: water droplet or cosmic energy drop in glowing pur
 
 **Total Images:** 99
 **Categories:** 11
-**Estimated Generation Time:** 30-60 minutes (24GB GPU, Flux1-schnell)
-**Estimated Generation Time:** 2-3 hours (24GB GPU, Flux1.dev)
+**Estimated Generation Time:** 2-3 hours (24GB GPU, Flux1.dev, 40 steps)
+**Per Image:** 15-30 seconds average
 
 **Recommended LoRA Stack:**
 1. Glowing Bioluminescent World (0.7) - For chakra and aura effects
@@ -1060,8 +1062,8 @@ Pull-to-refresh droplet icon: water droplet or cosmic energy drop in glowing pur
 - Quality check every 10-15 images
 
 **ComfyUI Workflow:**
-- Use Flux1-schnell for speed (4-8 steps, 3-5 sec/image)
-- Use Flux1.dev for quality (35-50 steps, 15-30 sec/image)
+- Model: Flux1.dev (highest quality, non-commercial)
+- Steps: 40 (optimal balance of quality and speed)
 - CFG Scale: 1.0 (Flux requirement)
 - Guidance Scale: 3.5
 - Enable transparency where noted
