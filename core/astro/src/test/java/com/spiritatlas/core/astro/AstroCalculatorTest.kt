@@ -18,11 +18,11 @@ class AstroCalculatorTest {
 
     @ParameterizedTest
     @CsvSource(
-        "1980, 23.85 - (20 * 0.01397)",
-        "2000, 23.85",
-        "2025, 23.85 + (25 * 0.01397)"
+        "1980",
+        "2000",
+        "2025"
     )
-    fun `ayanamsa matches linear model`(year: Int, expectedExpression: String) {
+    fun `ayanamsa matches linear model`(year: Int) {
         val expected = when (year) {
             1980 -> 23.85 - (20 * 0.01397)
             2000 -> 23.85

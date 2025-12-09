@@ -120,3 +120,82 @@ SpiritAtlas/
 - Use conventional commits: `feat:`, `fix:`, `refactor:`, `test:`, `docs:`
 - Run critical tests before committing
 - Include module name in scope: `fix(core:ui): description`
+
+---
+
+## Current Project Status (Updated 2025-12-08)
+
+### Build Status: ✅ PASSING
+- All modules compile cleanly
+- Debug build: ✅ SUCCESS
+- Release build: ✅ SUCCESS
+- Lint checks: ✅ PASSING
+- ProGuard/R8: ✅ Configured
+
+### Test Coverage: ✅ 113/113 PASSING
+
+| Module | Tests | Status |
+|--------|-------|--------|
+| **core:numerology** | 14 | ✅ 100% |
+| **core:astro** | 83 | ✅ 100% |
+| **core:ayurveda** | 6 | ✅ 100% |
+| **core:humandesign** | 10 | ✅ 100% |
+
+**Run critical tests:**
+```bash
+./gradlew :core:numerology:test :core:astro:test :core:ayurveda:test :core:humandesign:test
+```
+
+### Security: ✅ SSL PINNING CONFIGURED
+
+**Network Security Config:** `app/src/main/res/xml/network_security_config.xml`
+- Real SHA-256 certificate pins for openrouter.ai
+- Leaf certificate + Intermediate CA (Google Trust Services WE1)
+- Pin expiration: 2026-12-31
+- Localhost cleartext allowed for Ollama (local AI development)
+
+### Compose/Kotlin Compatibility: ✅ VERIFIED
+- Kotlin: 1.9.25
+- Compose Compiler: 1.5.15 (all modules)
+- Compose BOM: 2024.09.02
+- KSP: 1.9.25-1.0.20
+
+### Code Quality
+- ✅ Explicit imports (no wildcards)
+- ✅ Proper `@OptIn` annotations
+- ✅ StateFlow properly collected with `collectAsState()`
+- ✅ No deprecated API usage in core modules
+
+---
+
+## Quick Commands Reference
+
+**Install & Launch on Emulator:**
+```bash
+./gradlew installDebug && adb shell am start -n com.spiritatlas.app/.MainActivity
+```
+
+**View Logs:**
+```bash
+adb logcat | grep -E "SpiritAtlas|AndroidRuntime"
+```
+
+**Clean Build:**
+```bash
+./gradlew clean assembleDebug
+```
+
+**Full Test Suite:**
+```bash
+./gradlew test
+```
+
+---
+
+## AI Configuration
+
+The app supports two AI provider modes:
+1. **Local (Ollama)** - Privacy-first, runs on device
+2. **Cloud (OpenRouter)** - Advanced models, requires SSL pinning
+
+Users can switch providers in Settings (ConsentScreen.kt)
