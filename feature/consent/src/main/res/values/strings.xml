@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Screen Title -->
+    <string name="consent_screen_title">AI Settings</string>
+    <string name="consent_back_button">Back</string>
+
+    <!-- Privacy Notice -->
+    <string name="consent_privacy_title">Privacy &amp; Data Settings</string>
+    <string name="consent_privacy_description">Control how your data is used. Your choices are saved locally and encrypted.</string>
+
+    <!-- Section Headers -->
+    <string name="consent_data_permissions_header">Data Permissions</string>
+    <string name="consent_ai_provider_header">AI Provider</string>
+
+    <!-- Consent Types -->
+    <string name="consent_ai_enrichment_title">AI Enrichment</string>
+    <string name="consent_ai_enrichment_description">Allow AI to analyze your profile and provide personalized spiritual insights</string>
+
+    <string name="consent_cloud_sync_title">Cloud Sync</string>
+    <string name="consent_cloud_sync_description">Sync your profiles across devices using encrypted cloud storage</string>
+
+    <string name="consent_analytics_title">Analytics</string>
+    <string name="consent_analytics_description">Help improve the app by sharing anonymous usage data</string>
+
+    <!-- AI Provider Options -->
+    <string name="consent_provider_local_title">🏠 Local (Ollama)</string>
+    <string name="consent_provider_local_description">Runs AI on your device - completely private</string>
+
+    <string name="consent_provider_cloud_title">☁️ Cloud (OpenRouter)</string>
+    <string name="consent_provider_cloud_description">Uses advanced cloud AI models - faster and more accurate</string>
+</resources>

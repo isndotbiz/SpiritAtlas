@@ -154,6 +154,67 @@ SpiritAtlas/
 - Pin expiration: 2026-12-31
 - Localhost cleartext allowed for Ollama (local AI development)
 
+#### 🔄 SSL Pin Rotation Process
+
+**When to rotate pins:**
+- Certificate approaching expiration date
+- Certificate authority change
+- Security incident or compromise
+
+**How to update pins:**
+
+1. **Fetch new certificate pins:**
+```bash
+# Get the new certificate chain
+python3 << 'EOF'
+import ssl
+import socket
+import hashlib
+import base64
+
+hostname = 'openrouter.ai'
+port = 443
+
+context = ssl.create_default_context()
+with socket.create_connection((hostname, port)) as sock:
+    with context.wrap_socket(sock, server_hostname=hostname) as ssock:
+        cert_bin = ssock.getpeercert(binary_form=True)
+
+        # Extract and hash public key
+        import subprocess
+        cert_pem = ssl.DER_cert_to_PEM_cert(cert_bin)
+
+        proc1 = subprocess.run(['openssl', 'x509', '-pubkey', '-noout'],
+                              input=cert_pem.encode(), capture_output=True)
+        proc2 = subprocess.run(['openssl', 'pkey', '-pubin', '-outform', 'der'],
+                              input=proc1.stdout, capture_output=True)
+
+        pin = base64.b64encode(hashlib.sha256(proc2.stdout).digest()).decode()
+        print(f"New pin: {pin}")
+EOF
+```
+
+2. **Update `network_security_config.xml`:**
+   - Add new pin alongside existing pin (overlap period)
+   - Update expiration date
+   - Test with new configuration
+
+3. **Gradual rollout:**
+   - Keep both old and new pins for 30 days
+   - Monitor crash reports for SSL errors
+   - Remove old pin after transition period
+
+4. **Emergency backup plan:**
+   - Always maintain 2+ pins (leaf + intermediate CA)
+   - Document pin update procedure in runbook
+   - Test pin validation in integration tests
+
+**Testing pin rotation:**
+```bash
+# Verify pins are correct
+./gradlew :data:connectedAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.spiritatlas.data.network.SslPinningTest
+```
+
 ### Compose/Kotlin Compatibility: ✅ VERIFIED
 - Kotlin: 1.9.25
 - Compose Compiler: 1.5.15 (all modules)

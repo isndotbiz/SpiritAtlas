@@ -239,11 +239,18 @@
 # GOOGLE CRYPTO TINK & ERROR PRONE
 #===============================================================================
 
-# Keep Tink crypto library classes
--keep class com.google.crypto.tink.** { *; }
--dontwarn com.google.crypto.tink.**
+# Keep Tink crypto library - optimized rules
+# Only keep public API and classes used via reflection
+-keep class com.google.crypto.tink.Aead { *; }
+-keep class com.google.crypto.tink.KeysetHandle { *; }
+-keep class com.google.crypto.tink.KeysetManager { *; }
+-keep class com.google.crypto.tink.KeyTemplate { *; }
+-keep class com.google.crypto.tink.Registry { *; }
+-keep class com.google.crypto.tink.aead.** { *; }
+-keep class com.google.crypto.tink.config.TinkConfig { *; }
 
-# ErrorProne annotations (referenced by Tink)
+# Suppress warnings for optional dependencies
+-dontwarn com.google.crypto.tink.**
 -dontwarn com.google.errorprone.annotations.**
 -dontwarn javax.annotation.**
 -dontwarn org.checkerframework.**

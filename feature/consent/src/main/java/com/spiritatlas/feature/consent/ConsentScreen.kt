@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.spiritatlas.domain.model.ConsentStatus
@@ -26,10 +27,13 @@ fun ConsentScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("AI Settings") },
+                title = { Text(stringResource(R.string.consent_screen_title)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.consent_back_button)
+                        )
                     }
                 }
             )
@@ -52,12 +56,12 @@ fun ConsentScreen(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "Privacy & Data Settings",
+                        text = stringResource(R.string.consent_privacy_title),
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                     Text(
-                        text = "Control how your data is used. Your choices are saved locally and encrypted.",
+                        text = stringResource(R.string.consent_privacy_description),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
@@ -66,36 +70,36 @@ fun ConsentScreen(
 
             // Consent toggles
             Text(
-                text = "Data Permissions",
+                text = stringResource(R.string.consent_data_permissions_header),
                 style = MaterialTheme.typography.headlineSmall
             )
 
             ConsentToggle(
-                title = "AI Enrichment",
-                description = "Allow AI to analyze your profile and provide personalized spiritual insights",
+                title = stringResource(R.string.consent_ai_enrichment_title),
+                description = stringResource(R.string.consent_ai_enrichment_description),
                 isEnabled = consentMap[ConsentType.AI_ENRICHMENT] == ConsentStatus.GRANTED,
                 onToggle = { viewModel.toggle(ConsentType.AI_ENRICHMENT, it) }
             )
 
             ConsentToggle(
-                title = "Cloud Sync",
-                description = "Sync your profiles across devices using encrypted cloud storage",
+                title = stringResource(R.string.consent_cloud_sync_title),
+                description = stringResource(R.string.consent_cloud_sync_description),
                 isEnabled = consentMap[ConsentType.CLOUD_SYNC] == ConsentStatus.GRANTED,
                 onToggle = { viewModel.toggle(ConsentType.CLOUD_SYNC, it) }
             )
 
             ConsentToggle(
-                title = "Analytics",
-                description = "Help improve the app by sharing anonymous usage data",
+                title = stringResource(R.string.consent_analytics_title),
+                description = stringResource(R.string.consent_analytics_description),
                 isEnabled = consentMap[ConsentType.ANALYTICS] == ConsentStatus.GRANTED,
                 onToggle = { viewModel.toggle(ConsentType.ANALYTICS, it) }
             )
 
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
-            
+
             // AI Provider selection
             Text(
-                text = "AI Provider",
+                text = stringResource(R.string.consent_ai_provider_header),
                 style = MaterialTheme.typography.headlineSmall
             )
             
@@ -121,11 +125,11 @@ fun ConsentScreen(
                     ) {
                         Column {
                             Text(
-                                text = "🏠 Local (Ollama)",
+                                text = stringResource(R.string.consent_provider_local_title),
                                 style = MaterialTheme.typography.titleMedium
                             )
                             Text(
-                                text = "Runs AI on your device - completely private",
+                                text = stringResource(R.string.consent_provider_local_description),
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -156,11 +160,11 @@ fun ConsentScreen(
                     ) {
                         Column {
                             Text(
-                                text = "☁️ Cloud (OpenRouter)",
+                                text = stringResource(R.string.consent_provider_cloud_title),
                                 style = MaterialTheme.typography.titleMedium
                             )
                             Text(
-                                text = "Uses advanced cloud AI models - faster and more accurate",
+                                text = stringResource(R.string.consent_provider_cloud_description),
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
