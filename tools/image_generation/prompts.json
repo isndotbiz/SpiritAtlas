@@ -1,0 +1,372 @@
+{
+  "numerology": {
+    "life_path_1": {
+      "prompt": "Sacred geometry digital art of the number 1, representing leadership and independence, glowing with golden light, surrounded by sacred geometric patterns and cosmic energy, spiritual mystical style, ethereal atmosphere, deep space background with stars",
+      "size": "1024x1024",
+      "category": "numerology",
+      "tags": ["number", "leadership", "independence", "sacred_geometry"]
+    },
+    "life_path_2": {
+      "prompt": "Sacred geometry digital art of the number 2, representing harmony and partnership, glowing with silver moonlight, surrounded by sacred geometric patterns representing duality and balance, spiritual mystical style, ethereal atmosphere",
+      "size": "1024x1024",
+      "category": "numerology",
+      "tags": ["number", "harmony", "partnership", "balance"]
+    },
+    "life_path_3": {
+      "prompt": "Sacred geometry digital art of the number 3, representing creativity and expression, glowing with vibrant rainbow colors, surrounded by sacred geometric patterns of trinity and manifestation, spiritual mystical style, ethereal atmosphere",
+      "size": "1024x1024",
+      "category": "numerology",
+      "tags": ["number", "creativity", "expression", "trinity"]
+    },
+    "life_path_4": {
+      "prompt": "Sacred geometry digital art of the number 4, representing stability and foundation, glowing with emerald green light, surrounded by sacred geometric patterns of squares and cubes, spiritual mystical style, grounded earthy atmosphere",
+      "size": "1024x1024",
+      "category": "numerology",
+      "tags": ["number", "stability", "foundation", "structure"]
+    },
+    "life_path_5": {
+      "prompt": "Sacred geometry digital art of the number 5, representing freedom and adventure, glowing with dynamic orange light, surrounded by sacred geometric patterns of pentagons and spirals, spiritual mystical style, energetic flowing atmosphere",
+      "size": "1024x1024",
+      "category": "numerology",
+      "tags": ["number", "freedom", "adventure", "change"]
+    },
+    "life_path_6": {
+      "prompt": "Sacred geometry digital art of the number 6, representing love and responsibility, glowing with rose pink light, surrounded by sacred geometric patterns of hexagons and hearts, spiritual mystical style, nurturing warm atmosphere",
+      "size": "1024x1024",
+      "category": "numerology",
+      "tags": ["number", "love", "responsibility", "nurturing"]
+    },
+    "life_path_7": {
+      "prompt": "Sacred geometry digital art of the number 7, representing wisdom and spirituality, glowing with deep violet light, surrounded by sacred geometric patterns of heptagons and mystical symbols, spiritual mystical style, meditative cosmic atmosphere",
+      "size": "1024x1024",
+      "category": "numerology",
+      "tags": ["number", "wisdom", "spirituality", "mysticism"]
+    },
+    "life_path_8": {
+      "prompt": "Sacred geometry digital art of the number 8 (infinity symbol), representing abundance and power, glowing with golden yellow light, surrounded by sacred geometric patterns of infinity loops and mandalas, spiritual mystical style, prosperous radiant atmosphere",
+      "size": "1024x1024",
+      "category": "numerology",
+      "tags": ["number", "abundance", "power", "infinity"]
+    },
+    "life_path_9": {
+      "prompt": "Sacred geometry digital art of the number 9, representing completion and universal love, glowing with pure white light, surrounded by sacred geometric patterns of circles and completion symbols, spiritual mystical style, enlightened transcendent atmosphere",
+      "size": "1024x1024",
+      "category": "numerology",
+      "tags": ["number", "completion", "universal_love", "enlightenment"]
+    }
+  },
+  "astrology": {
+    "aries": {
+      "prompt": "Mystical astrological symbol for Aries the Ram, glowing with fiery red and orange energy, constellation of stars forming the ram's horns, cosmic background with Mars planet influence, spiritual zodiac art, dynamic energetic atmosphere",
+      "size": "1024x1024",
+      "category": "astrology",
+      "tags": ["zodiac", "aries", "fire", "mars"]
+    },
+    "taurus": {
+      "prompt": "Mystical astrological symbol for Taurus the Bull, glowing with earthy green and brown energy, constellation of stars forming the bull, cosmic background with Venus planet influence, spiritual zodiac art, grounded stable atmosphere",
+      "size": "1024x1024",
+      "category": "astrology",
+      "tags": ["zodiac", "taurus", "earth", "venus"]
+    },
+    "gemini": {
+      "prompt": "Mystical astrological symbol for Gemini the Twins, glowing with yellow and silver energy representing duality, constellation of stars forming twin figures, cosmic background with Mercury planet influence, spiritual zodiac art, intellectual airy atmosphere",
+      "size": "1024x1024",
+      "category": "astrology",
+      "tags": ["zodiac", "gemini", "air", "mercury"]
+    },
+    "cancer": {
+      "prompt": "Mystical astrological symbol for Cancer the Crab, glowing with silver moonlight and pearl energy, constellation of stars forming the crab, cosmic background with Moon influence, spiritual zodiac art, emotional nurturing atmosphere",
+      "size": "1024x1024",
+      "category": "astrology",
+      "tags": ["zodiac", "cancer", "water", "moon"]
+    },
+    "leo": {
+      "prompt": "Mystical astrological symbol for Leo the Lion, glowing with golden sunlight and royal energy, constellation of stars forming the lion's mane, cosmic background with Sun influence, spiritual zodiac art, regal confident atmosphere",
+      "size": "1024x1024",
+      "category": "astrology",
+      "tags": ["zodiac", "leo", "fire", "sun"]
+    },
+    "virgo": {
+      "prompt": "Mystical astrological symbol for Virgo the Maiden, glowing with soft green and white light, constellation of stars forming the maiden holding wheat, cosmic background with Mercury planet influence, spiritual zodiac art, pure analytical atmosphere",
+      "size": "1024x1024",
+      "category": "astrology",
+      "tags": ["zodiac", "virgo", "earth", "mercury"]
+    },
+    "libra": {
+      "prompt": "Mystical astrological symbol for Libra the Scales, glowing with pink and blue balanced energy, constellation of stars forming perfectly balanced scales, cosmic background with Venus planet influence, spiritual zodiac art, harmonious balanced atmosphere",
+      "size": "1024x1024",
+      "category": "astrology",
+      "tags": ["zodiac", "libra", "air", "venus"]
+    },
+    "scorpio": {
+      "prompt": "Mystical astrological symbol for Scorpio the Scorpion, glowing with deep red and black transformative energy, constellation of stars forming the scorpion, cosmic background with Pluto planet influence, spiritual zodiac art, intense mysterious atmosphere",
+      "size": "1024x1024",
+      "category": "astrology",
+      "tags": ["zodiac", "scorpio", "water", "pluto"]
+    },
+    "sagittarius": {
+      "prompt": "Mystical astrological symbol for Sagittarius the Archer, glowing with purple and orange adventurous energy, constellation of stars forming the archer's bow and arrow, cosmic background with Jupiter planet influence, spiritual zodiac art, optimistic expansive atmosphere",
+      "size": "1024x1024",
+      "category": "astrology",
+      "tags": ["zodiac", "sagittarius", "fire", "jupiter"]
+    },
+    "capricorn": {
+      "prompt": "Mystical astrological symbol for Capricorn the Goat, glowing with dark green and grey ambitious energy, constellation of stars forming the sea-goat, cosmic background with Saturn planet influence, spiritual zodiac art, disciplined structured atmosphere",
+      "size": "1024x1024",
+      "category": "astrology",
+      "tags": ["zodiac", "capricorn", "earth", "saturn"]
+    },
+    "aquarius": {
+      "prompt": "Mystical astrological symbol for Aquarius the Water Bearer, glowing with electric blue and turquoise innovative energy, constellation of stars forming the water bearer pouring cosmic wisdom, cosmic background with Uranus planet influence, spiritual zodiac art, revolutionary visionary atmosphere",
+      "size": "1024x1024",
+      "category": "astrology",
+      "tags": ["zodiac", "aquarius", "air", "uranus"]
+    },
+    "pisces": {
+      "prompt": "Mystical astrological symbol for Pisces the Fish, glowing with seafoam green and violet dreamy energy, constellation of stars forming two fish swimming in opposite directions, cosmic background with Neptune planet influence, spiritual zodiac art, mystical compassionate atmosphere",
+      "size": "1024x1024",
+      "category": "astrology",
+      "tags": ["zodiac", "pisces", "water", "neptune"]
+    }
+  },
+  "chakras": {
+    "root_chakra": {
+      "prompt": "Glowing root chakra (Muladhara) visualization, vibrant red energy vortex at the base of the spine, sacred geometry mandala with 4 petals, Sanskrit symbol, grounding earth energy, spiritual mystical art, deep meditation atmosphere",
+      "size": "1024x1024",
+      "category": "chakras",
+      "tags": ["chakra", "root", "muladhara", "grounding"]
+    },
+    "sacral_chakra": {
+      "prompt": "Glowing sacral chakra (Svadhisthana) visualization, vibrant orange energy vortex below the navel, sacred geometry mandala with 6 petals, Sanskrit symbol, flowing water energy, spiritual mystical art, creative passionate atmosphere",
+      "size": "1024x1024",
+      "category": "chakras",
+      "tags": ["chakra", "sacral", "svadhisthana", "creativity"]
+    },
+    "solar_plexus_chakra": {
+      "prompt": "Glowing solar plexus chakra (Manipura) visualization, vibrant yellow energy vortex at the stomach, sacred geometry mandala with 10 petals, Sanskrit symbol, fire energy, spiritual mystical art, empowered confident atmosphere",
+      "size": "1024x1024",
+      "category": "chakras",
+      "tags": ["chakra", "solar_plexus", "manipura", "power"]
+    },
+    "heart_chakra": {
+      "prompt": "Glowing heart chakra (Anahata) visualization, vibrant green and pink energy vortex at the heart center, sacred geometry mandala with 12 petals, Sanskrit symbol, unconditional love energy, spiritual mystical art, loving compassionate atmosphere",
+      "size": "1024x1024",
+      "category": "chakras",
+      "tags": ["chakra", "heart", "anahata", "love"]
+    },
+    "throat_chakra": {
+      "prompt": "Glowing throat chakra (Vishuddha) visualization, vibrant blue energy vortex at the throat, sacred geometry mandala with 16 petals, Sanskrit symbol, sound wave energy, spiritual mystical art, expressive communicative atmosphere",
+      "size": "1024x1024",
+      "category": "chakras",
+      "tags": ["chakra", "throat", "vishuddha", "communication"]
+    },
+    "third_eye_chakra": {
+      "prompt": "Glowing third eye chakra (Ajna) visualization, vibrant indigo energy vortex between the eyebrows, sacred geometry mandala with 2 petals, Sanskrit symbol, intuitive vision energy, spiritual mystical art, insightful intuitive atmosphere",
+      "size": "1024x1024",
+      "category": "chakras",
+      "tags": ["chakra", "third_eye", "ajna", "intuition"]
+    },
+    "crown_chakra": {
+      "prompt": "Glowing crown chakra (Sahasrara) visualization, vibrant violet and white energy vortex at the top of the head, sacred geometry mandala with 1000 petals, Sanskrit symbol, divine consciousness energy, spiritual mystical art, enlightened transcendent atmosphere",
+      "size": "1024x1024",
+      "category": "chakras",
+      "tags": ["chakra", "crown", "sahasrara", "enlightenment"]
+    }
+  },
+  "elements": {
+    "earth_element": {
+      "prompt": "Mystical earth element symbol, sacred geometry representing stability and grounding, emerald green and brown energy, crystals and mountains, Ayurvedic elemental art, spiritual grounded atmosphere, ancient wisdom",
+      "size": "1024x1024",
+      "category": "elements",
+      "tags": ["element", "earth", "grounding", "stability"]
+    },
+    "water_element": {
+      "prompt": "Mystical water element symbol, sacred geometry representing flow and emotion, aqua blue and silver energy, flowing waves and moon phases, Ayurvedic elemental art, spiritual flowing atmosphere, ancient wisdom",
+      "size": "1024x1024",
+      "category": "elements",
+      "tags": ["element", "water", "flow", "emotion"]
+    },
+    "fire_element": {
+      "prompt": "Mystical fire element symbol, sacred geometry representing transformation and passion, red and orange energy, flames and solar energy, Ayurvedic elemental art, spiritual dynamic atmosphere, ancient wisdom",
+      "size": "1024x1024",
+      "category": "elements",
+      "tags": ["element", "fire", "transformation", "passion"]
+    },
+    "air_element": {
+      "prompt": "Mystical air element symbol, sacred geometry representing movement and thought, light blue and white energy, swirling winds and clouds, Ayurvedic elemental art, spiritual airy atmosphere, ancient wisdom",
+      "size": "1024x1024",
+      "category": "elements",
+      "tags": ["element", "air", "movement", "thought"]
+    },
+    "ether_element": {
+      "prompt": "Mystical ether element symbol (space/akasha), sacred geometry representing consciousness and void, purple and cosmic energy, starfield and nebulae, Ayurvedic elemental art, spiritual expansive atmosphere, ancient wisdom",
+      "size": "1024x1024",
+      "category": "elements",
+      "tags": ["element", "ether", "space", "consciousness"]
+    }
+  },
+  "ayurveda": {
+    "vata_dosha": {
+      "prompt": "Ayurvedic Vata dosha visualization, air and ether elements combined, light blue and grey swirling energy, ethereal movement and creativity, sacred geometry, spiritual Ayurvedic art, dynamic mobile atmosphere",
+      "size": "1024x1024",
+      "category": "ayurveda",
+      "tags": ["dosha", "vata", "air", "movement"]
+    },
+    "pitta_dosha": {
+      "prompt": "Ayurvedic Pitta dosha visualization, fire and water elements combined, orange and red transformative energy, intense focused power, sacred geometry, spiritual Ayurvedic art, passionate determined atmosphere",
+      "size": "1024x1024",
+      "category": "ayurveda",
+      "tags": ["dosha", "pitta", "fire", "transformation"]
+    },
+    "kapha_dosha": {
+      "prompt": "Ayurvedic Kapha dosha visualization, earth and water elements combined, green and blue grounding energy, stable nurturing presence, sacred geometry, spiritual Ayurvedic art, calm stable atmosphere",
+      "size": "1024x1024",
+      "category": "ayurveda",
+      "tags": ["dosha", "kapha", "earth", "stability"]
+    }
+  },
+  "humandesign": {
+    "manifestor": {
+      "prompt": "Human Design Manifestor type visualization, initiating powerful energy, red and orange dynamic aura, closed sacral center with defined throat, sacred geometry bodygraph elements, spiritual HD art, independent initiating atmosphere",
+      "size": "1024x1024",
+      "category": "humandesign",
+      "tags": ["human_design", "manifestor", "initiation", "power"]
+    },
+    "generator": {
+      "prompt": "Human Design Generator type visualization, sustained responsive energy, warm yellow and gold aura, defined sacral center glowing, sacred geometry bodygraph elements, spiritual HD art, responsive building atmosphere",
+      "size": "1024x1024",
+      "category": "humandesign",
+      "tags": ["human_design", "generator", "response", "sustainability"]
+    },
+    "manifesting_generator": {
+      "prompt": "Human Design Manifesting Generator type visualization, multi-passionate quick energy, orange and yellow dynamic aura, defined sacral and throat centers, sacred geometry bodygraph elements, spiritual HD art, multi-tasking efficient atmosphere",
+      "size": "1024x1024",
+      "category": "humandesign",
+      "tags": ["human_design", "manifesting_generator", "multi_passionate", "efficient"]
+    },
+    "projector": {
+      "prompt": "Human Design Projector type visualization, guiding focused energy, green and blue wisdom aura, undefined sacral with defined other centers, sacred geometry bodygraph elements, spiritual HD art, guiding wise atmosphere",
+      "size": "1024x1024",
+      "category": "humandesign",
+      "tags": ["human_design", "projector", "guidance", "wisdom"]
+    },
+    "reflector": {
+      "prompt": "Human Design Reflector type visualization, lunar reflective energy, silver and white mirroring aura, all centers undefined with cosmic connection, sacred geometry bodygraph elements, spiritual HD art, reflective lunar atmosphere",
+      "size": "1024x1024",
+      "category": "humandesign",
+      "tags": ["human_design", "reflector", "lunar", "mirror"]
+    },
+    "profile_1_3": {
+      "prompt": "Human Design 1/3 Profile (Investigator-Martyr), foundation building through trial and error, geometric lines showing foundation and experimentation, spiritual HD art, learning discovering atmosphere",
+      "size": "1024x1024",
+      "category": "humandesign",
+      "tags": ["human_design", "profile", "1_3", "investigator"]
+    },
+    "profile_2_4": {
+      "prompt": "Human Design 2/4 Profile (Hermit-Opportunist), natural talent meeting community, geometric lines showing solitude and connection, spiritual HD art, natural networker atmosphere",
+      "size": "1024x1024",
+      "category": "humandesign",
+      "tags": ["human_design", "profile", "2_4", "hermit"]
+    },
+    "profile_3_5": {
+      "prompt": "Human Design 3/5 Profile (Martyr-Heretic), experimentation and practical solutions, geometric lines showing trial and projection, spiritual HD art, experimental problem-solver atmosphere",
+      "size": "1024x1024",
+      "category": "humandesign",
+      "tags": ["human_design", "profile", "3_5", "martyr"]
+    },
+    "profile_4_6": {
+      "prompt": "Human Design 4/6 Profile (Opportunist-Role Model), network building and wisdom, geometric lines showing community and observation, spiritual HD art, wise networker atmosphere",
+      "size": "1024x1024",
+      "category": "humandesign",
+      "tags": ["human_design", "profile", "4_6", "role_model"]
+    }
+  },
+  "transits": {
+    "sun_transit": {
+      "prompt": "Astrological Sun transit visualization, golden solar energy moving through zodiac wheel, radiant life force and vitality, cosmic planetary movement, spiritual transit art, empowering vital atmosphere",
+      "size": "1024x1024",
+      "category": "transits",
+      "tags": ["transit", "sun", "vitality", "life_force"]
+    },
+    "moon_transit": {
+      "prompt": "Astrological Moon transit visualization, silver lunar energy moving through zodiac wheel showing moon phases, emotional tides and intuition, cosmic planetary movement, spiritual transit art, emotional nurturing atmosphere",
+      "size": "1024x1024",
+      "category": "transits",
+      "tags": ["transit", "moon", "emotions", "intuition"]
+    },
+    "mercury_transit": {
+      "prompt": "Astrological Mercury transit visualization, quick silver energy moving through zodiac wheel, communication and thought, cosmic planetary movement, spiritual transit art, intellectual communicative atmosphere",
+      "size": "1024x1024",
+      "category": "transits",
+      "tags": ["transit", "mercury", "communication", "thought"]
+    },
+    "venus_transit": {
+      "prompt": "Astrological Venus transit visualization, rose pink and green energy moving through zodiac wheel, love and beauty, cosmic planetary movement, spiritual transit art, loving harmonious atmosphere",
+      "size": "1024x1024",
+      "category": "transits",
+      "tags": ["transit", "venus", "love", "beauty"]
+    },
+    "mars_transit": {
+      "prompt": "Astrological Mars transit visualization, fiery red energy moving through zodiac wheel, action and courage, cosmic planetary movement, spiritual transit art, dynamic assertive atmosphere",
+      "size": "1024x1024",
+      "category": "transits",
+      "tags": ["transit", "mars", "action", "courage"]
+    },
+    "jupiter_transit": {
+      "prompt": "Astrological Jupiter transit visualization, expansive purple and gold energy moving through zodiac wheel, growth and abundance, cosmic planetary movement, spiritual transit art, optimistic expansive atmosphere",
+      "size": "1024x1024",
+      "category": "transits",
+      "tags": ["transit", "jupiter", "expansion", "abundance"]
+    },
+    "saturn_transit": {
+      "prompt": "Astrological Saturn transit visualization, structured dark blue and grey energy moving through zodiac wheel, discipline and lessons, cosmic planetary movement, spiritual transit art, mature structured atmosphere",
+      "size": "1024x1024",
+      "category": "transits",
+      "tags": ["transit", "saturn", "discipline", "structure"]
+    },
+    "pluto_transit": {
+      "prompt": "Astrological Pluto transit visualization, transformative black and deep red energy moving through zodiac wheel, death and rebirth cycles, cosmic planetary movement, spiritual transit art, transformative powerful atmosphere",
+      "size": "1024x1024",
+      "category": "transits",
+      "tags": ["transit", "pluto", "transformation", "rebirth"]
+    }
+  },
+  "backgrounds": {
+    "cosmic_void": {
+      "prompt": "Deep cosmic void background, infinite dark space with distant stars, subtle nebula wisps, spiritual mystical atmosphere, perfect for overlay text, minimal ethereal cosmic art",
+      "size": "1024x1024",
+      "category": "backgrounds",
+      "tags": ["background", "cosmic", "void", "space"]
+    },
+    "nebula_pink": {
+      "prompt": "Pink and purple nebula cosmic background, ethereal gas clouds in space, stardust and cosmic energy, spiritual mystical atmosphere, perfect for overlay text, dreamy nebula art",
+      "size": "1024x1024",
+      "category": "backgrounds",
+      "tags": ["background", "nebula", "pink", "cosmic"]
+    },
+    "nebula_blue": {
+      "prompt": "Blue and turquoise nebula cosmic background, ethereal gas clouds in space, stardust and cosmic energy, spiritual mystical atmosphere, perfect for overlay text, calming nebula art",
+      "size": "1024x1024",
+      "category": "backgrounds",
+      "tags": ["background", "nebula", "blue", "cosmic"]
+    },
+    "galaxy_spiral": {
+      "prompt": "Spiral galaxy cosmic background, majestic spiral arms of stars and cosmic dust, deep space perspective, spiritual mystical atmosphere, perfect for overlay text, grand galactic art",
+      "size": "1024x1024",
+      "category": "backgrounds",
+      "tags": ["background", "galaxy", "spiral", "cosmic"]
+    },
+    "star_field": {
+      "prompt": "Dense star field cosmic background, countless twinkling stars of various sizes, deep space with subtle color variation, spiritual mystical atmosphere, perfect for overlay text, celestial star art",
+      "size": "1024x1024",
+      "category": "backgrounds",
+      "tags": ["background", "stars", "field", "cosmic"]
+    },
+    "aurora_mystical": {
+      "prompt": "Mystical aurora background, flowing colorful northern lights energy, ethereal waves of light in cosmic space, spiritual mystical atmosphere, perfect for overlay text, magical aurora art",
+      "size": "1024x1024",
+      "category": "backgrounds",
+      "tags": ["background", "aurora", "mystical", "lights"]
+    }
+  }
+}

@@ -1,0 +1,13 @@
+# SpiritAtlas Image Generation Requirements
+
+# Core dependencies
+requests>=2.31.0
+Pillow>=10.0.0
+
+# AI Image Generation Providers (choose one or both)
+fal-client>=0.4.0        # For fal.ai (recommended)
+replicate>=0.25.0        # For replicate.ai (alternative)
+
+# Optional utilities
+tqdm>=4.66.0            # Progress bars (if adding more features)
+python-dotenv>=1.0.0    # For .env file support
