@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
@@ -11,6 +12,39 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+
+/**
+ * Consolidated state for DateTimePicker to minimize recompositions.
+ * Single state object instead of 5 separate states.
+ */
+@Immutable
+private data class DateTimePickerState(
+    val year: Int = 1990,
+    val month: Int = 1,
+    val day: Int = 1,
+    val hour: Int = 12,
+    val minute: Int = 0
+) {
+    fun toLocalDateTime(): LocalDateTime? = try {
+        LocalDateTime.of(year, month, day, hour, minute)
+    } catch (e: Exception) {
+        null
+    }
+
+    companion object {
+        fun fromLocalDateTime(dateTime: LocalDateTime?): DateTimePickerState {
+            return dateTime?.let {
+                DateTimePickerState(
+                    year = it.year,
+                    month = it.monthValue,
+                    day = it.dayOfMonth,
+                    hour = it.hour,
+                    minute = it.minute
+                )
+            } ?: DateTimePickerState()
+        }
+    }
+}
 
 /**
  * A comprehensive date and time picker for spiritual profile data.
@@ -25,11 +59,9 @@ fun DateTimePicker(
     modifier: Modifier = Modifier
 ) {
     var showPicker by remember { mutableStateOf(false) }
-    var tempYear by remember { mutableStateOf(selectedDateTime?.year ?: 1990) }
-    var tempMonth by remember { mutableStateOf(selectedDateTime?.monthValue ?: 1) }
-    var tempDay by remember { mutableStateOf(selectedDateTime?.dayOfMonth ?: 1) }
-    var tempHour by remember { mutableStateOf(selectedDateTime?.hour ?: 12) }
-    var tempMinute by remember { mutableStateOf(selectedDateTime?.minute ?: 0) }
+    var pickerState by remember(selectedDateTime) {
+        mutableStateOf(DateTimePickerState.fromLocalDateTime(selectedDateTime))
+    }
 
     Column(modifier = modifier) {
         OutlinedTextField(
@@ -67,25 +99,25 @@ fun DateTimePicker(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        TextButton(onClick = { tempYear -= 10 }) {
+                        TextButton(onClick = { pickerState = pickerState.copy(year = pickerState.year - 10) }) {
                             Text("-10")
                         }
-                        TextButton(onClick = { tempYear -= 1 }) {
+                        TextButton(onClick = { pickerState = pickerState.copy(year = pickerState.year - 1) }) {
                             Text("-1")
                         }
                         OutlinedTextField(
-                            value = tempYear.toString(),
+                            value = pickerState.year.toString(),
                             onValueChange = { newValue ->
-                                newValue.toIntOrNull()?.let { tempYear = it }
+                                newValue.toIntOrNull()?.let { pickerState = pickerState.copy(year = it) }
                             },
                             label = { Text("Year") },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             modifier = Modifier.weight(1f)
                         )
-                        TextButton(onClick = { tempYear += 1 }) {
+                        TextButton(onClick = { pickerState = pickerState.copy(year = pickerState.year + 1) }) {
                             Text("+1")
                         }
-                        TextButton(onClick = { tempYear += 10 }) {
+                        TextButton(onClick = { pickerState = pickerState.copy(year = pickerState.year + 10) }) {
                             Text("+10")
                         }
                     }
@@ -96,10 +128,10 @@ fun DateTimePicker(
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         OutlinedTextField(
-                            value = tempMonth.toString(),
+                            value = pickerState.month.toString(),
                             onValueChange = { newValue ->
-                                newValue.toIntOrNull()?.let { 
-                                    if (it in 1..12) tempMonth = it 
+                                newValue.toIntOrNull()?.let {
+                                    if (it in 1..12) pickerState = pickerState.copy(month = it)
                                 }
                             },
                             label = { Text("Month") },
@@ -107,10 +139,10 @@ fun DateTimePicker(
                             modifier = Modifier.weight(1f)
                         )
                         OutlinedTextField(
-                            value = tempDay.toString(),
+                            value = pickerState.day.toString(),
                             onValueChange = { newValue ->
-                                newValue.toIntOrNull()?.let { 
-                                    if (it in 1..31) tempDay = it 
+                                newValue.toIntOrNull()?.let {
+                                    if (it in 1..31) pickerState = pickerState.copy(day = it)
                                 }
                             },
                             label = { Text("Day") },
@@ -125,10 +157,10 @@ fun DateTimePicker(
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         OutlinedTextField(
-                            value = tempHour.toString(),
+                            value = pickerState.hour.toString(),
                             onValueChange = { newValue ->
-                                newValue.toIntOrNull()?.let { 
-                                    if (it in 0..23) tempHour = it 
+                                newValue.toIntOrNull()?.let {
+                                    if (it in 0..23) pickerState = pickerState.copy(hour = it)
                                 }
                             },
                             label = { Text("Hour (0-23)") },
@@ -136,10 +168,10 @@ fun DateTimePicker(
                             modifier = Modifier.weight(1f)
                         )
                         OutlinedTextField(
-                            value = tempMinute.toString(),
+                            value = pickerState.minute.toString(),
                             onValueChange = { newValue ->
-                                newValue.toIntOrNull()?.let { 
-                                    if (it in 0..59) tempMinute = it 
+                                newValue.toIntOrNull()?.let {
+                                    if (it in 0..59) pickerState = pickerState.copy(minute = it)
                                 }
                             },
                             label = { Text("Minute") },
@@ -170,14 +202,9 @@ fun DateTimePicker(
                         }
                         Button(
                             onClick = {
-                                try {
-                                    val dateTime = LocalDateTime.of(
-                                        tempYear, tempMonth, tempDay, tempHour, tempMinute
-                                    )
+                                pickerState.toLocalDateTime()?.let { dateTime ->
                                     onDateTimeChange(dateTime)
                                     showPicker = false
-                                } catch (e: Exception) {
-                                    // Handle invalid date
                                 }
                             },
                             modifier = Modifier.weight(1f)

@@ -6,9 +6,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import java.util.concurrent.TimeUnit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
@@ -29,8 +31,19 @@ object NetworkModule {
     @Singleton
     @Named("openrouter")
     fun provideOpenRouterOkHttp(logging: HttpLoggingInterceptor): OkHttpClient {
+        // Certificate pinning for OpenRouter API security
+        // Pins should be updated when certificates rotate (typically annually)
+        val certificatePinner = CertificatePinner.Builder()
+            .add("openrouter.ai", "sha256/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=") // Primary pin - UPDATE WITH ACTUAL PIN
+            .add("openrouter.ai", "sha256/BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=") // Backup pin - UPDATE WITH ACTUAL PIN
+            .build()
+
         return OkHttpClient.Builder()
             .addInterceptor(logging)
+            .certificatePinner(certificatePinner)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
             .build()
     }
 
@@ -38,8 +51,13 @@ object NetworkModule {
     @Singleton
     @Named("ollama")
     fun provideOllamaOkHttp(logging: HttpLoggingInterceptor): OkHttpClient {
+        // Ollama is local, no certificate pinning needed
+        // Longer timeouts for local AI model processing
         return OkHttpClient.Builder()
             .addInterceptor(logging)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(120, TimeUnit.SECONDS) // Local models can be slow
+            .writeTimeout(30, TimeUnit.SECONDS)
             .build()
     }
 

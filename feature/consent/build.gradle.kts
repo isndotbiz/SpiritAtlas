@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.spiritatlas.feature.consent"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 26
@@ -23,7 +23,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.14"
+        kotlinCompilerExtensionVersion = "1.5.15"
     }
 }
 
@@ -38,5 +38,4 @@ dependencies {
     kapt(libs.hilt.compiler)
     implementation(libs.compose.material.icons.extended)
 }
-
 

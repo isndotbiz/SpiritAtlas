@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Core Identity Section -->
+    <string name="core_identity_title">✨ Core Identity (Required - Pick 3 minimum)</string>
+    <string name="full_birth_name_label">Full Birth Name *</string>
+    <string name="full_birth_name_placeholder">e.g., Luna Alexandra Moonwhisper</string>
+    <string name="full_birth_name_supporting">🔢 Essential for numerology calculations</string>
+    <string name="preferred_name_label">Preferred Name *</string>
+    <string name="preferred_name_placeholder">e.g., Luna</string>
+    <string name="preferred_name_supporting">👤 What you like to be called</string>
+    <string name="birth_date_time_label">Birth Date &amp; Time *</string>
+    <string name="birth_time_supporting">🕐 Exact time crucial for astrology accuracy</string>
+    <string name="birth_city_label">Birth City *</string>
+    <string name="birth_city_placeholder">e.g., Sedona</string>
+    <string name="birth_city_supporting">🌍 Location affects astrological calculations</string>
+
+    <!-- Additional Names Section -->
+    <string name="additional_names_title">🏷️ Additional Names</string>
+    <string name="additional_names_subtitle">Enhance numerology accuracy</string>
+    <string name="middle_name_label">Middle Name(s)</string>
+    <string name="middle_name_placeholder">e.g., Alexandra Rose</string>
+    <string name="nickname_label">Nickname</string>
+    <string name="nickname_placeholder">e.g., Lunar</string>
+    <string name="spiritual_name_label">Spiritual Name</string>
+    <string name="spiritual_name_placeholder">e.g., Moonwhisper</string>
+
+    <!-- Family & Ancestry Section -->
+    <string name="family_ancestry_title">👨‍👩‍👧‍👦 Family &amp; Ancestry</string>
+    <string name="family_ancestry_subtitle">Deeper karmic insights</string>
+    <string name="mother_name_label">Mother\'s Full Name</string>
+    <string name="mother_name_placeholder">e.g., Celeste Maya Starweaver</string>
+    <string name="father_name_label">Father\'s Full Name</string>
+    <string name="father_name_placeholder">e.g., Orion David Starweaver</string>
+    <string name="cultural_ancestry_label">Cultural Ancestry</string>
+    <string name="cultural_ancestry_placeholder">e.g., Celtic-Cherokee-Italian</string>
+
+    <!-- Physical & Energetic Section -->
+    <string name="physical_energetic_title">⚡ Physical &amp; Energetic</string>
+    <string name="physical_energetic_subtitle">Energy flow patterns</string>
+    <string name="gender_energy_label">Gender Energy</string>
+    <string name="gender_energy_placeholder">Select gender energy type</string>
+    <string name="masculine_energy">♂️ Masculine Energy</string>
+    <string name="feminine_energy">♀️ Feminine Energy</string>
+    <string name="non_binary_energy">⚧️ Non-Binary Energy</string>
+    <string name="prefer_not_to_say">🌟 Prefer Not to Say</string>
+    <string name="eye_color_label">Eye Color</string>
+    <string name="eye_color_placeholder">e.g., Deep ocean blue with golden flecks</string>
+
+    <!-- Timing & Cycles Section -->
+    <string name="key_timing_title">🕐 Key Timing</string>
+    <string name="key_timing_subtitle">Essential life moments</string>
+    <string name="precise_timing_description">Precise timing for key life moments</string>
+    <string name="first_breath_label">First Breath Moment</string>
+    <string name="first_steps_label">First Steps Date</string>
+
+    <!-- Environmental Section -->
+    <string name="environmental_title">🌙 Environmental</string>
+    <string name="environmental_subtitle">Birth environment influences</string>
+    <string name="moon_phase_label">Moon Phase at Birth</string>
+    <string name="moon_phase_placeholder">e.g., Waxing Gibbous (84%% illumination)</string>
+    <string name="weather_conditions_label">Weather Conditions</string>
+    <string name="weather_conditions_placeholder">e.g., Clear night, full moon visible</string>
+    <string name="hospital_name_label">Hospital/Birth Center</string>
+    <string name="hospital_name_placeholder">e.g., Sedona Sacred Birth Center</string>
+
+    <!-- Life Patterns Section -->
+    <string name="life_patterns_title">🌱 Life Patterns</string>
+    <string name="life_patterns_subtitle">Personal development markers</string>
+    <string name="first_word_label">First Word</string>
+    <string name="first_word_placeholder">e.g., Light</string>
+    <string name="life_events_description">Life events and spiritual awakenings can be added here</string>
+
+    <!-- Preferences Section -->
+    <string name="calculation_preferences_title">⚙️ Calculation Preferences</string>
+    <string name="calculation_preferences_subtitle">How to calculate your insights</string>
+    <string name="zodiac_system_format">Zodiac System: %s</string>
+    <string name="zodiac_sidereal">Sidereal</string>
+    <string name="zodiac_tropical">Tropical</string>
+    <string name="numerology_format">Numerology: %s</string>
+    <string name="detail_level_format">Detail Level: %s</string>
+</resources>

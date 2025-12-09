@@ -1,6 +1,5 @@
 *.iml
 .gradle
-/local.properties
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
@@ -12,7 +11,6 @@
 /captures
 .externalNativeBuild
 .cxx
-local.properties
 
 # Module build directories
 */build/
@@ -41,3 +39,6 @@ api_keys.properties
 
 # OS files
 Thumbs.db
+
+# Archived documentation
+.archive/

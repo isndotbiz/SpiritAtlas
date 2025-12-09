@@ -1,16 +1,18 @@
 [versions]
 # Core Framework - Updated for performance and security
-agp = "8.7.0"                    # Build performance improvements
+agp = "8.13.1"                    # Build performance improvements
+junit-version = "4.13.2"
 kotlin = "1.9.25"                # Latest stable
 compose-bom = "2024.09.02"       # Latest features and bug fixes
 hilt = "2.52"                    # Bug fixes and performance
+kotlinx-coroutines = "1.7.3"     # Coroutines version
 
 # AndroidX - Security and stability updates
 androidx-core = "1.13.1"         # Latest stable
 androidx-lifecycle = "2.8.6"     # Lifecycle improvements
 androidx-activity = "1.9.2"      # Compose integration improvements
 androidx-navigation = "2.8.1"    # Bug fixes
-androidx-security = "1.1.0-beta04" # CRITICAL: Remove alpha dependency
+androidx-security = "1.1.0-alpha06" # CRITICAL: Remove alpha dependency
 androidx-work = "2.9.1"          # Stability fixes
 
 # Database
@@ -33,7 +35,8 @@ jacoco = "0.8.12"               # Coverage improvements
 
 # Security and Monitoring
 versions = "0.51.0"             # Dependency version checking
-dependencycheck = "9.2.0"       # OWASP security scanning
+dependencycheck = "9.2.0"
+foundation-layout = "1.10.0"       # OWASP security scanning
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
@@ -49,6 +52,7 @@ androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
+compose-material = { module = "androidx.compose.material:material" }
 compose-material3 = { module = "androidx.compose.material3:material3" }
 compose-ui = { module = "androidx.compose.ui:ui" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
@@ -60,6 +64,8 @@ hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.re
 hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version = "1.1.0" }
 hilt-work = { module = "androidx.hilt:hilt-work", version = "1.1.0" }
 
+junit = { module = "junit:junit", version.ref = "junit-version" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
@@ -68,10 +74,13 @@ moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
 moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
 moshi-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
 
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
+
 javax-inject = { module = "javax.inject:javax.inject", version = "1" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+androidx-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout", version.ref = "foundation-layout" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

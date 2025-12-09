@@ -79,12 +79,27 @@ class ProfileLibraryViewModel @Inject constructor(
             try {
                 // Trigger enrichment worker for this specific profile
                 // In a real implementation, you'd enqueue a WorkManager job here
-                _uiState.update { 
+                _uiState.update {
                     it.copy(message = "Enrichment started! Check back in a few minutes.")
                 }
             } catch (e: Exception) {
-                _uiState.update { 
+                _uiState.update {
                     it.copy(error = "Failed to start enrichment: ${e.message}")
+                }
+            }
+        }
+    }
+
+    fun deleteProfile(profileId: String) {
+        viewModelScope.launch {
+            try {
+                userRepository.deleteProfile(profileId)
+                _uiState.update {
+                    it.copy(message = "Profile deleted successfully.")
+                }
+            } catch (e: Exception) {
+                _uiState.update {
+                    it.copy(error = "Failed to delete profile: ${e.message}")
                 }
             }
         }
