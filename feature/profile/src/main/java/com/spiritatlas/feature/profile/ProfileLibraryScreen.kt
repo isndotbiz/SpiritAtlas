@@ -237,7 +237,7 @@ fun ProfileLibraryTopBar(
                     text = "Profile Library",
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp,
-                    color = SpiritualPurple
+                    color = MaterialTheme.colorScheme.primary
                 )
             },
             navigationIcon = {
@@ -377,10 +377,10 @@ fun EnhancedModernProfileCard(
                                 width = 2.dp,
                                 brush = Brush.sweepGradient(
                                     colors = listOf(
-                                        SpiritualPurple,
+                                        MaterialTheme.colorScheme.primary,
                                         MysticViolet,
-                                        AuraGold,
-                                        SpiritualPurple
+                                        MaterialTheme.colorScheme.secondary,
+                                        MaterialTheme.colorScheme.primary
                                     ),
                                     center = Offset(
                                         cos(Math.toRadians(animatedBorderOffset.toDouble())).toFloat(),
@@ -418,7 +418,7 @@ fun EnhancedModernProfileCard(
                             text = profile.profileName,
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
-                            color = SpiritualPurple,
+                            color = MaterialTheme.colorScheme.primary,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
@@ -466,14 +466,14 @@ fun EnhancedModernProfileCard(
                                 Icon(
                                     imageVector = Icons.Default.Star,
                                     contentDescription = "Enriched",
-                                    tint = AuraGold,
+                                    tint = MaterialTheme.colorScheme.secondary,
                                     modifier = Modifier.size(16.dp)
                                 )
                                 Spacer(modifier = Modifier.width(4.dp))
                                 Text(
                                     text = "AI Enriched",
                                     fontSize = 12.sp,
-                                    color = AuraGold,
+                                    color = MaterialTheme.colorScheme.secondary,
                                     fontWeight = FontWeight.Medium
                                 )
                             }
@@ -488,19 +488,20 @@ fun EnhancedModernProfileCard(
                             checked = isSelected,
                             onCheckedChange = { onSelectionToggle() },
                             colors = CheckboxDefaults.colors(
-                                checkedColor = SpiritualPurple
+                                checkedColor = MaterialTheme.colorScheme.primary
                             )
                         )
                     } else {
                         IconButton(
                             onClick = { expanded = !expanded },
-                            modifier = Modifier.size(40.dp)
+                            modifier = Modifier.size(48.dp)
                         ) {
                             Icon(
                                 imageVector = if (expanded) Icons.Default.KeyboardArrowUp
                                              else Icons.Default.KeyboardArrowDown,
                                 contentDescription = "Expand",
-                                tint = SpiritualPurple
+                                tint = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.size(24.dp)
                             )
                         }
                     }
@@ -757,7 +758,7 @@ fun SwipeActions(
         ActionButton(
             icon = Icons.Default.Edit,
             label = "Edit",
-            color = SpiritualPurple,
+            color = MaterialTheme.colorScheme.primary,
             onClick = onEdit
         )
 
@@ -773,7 +774,7 @@ fun SwipeActions(
         ActionButton(
             icon = Icons.Default.Star,
             label = "Enrich",
-            color = AuraGold,
+            color = MaterialTheme.colorScheme.secondary,
             onClick = onEnrich
         )
 
@@ -962,7 +963,7 @@ fun EmptyProfileLibrary(
             text = "No Profiles Yet",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            color = SpiritualPurple
+            color = MaterialTheme.colorScheme.primary
         )
         
         Spacer(modifier = Modifier.height(8.dp))

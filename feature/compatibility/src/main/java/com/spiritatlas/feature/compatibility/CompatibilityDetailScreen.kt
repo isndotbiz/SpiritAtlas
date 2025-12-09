@@ -290,7 +290,7 @@ private fun PagerIndicator(
                     Text(
                         text = sections[index],
                         fontSize = 10.sp,
-                        color = SpiritualPurple,
+                        color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Medium
                     )
                 }
@@ -446,7 +446,7 @@ private fun ProfileAvatar(
                 .background(
                     Brush.radialGradient(
                         colors = listOf(
-                            SpiritualPurple,
+                            MaterialTheme.colorScheme.primary,
                             MysticViolet
                         )
                     ),
@@ -628,6 +628,10 @@ private fun TwelveDimensionRadarChart(
         "Growth" to scores.energeticScore
     )
 
+    // Extract colors from theme before Canvas (can't use MaterialTheme inside DrawScope)
+    val primaryColor = MaterialTheme.colorScheme.primary
+    val onPrimaryColor = MaterialTheme.colorScheme.onPrimary
+
     Canvas(
         modifier = Modifier
             .fillMaxSize()
@@ -644,14 +648,18 @@ private fun TwelveDimensionRadarChart(
     ) {
         drawTwelveDimensionRadar(
             dimensions = dimensions,
-            animationProgress = animationProgress
+            animationProgress = animationProgress,
+            primaryColor = primaryColor,
+            onPrimaryColor = onPrimaryColor
         )
     }
 }
 
 private fun DrawScope.drawTwelveDimensionRadar(
     dimensions: Map<String, Double>,
-    animationProgress: Float
+    animationProgress: Float,
+    primaryColor: Color,
+    onPrimaryColor: Color
 ) {
     val center = Offset(size.width / 2, size.height / 2)
     val maxRadius = size.minDimension / 2 * 0.7f
@@ -720,20 +728,20 @@ private fun DrawScope.drawTwelveDimensionRadar(
     // Draw polygon outline
     drawPath(
         path = path,
-        color = SpiritualPurple,
+        color = primaryColor,
         style = Stroke(width = 3f)
     )
 
     // Draw points
     points.forEach { point ->
         drawCircle(
-            color = SpiritualPurple,
+            color = primaryColor,
             radius = 6f,
             center = point
         )
 
         drawCircle(
-            color = Color.White,
+            color = onPrimaryColor,
             radius = 2f,
             center = point
         )
@@ -761,7 +769,7 @@ private fun DimensionDetailCard(
                     text = dimension,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    color = SpiritualPurple
+                    color = MaterialTheme.colorScheme.primary
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
@@ -1051,11 +1059,11 @@ private fun FlippableChallengeCard(
                                 text = "Solutions:",
                                 style = MaterialTheme.typography.labelLarge,
                                 fontWeight = FontWeight.Bold,
-                                color = SpiritualPurple
+                                color = MaterialTheme.colorScheme.primary
                             )
                             challenge.solutions.forEach { solution ->
                                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                    Text("•", color = SpiritualPurple)
+                                    Text("•", color = MaterialTheme.colorScheme.primary)
                                     Text(
                                         text = solution,
                                         style = MaterialTheme.typography.bodySmall
@@ -1268,7 +1276,7 @@ private fun AstrologySignMatch(
             Text(
                 text = "×",
                 fontSize = 24.sp,
-                color = SpiritualPurple
+                color = MaterialTheme.colorScheme.primary
             )
             Text(text = sign2, fontSize = 32.sp)
         }
@@ -1653,7 +1661,7 @@ private fun ActionPlansSection(report: CompatibilityReport) {
             ActionPlanCategory(
                 title = "Today",
                 icon = "☀️",
-                color = AuraGold,
+                color = MaterialTheme.colorScheme.secondary,
                 actions = listOf(
                     "Express appreciation for each other",
                     "Share a meal together mindfully",
@@ -1673,7 +1681,7 @@ private fun ActionPlansSection(report: CompatibilityReport) {
             ActionPlanCategory(
                 title = "This Week",
                 icon = "📅",
-                color = SpiritualPurple,
+                color = MaterialTheme.colorScheme.primary,
                 actions = listOf(
                     "Plan a date focused on shared interests",
                     "Discuss long-term goals together",
@@ -1795,15 +1803,19 @@ private fun ActionChecklistItem(
 
 @Composable
 private fun ConfettiEffect(modifier: Modifier = Modifier) {
-    val particles = remember {
+    // Extract colors from theme before remember block
+    val primaryColor = MaterialTheme.colorScheme.primary
+    val secondaryColor = MaterialTheme.colorScheme.secondary
+
+    val particles = remember(primaryColor, secondaryColor) {
         List(30) {
             ConfettiParticle(
                 x = Random.nextFloat(),
                 initialY = -0.2f,
                 speed = Random.nextFloat() * 0.5f + 0.3f,
                 color = listOf(
-                    SpiritualPurple,
-                    AuraGold,
+                    primaryColor,
+                    secondaryColor,
                     TantricRose,
                     ChakraGreen,
                     CosmicBlue

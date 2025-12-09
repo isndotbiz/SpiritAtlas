@@ -41,7 +41,7 @@ class ConsentViewModel @Inject constructor(
 
     fun providerModeState(): StateFlow<AiProviderMode> =
         aiSettingsRepository.observeMode().stateIn(
-            viewModelScope, SharingStarted.WhileSubscribed(5000), AiProviderMode.CLOUD
+            viewModelScope, SharingStarted.WhileSubscribed(5000), AiProviderMode.AUTO
         )
 
     fun setProviderMode(mode: AiProviderMode) {

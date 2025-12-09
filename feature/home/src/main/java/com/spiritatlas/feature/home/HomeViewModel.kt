@@ -24,9 +24,13 @@ class HomeViewModel @Inject constructor(
         .observeMode()
         .map { mode ->
             when (mode) {
-                AiProviderMode.CLOUD -> "AI Provider: OpenRouter"
-                AiProviderMode.LOCAL -> "AI Provider: Ollama"
                 AiProviderMode.AUTO -> "AI Provider: Auto (prefers OpenRouter)"
+                AiProviderMode.LOCAL -> "AI Provider: Ollama"
+                AiProviderMode.GEMINI -> "AI Provider: Gemini"
+                AiProviderMode.GROQ -> "AI Provider: Groq"
+                AiProviderMode.OPENAI -> "AI Provider: OpenAI"
+                AiProviderMode.CLAUDE -> "AI Provider: Claude"
+                AiProviderMode.OPENROUTER -> "AI Provider: OpenRouter"
             }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "AI Provider: Auto (prefers OpenRouter)")

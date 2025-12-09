@@ -27,6 +27,7 @@ domain/build/
 *.log
 
 # API Keys and Secrets (NEVER COMMIT!)
+local.properties
 secrets.properties
 keystore.properties
 api_keys.properties

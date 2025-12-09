@@ -143,9 +143,9 @@ fun ConsentScreen(
                 
                 // Cloud (OpenRouter) option
                 Card(
-                    onClick = { viewModel.setProviderMode(AiProviderMode.CLOUD) },
+                    onClick = { viewModel.setProviderMode(AiProviderMode.AUTO) },
                     colors = CardDefaults.cardColors(
-                        containerColor = if (providerMode == AiProviderMode.CLOUD) {
+                        containerColor = if (providerMode == AiProviderMode.AUTO) {
                             MaterialTheme.colorScheme.primaryContainer
                         } else {
                             MaterialTheme.colorScheme.surface
@@ -170,8 +170,8 @@ fun ConsentScreen(
                             )
                         }
                         RadioButton(
-                            selected = providerMode == AiProviderMode.CLOUD,
-                            onClick = { viewModel.setProviderMode(AiProviderMode.CLOUD) }
+                            selected = providerMode == AiProviderMode.AUTO,
+                            onClick = { viewModel.setProviderMode(AiProviderMode.AUTO) }
                         )
                     }
                 }

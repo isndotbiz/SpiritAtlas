@@ -80,7 +80,7 @@ fun StarfieldBackground(
             stars.forEach { star ->
                 val x = size.width * star.x
                 val y = size.height * star.y
-                val twinkle = (cos(Math.toRadians((time * star.twinkleSpeed + star.twinkleOffset).toDouble())) + 1f) / 2f
+                val twinkle = (cos(Math.toRadians((time * star.twinkleSpeed + star.twinkleOffset).toDouble())).toFloat() + 1f) / 2f
                 val alpha = 0.3f + (twinkle * 0.7f)
 
                 // Star glow
@@ -92,7 +92,7 @@ fun StarfieldBackground(
 
                 // Star core
                 drawCircle(
-                    color = Color.White.copy(alpha = alpha),
+                    color = Color.White.copy(alpha = alpha.toFloat()),
                     radius = star.size,
                     center = Offset(x, y)
                 )
@@ -131,13 +131,6 @@ fun StarfieldBackground(
     }
 }
 
-private data class Star(
-    val x: Float,
-    val y: Float,
-    val size: Float,
-    val twinkleSpeed: Float,
-    val twinkleOffset: Float
-)
 
 // ============================================================================
 // 2. SACRED GEOMETRY BACKGROUND - For Profile Library Screen

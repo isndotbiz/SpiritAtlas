@@ -126,8 +126,8 @@ fun HomeScreen(
             floatingActionButton = {
                 FloatingActionButton(
                     onClick = onNavigateToProfile,
-                    containerColor = SpiritualPurple,
-                    contentColor = Color.White
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
                 ) {
                     Icon(Icons.Filled.Add, contentDescription = "Create Profile")
                 }
@@ -253,7 +253,7 @@ private fun HomeTopBar(onSettingsClick: () -> Unit) {
                     "SpiritAtlas",
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
-                    color = SpiritualPurple
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
         },
@@ -262,7 +262,7 @@ private fun HomeTopBar(onSettingsClick: () -> Unit) {
                 Icon(
                     Icons.Filled.Settings,
                     contentDescription = "Settings",
-                    tint = SpiritualPurple
+                    tint = MaterialTheme.colorScheme.primary
                 )
             }
         },
@@ -298,7 +298,7 @@ private fun HeaderSection() {
                 text = "$greeting, Seeker",
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
-                color = SpiritualPurple
+                color = MaterialTheme.colorScheme.primary
             )
 
             // Date and Moon Phase
@@ -346,7 +346,7 @@ private fun MoonPhaseIcon(phase: MoonPhase) {
             // Draw shadow for phase effect
             val shadowOffset = (phase.illumination - 0.5f) * 2f * radius
             drawCircle(
-                color = Color.Black.copy(alpha = 0.6f),
+                color = Color.Black.copy(alpha = 0.75f),
                 radius = radius,
                 center = center.copy(x = center.x + shadowOffset)
             )
@@ -385,7 +385,7 @@ private fun DailyInsightsCard() {
                     text = "Daily Insights",
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
-                    color = SpiritualPurple
+                    color = MaterialTheme.colorScheme.primary
                 )
                 Icon(
                     Icons.Filled.Star,
@@ -472,7 +472,7 @@ private fun InsightRow(
         Icon(
             icon,
             contentDescription = null,
-            tint = SpiritualPurple,
+            tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier.size(20.dp)
         )
         Column {
@@ -480,7 +480,7 @@ private fun InsightRow(
                 text = title,
                 style = MaterialTheme.typography.labelMedium,
                 fontWeight = FontWeight.SemiBold,
-                color = SpiritualPurple
+                color = MaterialTheme.colorScheme.primary
             )
             Text(
                 text = content,
@@ -500,7 +500,7 @@ private fun QuickProfileAccess(onNavigateToProfile: () -> Unit) {
             text = "Your Profiles",
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
-            color = SpiritualPurple
+            color = MaterialTheme.colorScheme.primary
         )
 
         LazyRow(
@@ -559,7 +559,7 @@ private fun ProfileAvatarCard(
                         colors = listOf(SpiritualPurple, MysticViolet)
                     )
                 )
-                .border(3.dp, Color.White.copy(alpha = 0.3f), CircleShape),
+                .border(3.dp, Color.White.copy(alpha = 0.75f), CircleShape),
             contentAlignment = Alignment.Center
         ) {
             Text(
@@ -603,7 +603,7 @@ private fun AddProfileCard(onClick: () -> Unit) {
             Icon(
                 Icons.Filled.Add,
                 contentDescription = "Add Profile",
-                tint = SpiritualPurple,
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(32.dp)
             )
         }
@@ -612,7 +612,7 @@ private fun AddProfileCard(onClick: () -> Unit) {
             text = "Add New",
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.Medium,
-            color = SpiritualPurple
+            color = MaterialTheme.colorScheme.primary
         )
     }
 }
@@ -635,7 +635,7 @@ private fun TransitAlertsSection() {
                     text = "Planetary Transits",
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
-                    color = SpiritualPurple
+                    color = MaterialTheme.colorScheme.primary
                 )
                 Icon(
                     Icons.Filled.Info,
@@ -792,7 +792,7 @@ private fun CompatibilityQuickCheck(onSeeFullAnalysis: () -> Unit) {
                 text = "Compatibility Check",
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
-                color = SpiritualPurple
+                color = MaterialTheme.colorScheme.primary
             )
 
             // Profile selectors
@@ -931,7 +931,7 @@ private fun SpiritualWeatherWidget() {
                     text = "Spiritual Weather",
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
-                    color = SpiritualPurple
+                    color = MaterialTheme.colorScheme.primary
                 )
                 Text(
                     text = "Today",
@@ -972,7 +972,7 @@ private fun SpiritualWeatherWidget() {
                     text = "Recommended Activities",
                     style = MaterialTheme.typography.labelMedium,
                     fontWeight = FontWeight.SemiBold,
-                    color = SpiritualPurple
+                    color = MaterialTheme.colorScheme.primary
                 )
                 Text(
                     text = "• Morning meditation\n• Creative projects\n• Connect with loved ones",
@@ -1046,7 +1046,7 @@ private fun FeaturedContentSection() {
             text = "Learn & Explore",
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
-            color = SpiritualPurple
+            color = MaterialTheme.colorScheme.primary
         )
 
         LazyRow(
@@ -1110,7 +1110,7 @@ private fun FeaturedContentCard(content: FeaturedContent) {
             Text(
                 text = "Read more →",
                 style = MaterialTheme.typography.labelMedium,
-                color = SpiritualPurple,
+                color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Medium
             )
         }

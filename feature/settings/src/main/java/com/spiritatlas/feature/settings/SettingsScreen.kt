@@ -902,8 +902,12 @@ private fun AiProviderSelector(
     AiProviderMode.values().forEach { mode ->
       val (label, description, icon) = when (mode) {
         AiProviderMode.LOCAL -> Triple("Local (Ollama)", "Runs on your device - completely private", "🏠")
-        AiProviderMode.CLOUD -> Triple("Cloud (OpenRouter)", "Advanced models - faster and more accurate", "☁️")
         AiProviderMode.AUTO -> Triple("Automatic", "Switches between local and cloud intelligently", "⚡")
+        AiProviderMode.GEMINI -> Triple("Gemini", "Google Gemini 2.5 Flash - fast and free", "💎")
+        AiProviderMode.GROQ -> Triple("Groq", "Groq Llama 3.3 70B - fast and free", "⚡")
+        AiProviderMode.OPENAI -> Triple("OpenAI", "GPT-4o - requires API key", "🤖")
+        AiProviderMode.CLAUDE -> Triple("Claude", "Anthropic Claude - requires API key", "🧠")
+        AiProviderMode.OPENROUTER -> Triple("OpenRouter", "Multiple models available", "☁️")
       }
 
       Card(
@@ -1031,24 +1035,27 @@ private fun AccentColorPicker(
       AccentColor.values().forEach { color ->
         Box(
           modifier = Modifier
-            .size(40.dp)
+            .size(48.dp)
             .clip(CircleShape)
-            .background(Color(color.colorHex))
             .clickable { onColorSelected(color) }
-            .then(
-              if (selectedColor == color) {
-                Modifier.padding(4.dp)
-              } else Modifier
-            ),
+            .padding(4.dp),
           contentAlignment = Alignment.Center
         ) {
-          if (selectedColor == color) {
-            Icon(
-              imageVector = Icons.Filled.Check,
-              contentDescription = null,
-              tint = Color.White,
-              modifier = Modifier.size(20.dp)
-            )
+          Box(
+            modifier = Modifier
+              .fillMaxSize()
+              .clip(CircleShape)
+              .background(Color(color.colorHex)),
+            contentAlignment = Alignment.Center
+          ) {
+            if (selectedColor == color) {
+              Icon(
+                imageVector = Icons.Filled.Check,
+                contentDescription = null,
+                tint = Color.White,
+                modifier = Modifier.size(20.dp)
+              )
+            }
           }
         }
       }
@@ -1442,7 +1449,7 @@ private fun UsageStatsCard(
       }
 
       // Per-Day Usage (if applicable)
-      if (usage.limitPerDay != null) {
+      usage.limitPerDay?.let { limitPerDay ->
         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
           Row(
             modifier = Modifier.fillMaxWidth(),
@@ -1454,7 +1461,7 @@ private fun UsageStatsCard(
               color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Text(
-              text = "${usage.requestsPerDay} / ${usage.limitPerDay}",
+              text = "${usage.requestsPerDay} / $limitPerDay",
               style = MaterialTheme.typography.bodyMedium,
               fontWeight = FontWeight.Medium,
               color = if (usage.isNearLimitPerDay) {
@@ -1465,7 +1472,7 @@ private fun UsageStatsCard(
             )
           }
           LinearProgressIndicator(
-            progress = { (usage.requestsPerDay.toFloat() / usage.limitPerDay).coerceIn(0f, 1f) },
+            progress = { (usage.requestsPerDay.toFloat() / limitPerDay).coerceIn(0f, 1f) },
             modifier = Modifier.fillMaxWidth(),
             color = if (usage.isNearLimitPerDay) {
               MaterialTheme.colorScheme.error

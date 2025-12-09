@@ -602,11 +602,11 @@ fun CosmicText(
 
 // Supporting data classes and enums
 
-private data class Star(
+data class Star(
     val x: Float,
     val y: Float,
     val size: Float,
-    val brightness: Float,
+    val brightness: Float = 1f,
     val twinkleSpeed: Float,
     val twinkleOffset: Float
 )

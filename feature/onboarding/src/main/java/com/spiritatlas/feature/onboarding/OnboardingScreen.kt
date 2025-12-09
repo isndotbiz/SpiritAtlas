@@ -260,8 +260,8 @@ fun PageIndicator(
     val color by animateColorAsState(
         targetValue = when {
             isActive -> Color.White
-            isCompleted -> Color.White.copy(alpha = 0.6f)
-            else -> Color.White.copy(alpha = 0.3f)
+            isCompleted -> Color.White.copy(alpha = 0.75f)
+            else -> Color.White.copy(alpha = 0.75f)
         },
         animationSpec = tween(300),
         label = "color"

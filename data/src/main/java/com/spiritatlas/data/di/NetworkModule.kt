@@ -6,7 +6,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -29,18 +28,24 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    @Named("openrouter")
-    fun provideOpenRouterOkHttp(logging: HttpLoggingInterceptor): OkHttpClient {
-        // Certificate pinning for OpenRouter API security
-        // Pins should be updated when certificates rotate (typically annually)
-        val certificatePinner = CertificatePinner.Builder()
-            .add("openrouter.ai", "sha256/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=") // Primary pin - UPDATE WITH ACTUAL PIN
-            .add("openrouter.ai", "sha256/BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=") // Backup pin - UPDATE WITH ACTUAL PIN
-            .build()
-
+    fun provideOkHttpClient(logging: HttpLoggingInterceptor): OkHttpClient {
+        // Generic HTTP client for AI providers
         return OkHttpClient.Builder()
             .addInterceptor(logging)
-            .certificatePinner(certificatePinner)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(90, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    @Named("openrouter")
+    fun provideOpenRouterOkHttp(logging: HttpLoggingInterceptor): OkHttpClient {
+        // Standard HTTPS connection for OpenRouter API
+        // Certificate pinning removed to avoid maintenance overhead and connection failures
+        return OkHttpClient.Builder()
+            .addInterceptor(logging)
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
