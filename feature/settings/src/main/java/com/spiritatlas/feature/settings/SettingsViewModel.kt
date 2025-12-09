@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.spiritatlas.core.ui.haptics.HapticPreferences
+import com.spiritatlas.data.tracking.ProviderUsage
+import com.spiritatlas.data.tracking.UsageRepository
 import com.spiritatlas.domain.ai.AiProviderMode
 import com.spiritatlas.domain.ai.AiSettingsRepository
 import com.spiritatlas.domain.model.ConsentStatus
@@ -28,7 +30,8 @@ class SettingsViewModel @Inject constructor(
   @ApplicationContext private val context: Context,
   private val consentRepository: ConsentRepository,
   private val aiSettingsRepository: AiSettingsRepository,
-  private val userRepository: UserRepository
+  private val userRepository: UserRepository,
+  private val usageRepository: UsageRepository
 ) : ViewModel() {
 
   private val hapticPreferences = HapticPreferences(context)
@@ -52,7 +55,7 @@ class SettingsViewModel @Inject constructor(
     aiSettingsRepository.observeMode().stateIn(
       viewModelScope,
       SharingStarted.WhileSubscribed(5000),
-      AiProviderMode.CLOUD
+      AiProviderMode.AUTO
     )
 
   val consentMap: StateFlow<Map<ConsentType, ConsentStatus>> =
@@ -63,6 +66,13 @@ class SettingsViewModel @Inject constructor(
     ) { statuses ->
       ConsentType.values().zip(statuses.toList()).toMap()
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+
+  // AI Usage Statistics
+  val geminiUsage: StateFlow<ProviderUsage> = usageRepository.observeGeminiUsage()
+    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), ProviderUsage(0, 0, 15, 1500))
+
+  val groqUsage: StateFlow<ProviderUsage> = usageRepository.observeGroqUsage()
+    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), ProviderUsage(0, 0, 30, null))
 
   // Appearance
   private val _themeMode = MutableStateFlow(settingsPreferences.getThemeMode())
@@ -152,6 +162,70 @@ class SettingsViewModel @Inject constructor(
       // TODO: Implement AI cache clearing
       _isLoading.value = false
     }
+  }
+
+  // Provider API Key Management
+  private val _providerStatuses = MutableStateFlow<Map<AiProviderMode, ProviderStatus>>(emptyMap())
+  val providerStatuses: StateFlow<Map<AiProviderMode, ProviderStatus>> = _providerStatuses.asStateFlow()
+
+  private val _testConnectionResult = MutableStateFlow<TestConnectionResult?>(null)
+  val testConnectionResult: StateFlow<TestConnectionResult?> = _testConnectionResult.asStateFlow()
+
+  init {
+    loadProviderStatuses()
+  }
+
+  fun loadProviderStatuses() {
+    viewModelScope.launch {
+      val statuses = mutableMapOf<AiProviderMode, ProviderStatus>()
+      AiProviderMode.values().forEach { provider ->
+        val isAvailable = aiSettingsRepository.isProviderAvailable(provider)
+        val apiKey = when (provider) {
+          AiProviderMode.OPENAI -> aiSettingsRepository.getOpenAiApiKey()
+          AiProviderMode.CLAUDE -> aiSettingsRepository.getClaudeApiKey()
+          AiProviderMode.OPENROUTER -> aiSettingsRepository.getOpenRouterApiKey()
+          else -> null
+        }
+        statuses[provider] = ProviderStatus(
+          isAvailable = isAvailable,
+          hasApiKey = !apiKey.isNullOrBlank(),
+          apiKey = apiKey
+        )
+      }
+      _providerStatuses.value = statuses
+    }
+  }
+
+  fun setProviderApiKey(provider: AiProviderMode, apiKey: String) {
+    viewModelScope.launch {
+      when (provider) {
+        AiProviderMode.OPENAI -> aiSettingsRepository.setOpenAiApiKey(apiKey.takeIf { it.isNotBlank() })
+        AiProviderMode.CLAUDE -> aiSettingsRepository.setClaudeApiKey(apiKey.takeIf { it.isNotBlank() })
+        AiProviderMode.OPENROUTER -> aiSettingsRepository.setOpenRouterApiKey(apiKey.takeIf { it.isNotBlank() })
+        else -> { /* Not supported */ }
+      }
+      loadProviderStatuses()
+    }
+  }
+
+  fun testProviderConnection(provider: AiProviderMode) {
+    viewModelScope.launch {
+      _testConnectionResult.value = TestConnectionResult(provider, TestStatus.TESTING)
+      try {
+        val isAvailable = aiSettingsRepository.isProviderAvailable(provider)
+        _testConnectionResult.value = if (isAvailable) {
+          TestConnectionResult(provider, TestStatus.SUCCESS, "Connection successful")
+        } else {
+          TestConnectionResult(provider, TestStatus.FAILED, "Provider unavailable or API key invalid")
+        }
+      } catch (e: Exception) {
+        _testConnectionResult.value = TestConnectionResult(provider, TestStatus.FAILED, e.message ?: "Connection failed")
+      }
+    }
+  }
+
+  fun clearTestConnectionResult() {
+    _testConnectionResult.value = null
   }
 
   // Appearance Actions
@@ -254,6 +328,13 @@ class SettingsViewModel @Inject constructor(
       } finally {
         _isLoading.value = false
       }
+    }
+  }
+
+  // AI Usage Actions
+  fun resetAiUsage() {
+    viewModelScope.launch {
+      usageRepository.resetAllUsage()
     }
   }
 }
@@ -410,4 +491,23 @@ enum class AccentColor(val displayName: String, val colorHex: Long) {
   TANTRIC_ROSE("Tantric Rose", 0xFFEC4899),
   AURA_GOLD("Aura Gold", 0xFFFBBF24),
   CHAKRA_INDIGO("Chakra Indigo", 0xFF6366F1)
+}
+
+// Provider Management Models
+data class ProviderStatus(
+  val isAvailable: Boolean,
+  val hasApiKey: Boolean,
+  val apiKey: String? = null
+)
+
+data class TestConnectionResult(
+  val provider: AiProviderMode,
+  val status: TestStatus,
+  val message: String? = null
+)
+
+enum class TestStatus {
+  TESTING,
+  SUCCESS,
+  FAILED
 }

@@ -31,6 +31,7 @@ dependencies {
   implementation(project(":core:ui"))
   implementation(project(":core:common"))
   implementation(project(":domain"))
+  implementation(project(":data"))
 
   implementation(libs.androidx.lifecycle.viewmodel.compose)
   implementation(libs.hilt.android)

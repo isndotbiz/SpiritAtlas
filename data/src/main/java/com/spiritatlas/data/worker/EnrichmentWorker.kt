@@ -30,18 +30,14 @@ class EnrichmentWorker @AssistedInject constructor(
     override suspend fun doWork(): Result {
         return try {
             Log.d("SpiritAtlas", "EnrichmentWorker: Starting enrichment work")
-            
-            // Check consent first
-            val consent = consentRepository.getConsentStatus(ConsentType.AI_ENRICHMENT).first()
-            if (consent.name != "GRANTED") {
-                Log.w("SpiritAtlas", "EnrichmentWorker: AI enrichment consent not granted")
-                return Result.failure()
-            }
-            
+
+            // AI is now automatic - no consent check required
+            // The user can still opt-out via settings if desired
+
             // Check AI provider availability
             if (!aiProvider.isAvailable()) {
-                Log.w("SpiritAtlas", "EnrichmentWorker: AI provider not available")
-                return Result.retry()
+                Log.w("SpiritAtlas", "EnrichmentWorker: AI provider not available - please add Gemini API key")
+                return Result.failure() // Changed from retry to failure since no provider means can't proceed
             }
             
             // Get user profile (specific profile if ID provided, otherwise default)

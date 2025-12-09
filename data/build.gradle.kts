@@ -25,12 +25,22 @@ android {
             val v = (raw ?: "").trim().trim('"')
             return v
         }
+        // App-level API keys (built-in, optional)
         val openRouterKey = sanitize(localProps.getProperty("openrouter.api.key"))
+        val geminiKey = sanitize(localProps.getProperty("gemini.api.key"))
+        val groqKey = sanitize(localProps.getProperty("groq.api.key"))
         val ollamaRaw = sanitize(localProps.getProperty("ollama.base.url"))
         val ollamaUrl = if (ollamaRaw.isBlank()) "http://localhost:11434" else ollamaRaw
+
+        // Build config fields
         buildConfigField("String", "OPENROUTER_API_KEY", "\"$openRouterKey\"")
         buildConfigField("String", "OPENROUTER_BASE_URL", "\"https://openrouter.ai/\"")
+        buildConfigField("String", "GEMINI_API_KEY", "\"$geminiKey\"")
+        buildConfigField("String", "GROQ_API_KEY", "\"$groqKey\"")
         buildConfigField("String", "OLLAMA_BASE_URL", "\"$ollamaUrl\"")
+
+        // User API keys stored in encrypted preferences (set via UI)
+        // OpenAI, Claude, and other providers use user-provided keys
     }
     
     compileOptions {
@@ -67,6 +77,9 @@ dependencies {
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
     ksp(libs.moshi.codegen)
+
+    // Google Gemini AI
+    implementation(libs.generativeai)
     
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)

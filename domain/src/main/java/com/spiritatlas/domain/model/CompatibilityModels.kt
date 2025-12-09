@@ -1,5 +1,7 @@
 package com.spiritatlas.domain.model
 
+import com.spiritatlas.domain.ai.AiCompatibilityInsights
+
 /**
  * Domain models for relationship compatibility analysis
  * Integrates numerology, astrology, and tantric insights
@@ -14,6 +16,7 @@ data class CompatibilityReport(
     val challenges: List<CompatibilityChallenge>,
     val recommendations: List<CompatibilityRecommendation>,
     val tantricMatches: List<TantricCompatibility>,
+    val aiInsights: AiCompatibilityInsights? = null, // AI-enhanced insights (optional)
     val generatedAt: java.time.LocalDateTime = java.time.LocalDateTime.now()
 ) {
     val compatibilityLevel: CompatibilityLevel
@@ -25,6 +28,9 @@ data class CompatibilityReport(
             overallScore.totalScore >= 30.0 -> CompatibilityLevel.CHALLENGING
             else -> CompatibilityLevel.INCOMPATIBLE
         }
+
+    val hasAiInsights: Boolean
+        get() = aiInsights != null
 }
 
 data class CompatibilityScores(

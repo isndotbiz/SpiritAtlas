@@ -1,9 +1,15 @@
 package com.spiritatlas.domain.service.optimized
 
+import com.spiritatlas.core.common.Result
+import com.spiritatlas.domain.ai.AnalysisType
 import com.spiritatlas.domain.model.*
+import com.spiritatlas.domain.service.AiCompatibilityService
 import com.spiritatlas.domain.tantric.TantricContent
 import com.spiritatlas.domain.tantric.TantricContentType
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.util.Collections
+import javax.inject.Inject
 import kotlin.math.abs
 
 /**
@@ -34,7 +40,7 @@ private class LruCache<K, V>(private val maxSize: Int) {
 }
 
 /**
- * Performance-optimized compatibility analysis engine
+ * Performance-optimized compatibility analysis engine with AI enhancement
  *
  * Key optimizations:
  * - Cached calculations to avoid redundant computations
@@ -44,8 +50,11 @@ private class LruCache<K, V>(private val maxSize: Int) {
  * - Pool object reuse where appropriate
  * - Minimized memory allocations in hot paths
  * - Bounded LRU caches to prevent memory leaks
+ * - Optional AI-powered insights for enhanced analysis
  */
-class OptimizedCompatibilityAnalysisEngine {
+class OptimizedCompatibilityAnalysisEngine @Inject constructor(
+    private val aiCompatibilityService: AiCompatibilityService? = null // Optional AI service
+) {
 
     // Bounded LRU caches to prevent unbounded memory growth
     private val nameEnergyCache = LruCache<String, Double>(256)
@@ -105,28 +114,93 @@ class OptimizedCompatibilityAnalysisEngine {
     }
     
     /**
-     * Optimized main analysis method with caching and performance improvements
+     * Optimized main analysis method with caching, performance improvements, and AI enhancement
+     *
+     * @param profileA First person's profile
+     * @param profileB Second person's profile
+     * @param tantricContent Tantric content for analysis
+     * @param includeAiInsights Whether to include AI-powered insights (if available)
+     * @param aiAnalysisType Type of AI analysis (quick/standard/comprehensive)
+     * @return Complete compatibility report with optional AI insights
      */
-    fun analyzeCompatibility(
+    suspend fun analyzeCompatibility(
         profileA: UserProfile,
         profileB: UserProfile,
-        tantricContent: List<TantricContent> = emptyList()
-    ): CompatibilityReport {
+        tantricContent: List<TantricContent> = emptyList(),
+        includeAiInsights: Boolean = true,
+        aiAnalysisType: AnalysisType = AnalysisType.STANDARD
+    ): CompatibilityReport = withContext(Dispatchers.Default) {
         // Generate cache keys for profile pair
         val cacheKey = generateProfilePairKey(profileA, profileB)
-        
+
         // Try to get cached scores first
         val scores = profileScoreCache.computeIfAbsent(cacheKey) {
             calculateOptimizedCompatibilityScores(profileA, profileB)
         }
-        
+
         // Generate other components (these are typically unique per analysis)
         val insights = generateRelationshipInsights(profileA, profileB, scores)
         val strengths = identifyStrengths(profileA, profileB, scores)
         val challenges = identifyChallenges(profileA, profileB, scores)
         val recommendations = generateRecommendations(profileA, profileB, scores, challenges)
         val tantricMatches = analyzeTantricCompatibilityOptimized(profileA, profileB, tantricContent)
-        
+
+        // Optionally enhance with AI insights
+        val aiInsights = if (includeAiInsights && aiCompatibilityService != null) {
+            try {
+                when (val result = aiCompatibilityService.analyzeCompatibility(
+                    profileA = profileA,
+                    profileB = profileB,
+                    calculatedScores = scores,
+                    analysisType = aiAnalysisType
+                )) {
+                    is Result.Success -> result.data
+                    else -> null // Gracefully fall back if AI unavailable
+                }
+            } catch (e: Exception) {
+                null // Gracefully fall back on error
+            }
+        } else {
+            null
+        }
+
+        return@withContext CompatibilityReport(
+            profileA = profileA,
+            profileB = profileB,
+            overallScore = scores,
+            insights = insights,
+            strengths = strengths,
+            challenges = challenges,
+            recommendations = recommendations,
+            tantricMatches = tantricMatches,
+            aiInsights = aiInsights
+        )
+    }
+
+    /**
+     * Synchronous version for backward compatibility
+     * Note: This version cannot include AI insights as they require suspend context
+     */
+    fun analyzeCompatibilitySync(
+        profileA: UserProfile,
+        profileB: UserProfile,
+        tantricContent: List<TantricContent> = emptyList()
+    ): CompatibilityReport {
+        // Generate cache keys for profile pair
+        val cacheKey = generateProfilePairKey(profileA, profileB)
+
+        // Try to get cached scores first
+        val scores = profileScoreCache.computeIfAbsent(cacheKey) {
+            calculateOptimizedCompatibilityScores(profileA, profileB)
+        }
+
+        // Generate other components (these are typically unique per analysis)
+        val insights = generateRelationshipInsights(profileA, profileB, scores)
+        val strengths = identifyStrengths(profileA, profileB, scores)
+        val challenges = identifyChallenges(profileA, profileB, scores)
+        val recommendations = generateRecommendations(profileA, profileB, scores, challenges)
+        val tantricMatches = analyzeTantricCompatibilityOptimized(profileA, profileB, tantricContent)
+
         return CompatibilityReport(
             profileA = profileA,
             profileB = profileB,
@@ -135,7 +209,8 @@ class OptimizedCompatibilityAnalysisEngine {
             strengths = strengths,
             challenges = challenges,
             recommendations = recommendations,
-            tantricMatches = tantricMatches
+            tantricMatches = tantricMatches,
+            aiInsights = null // No AI in sync version
         )
     }
     

@@ -78,9 +78,8 @@ import com.spiritatlas.core.ui.components.CompatibilityScoreDisplay
 import com.spiritatlas.core.ui.components.GlassmorphCard
 import com.spiritatlas.core.ui.components.SpiritualButton
 import com.spiritatlas.core.ui.components.SpiritualButtonStyle
-import com.spiritatlas.core.ui.components.SpiritualGradientBackground
-import com.spiritatlas.core.ui.components.SpiritualGradientType
 import com.spiritatlas.core.ui.components.SpiritualPullRefresh
+import com.spiritatlas.core.ui.components.StarfieldBackground
 import com.spiritatlas.core.ui.theme.AuraGold
 import com.spiritatlas.core.ui.theme.ChakraBlue
 import com.spiritatlas.core.ui.theme.ChakraGreen
@@ -119,7 +118,7 @@ fun HomeScreen(
         sectionsVisible = true
     }
 
-    SpiritualGradientBackground(gradientType = SpiritualGradientType.MYSTIC) {
+    StarfieldBackground {
         Scaffold(
             topBar = {
                 HomeTopBar(onSettingsClick = onNavigateToConsent)

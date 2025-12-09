@@ -27,6 +27,9 @@ moshi = "1.15.1"                # Minor fixes
 junit = "5.11.2"                # Latest
 mockk = "1.13.13"               # Bug fixes
 
+# AI/ML
+generativeai = "0.9.0"          # Google Gemini AI SDK
+
 # Tools
 timber = "5.0.1"                # Latest stable
 detekt = "1.23.7"               # Rule improvements
@@ -75,6 +78,8 @@ moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "mosh
 moshi-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
 
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
+
+generativeai = { module = "com.google.ai.client.generativeai:generativeai", version.ref = "generativeai" }
 
 javax-inject = { module = "javax.inject:javax.inject", version = "1" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }

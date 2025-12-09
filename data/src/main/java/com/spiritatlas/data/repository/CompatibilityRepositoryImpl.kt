@@ -31,20 +31,22 @@ class CompatibilityRepositoryImpl @Inject constructor(
     ): Flow<Result<CompatibilityReport>> = flow {
         try {
             emit(Result.Loading)
-            
+
             // Simulate processing time
             delay(1500)
-            
+
             // Get sample tantric content for analysis
             val tantricContent = getSampleTantricContent()
-            
-            // Use the engine to perform analysis
+
+            // Use the engine to perform analysis with AI enhancement
+            // The engine will automatically include AI insights if available
             val report = compatibilityEngine.analyzeCompatibility(
                 profileA = profileA,
                 profileB = profileB,
-                tantricContent = tantricContent
+                tantricContent = tantricContent,
+                includeAiInsights = true  // Enable AI-powered insights
             )
-            
+
             emit(Result.Success(report))
         } catch (e: Exception) {
             emit(Result.Error(Exception("Failed to analyze compatibility: ${e.message}")))
