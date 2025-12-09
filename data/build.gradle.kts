@@ -26,10 +26,12 @@ android {
             return v
         }
         val openRouterKey = sanitize(localProps.getProperty("openrouter.api.key"))
+        val geminiKey = sanitize(localProps.getProperty("gemini.api.key"))
         val ollamaRaw = sanitize(localProps.getProperty("ollama.base.url"))
         val ollamaUrl = if (ollamaRaw.isBlank()) "http://localhost:11434" else ollamaRaw
         buildConfigField("String", "OPENROUTER_API_KEY", "\"$openRouterKey\"")
         buildConfigField("String", "OPENROUTER_BASE_URL", "\"https://openrouter.ai/\"")
+        buildConfigField("String", "GEMINI_API_KEY", "\"$geminiKey\"")
         buildConfigField("String", "OLLAMA_BASE_URL", "\"$ollamaUrl\"")
     }
     
@@ -67,6 +69,9 @@ dependencies {
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
     ksp(libs.moshi.codegen)
+
+    // Google Gemini AI
+    implementation(libs.generativeai)
     
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
