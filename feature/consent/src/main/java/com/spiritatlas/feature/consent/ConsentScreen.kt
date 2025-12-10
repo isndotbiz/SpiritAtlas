@@ -8,9 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.spiritatlas.core.ui.components.DimmedSpiritualBackground
 import com.spiritatlas.domain.model.ConsentStatus
 import com.spiritatlas.domain.ai.AiProviderMode
 import com.spiritatlas.domain.repository.ConsentType
@@ -24,21 +26,22 @@ fun ConsentScreen(
     val consentMap by viewModel.consentMap.collectAsState()
     val providerMode by viewModel.providerModeState().collectAsState()
 
+    // Consent/settings screen - using scaffold without custom background for now
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(stringResource(R.string.consent_screen_title)) },
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(
-                            Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.consent_back_button)
-                        )
+            topBar = {
+                TopAppBar(
+                    title = { Text(stringResource(R.string.consent_screen_title)) },
+                    navigationIcon = {
+                        IconButton(onClick = onNavigateBack) {
+                            Icon(
+                                Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = stringResource(R.string.consent_back_button)
+                            )
+                        }
                     }
-                }
-            )
-        }
-    ) { paddingValues ->
+                )
+            }
+        ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()

@@ -16,6 +16,9 @@ interface AiSettingsRepository {
 
     // Provider availability
     suspend fun isProviderAvailable(provider: AiProviderMode): Boolean
+
+    // Cache management
+    suspend fun clearAiCache()
 }
 
 

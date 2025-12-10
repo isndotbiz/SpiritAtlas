@@ -26,9 +26,29 @@ class ConsentScreenTest {
     val composeTestRule = createComposeRule()
 
     private fun createMockViewModel(): ConsentViewModel {
+        // Create mock repositories using simple implementations
+        val mockConsentRepository = object : com.spiritatlas.domain.repository.ConsentRepository {
+            override suspend fun getConsentStatus(type: ConsentType) = MutableStateFlow(ConsentStatus.NOT_ASKED)
+            override suspend fun updateConsent(type: ConsentType, status: ConsentStatus) {}
+            override suspend fun hasConsent(type: ConsentType) = false
+        }
+
+        val mockAiConfigRepository = object : com.spiritatlas.domain.ai.AiSettingsRepository {
+            override fun observeMode() = MutableStateFlow(AiProviderMode.LOCAL)
+            override suspend fun setMode(mode: AiProviderMode) {}
+            override suspend fun setOpenAiApiKey(apiKey: String?) {}
+            override suspend fun getOpenAiApiKey(): String? = null
+            override suspend fun setClaudeApiKey(apiKey: String?) {}
+            override suspend fun getClaudeApiKey(): String? = null
+            override suspend fun setOpenRouterApiKey(apiKey: String?) {}
+            override suspend fun getOpenRouterApiKey(): String? = null
+            override suspend fun isProviderAvailable(provider: AiProviderMode) = true
+            override suspend fun clearAiCache() {}
+        }
+
         return object : ConsentViewModel(
-            consentRepository = TODO("Mock repository"),
-            aiConfigRepository = TODO("Mock repository")
+            consentRepository = mockConsentRepository,
+            aiConfigRepository = mockAiConfigRepository
         ) {
             private val _consentMap = MutableStateFlow(
                 mapOf(

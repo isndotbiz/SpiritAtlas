@@ -1,0 +1,67 @@
+--- a/app/build.gradle.kts
++++ b/app/build.gradle.kts
+@@ -108,16 +108,59 @@
+         }
+     }
+
+-    // Configure splits for smaller APKs (optional - for advanced optimization)
++    // Configure splits for optimized APK delivery
+     splits {
+         abi {
+-            isEnable = false // Set to true for ABI-specific APKs
++            // Enable ABI splits for smaller per-device APKs
++            isEnable = true
+             reset()
+-            include("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
+-            isUniversalApk = true
++
++            // Option A: Include all ABIs (recommended for initial rollout)
++            include("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
++
++            // Option B: ARM64-only (uncomment for aggressive optimization)
++            // include("arm64-v8a")
++
++            // Create universal APK as fallback
++            isUniversalApk = true
+         }
++
+         density {
+-            isEnable = false // Set to true for density-specific APKs
++            // Disable density splits (keep all densities in each APK)
++            isEnable = false
++        }
++    }
++}
++
++// Version code strategy for ABI splits
++android.applicationVariants.all {
++    val variant = this
++    variant.outputs.all {
++        val output = this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
++
++        // Map ABIs to version code multipliers
++        val abiMultiplier = when {
++            output.getFilter("ABI") == "arm64-v8a" -> 4
++            output.getFilter("ABI") == "armeabi-v7a" -> 3
++            output.getFilter("ABI") == "x86_64" -> 2
++            output.getFilter("ABI") == "x86" -> 1
++            else -> 0 // Universal APK
+         }
++
++        // New version code = (base * 10) + ABI multiplier
++        // Example: 1.0.0 (versionCode 1) -> 14 (arm64-v8a)
++        output.versionCodeOverride =
++            (variant.versionCode.toInt() * 10) + abiMultiplier
+     }
+ }
++
++// Optional: Enable R8 full mode for additional optimization
++// Add to gradle.properties:
++// android.enableR8.fullMode=true
++
++// Optional: Build App Bundle instead of APKs
++// Command: ./gradlew :app:bundleRelease
++// Output: app/build/outputs/bundle/release/app-release.aab
++
++// To build all APK variants:
++// ./gradlew :app:assembleRelease

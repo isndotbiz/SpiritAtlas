@@ -1,8 +1,10 @@
 package com.spiritatlas.app
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.spiritatlas.data.mock.MockProfileInitializer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
@@ -17,13 +19,16 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val mockProfileInitializer: MockProfileInitializer
 ) : ViewModel() {
 
     companion object {
+        private const val TAG = "SplashViewModel"
         private const val SPLASH_DURATION = 2800L // Total animation duration
         private const val ANIMATION_STEP = 16L // ~60fps update rate
         private const val ONBOARDING_PREF_KEY = "onboarding_completed"
+        private const val MOCK_PROFILES_INITIALIZED_KEY = "mock_profiles_initialized"
         private const val PREFS_NAME = "spirit_atlas_prefs"
     }
 
@@ -36,7 +41,44 @@ class SplashViewModel @Inject constructor(
     private val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
     init {
+        // Initialize mock profiles asynchronously (non-blocking)
+        initializeMockProfilesIfNeeded()
+
+        // Start splash animation
         startAnimation()
+    }
+
+    /**
+     * Initialize mock profiles on first app launch only.
+     * Runs asynchronously and doesn't block the splash animation.
+     */
+    private fun initializeMockProfilesIfNeeded() {
+        viewModelScope.launch {
+            try {
+                val alreadyInitialized = sharedPreferences.getBoolean(
+                    MOCK_PROFILES_INITIALIZED_KEY,
+                    false
+                )
+
+                if (!alreadyInitialized) {
+                    Log.d(TAG, "First launch detected - initializing mock profiles...")
+
+                    val createdCount = mockProfileInitializer.initializeMockProfiles()
+
+                    // Mark as initialized
+                    sharedPreferences.edit()
+                        .putBoolean(MOCK_PROFILES_INITIALIZED_KEY, true)
+                        .apply()
+
+                    Log.d(TAG, "Mock profiles initialized successfully. Created $createdCount profiles.")
+                } else {
+                    Log.d(TAG, "Mock profiles already initialized, skipping.")
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error initializing mock profiles: ${e.message}", e)
+                // Don't crash the app - continue with splash animation
+            }
+        }
     }
 
     /**
@@ -105,6 +147,20 @@ class SplashViewModel @Inject constructor(
         sharedPreferences.edit()
             .putBoolean(ONBOARDING_PREF_KEY, false)
             .apply()
+    }
+
+    /**
+     * Reset mock profile initialization flag (for testing/debugging)
+     * This will cause mock profiles to be re-initialized on next app launch.
+     *
+     * Note: This only resets the flag. To actually clear the profiles from the database,
+     * use mockProfileInitializer.clearMockProfiles() separately.
+     */
+    fun resetMockProfileInitialization() {
+        sharedPreferences.edit()
+            .putBoolean(MOCK_PROFILES_INITIALIZED_KEY, false)
+            .apply()
+        Log.d(TAG, "Mock profile initialization flag reset.")
     }
 }
 

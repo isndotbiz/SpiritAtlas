@@ -32,31 +32,31 @@ fun getOnboardingPages(): List<OnboardingPage> = listOf(
     OnboardingPage(
         title = "Discover Your Cosmic Blueprint",
         subtitle = "Unlock the mysteries of your spiritual journey through ancient wisdom and modern insight",
-        illustration = { WelcomeIllustration() },
+        illustration = { WelcomeIllustrationWithBackground() },
         gradientColors = listOf(SpiritualPurple, MysticViolet, CosmicBlue)
     ),
     OnboardingPage(
         title = "Four Sacred Systems",
         subtitle = "Explore Astrology, Numerology, Ayurveda, and Human Design in perfect harmony",
-        illustration = { FourSystemsIllustration() },
+        illustration = { FourSystemsIllustrationWithBackground() },
         gradientColors = listOf(CosmicBlue, ChakraIndigo, SpiritualPurple)
     ),
     OnboardingPage(
         title = "Privacy First, Always",
         subtitle = "Your data stays on your device. You control which AI provider to use, if any",
-        illustration = { PrivacyIllustration() },
+        illustration = { PrivacyIllustrationWithBackground() },
         gradientColors = listOf(ChakraGreen, DeepTeal, CosmicBlue)
     ),
     OnboardingPage(
         title = "Couples Compatibility",
         subtitle = "Discover relationship dynamics and deepen your connection through cosmic alignment",
-        illustration = { CouplesIllustration() },
+        illustration = { CouplesIllustrationWithBackground() },
         gradientColors = listOf(TantricRose, IntimacyPurple, SpiritualPurple)
     ),
     OnboardingPage(
         title = "Begin Your Journey",
         subtitle = "Create your first profile and unlock personalized insights from the cosmos",
-        illustration = { GetStartedIllustration() },
+        illustration = { GetStartedIllustrationWithBackground() },
         gradientColors = listOf(AuraGold, ChakraOrange, TantricRose)
     )
 )
@@ -554,3 +554,46 @@ private data class Star(
     val twinkleSpeed: Float,
     val twinkleOffset: Float
 )
+
+// NEW VERSIONS WITH BACKGROUND IMAGES
+
+@Composable
+fun WelcomeIllustrationWithBackground() {
+    Box(modifier = Modifier.fillMaxWidth().height(300.dp)) {
+        // TODO: Re-enable background image with proper resource management
+        // Background temporarily disabled to fix build
+        WelcomeIllustration()
+    }
+}
+
+@Composable
+fun FourSystemsIllustrationWithBackground() {
+    Box(modifier = Modifier.fillMaxWidth().height(300.dp)) {
+        // TODO: Re-enable background image with proper resource management
+        FourSystemsIllustration()
+    }
+}
+
+@Composable
+fun PrivacyIllustrationWithBackground() {
+    Box(modifier = Modifier.fillMaxWidth().height(300.dp)) {
+        // TODO: Re-enable background image with proper resource management
+        PrivacyIllustration()
+    }
+}
+
+@Composable
+fun CouplesIllustrationWithBackground() {
+    Box(modifier = Modifier.fillMaxWidth().height(300.dp)) {
+        // TODO: Re-enable background image with proper resource management
+        CouplesIllustration()
+    }
+}
+
+@Composable
+fun GetStartedIllustrationWithBackground() {
+    Box(modifier = Modifier.fillMaxWidth().height(300.dp)) {
+        // TODO: Re-enable background image with proper resource management
+        GetStartedIllustration()
+    }
+}

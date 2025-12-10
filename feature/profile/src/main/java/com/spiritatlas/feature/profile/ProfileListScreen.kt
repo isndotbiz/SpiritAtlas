@@ -12,9 +12,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.spiritatlas.core.ui.components.SacredGeometryBackground
 import com.spiritatlas.domain.model.UserProfile
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -33,11 +35,13 @@ fun ProfileListScreen(
     var selectionMode by remember { mutableStateOf(false) }
     var selectedProfiles by remember { mutableStateOf(setOf<String>()) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
+    // Profile list with sacred geometry background
+    SacredGeometryBackground {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
         // Header
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -215,7 +219,7 @@ fun ProfileListScreen(
                 ) {
                     Icon(
                         Icons.Default.PersonAdd,
-                        contentDescription = null,
+                        contentDescription = "Add your first profile",
                         modifier = Modifier.size(64.dp),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -295,6 +299,7 @@ fun ProfileListScreen(
                 }
             }
         )
+        }
     }
 }
 
@@ -341,7 +346,7 @@ private fun ProfileCard(
             } else {
                 Icon(
                     Icons.Default.Person,
-                    contentDescription = null,
+                    contentDescription = "Profile avatar",
                     modifier = Modifier.size(40.dp),
                     tint = MaterialTheme.colorScheme.primary
                 )

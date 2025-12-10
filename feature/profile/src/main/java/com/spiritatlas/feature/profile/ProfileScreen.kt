@@ -1,5 +1,6 @@
 package com.spiritatlas.feature.profile
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
@@ -8,10 +9,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.foundation.layout.Box
+import androidx.compose.ui.layout.ContentScale
 import com.spiritatlas.core.ui.components.DateTimePicker
 import com.spiritatlas.core.ui.components.ModernDropdown
+import com.spiritatlas.core.ui.components.SpiritualGradients
+import com.spiritatlas.core.ui.components.ProgressiveImage
 import com.spiritatlas.domain.model.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -24,39 +30,47 @@ fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    
+
     LaunchedEffect(profileId) {
         viewModel.loadProfile(profileId)
     }
-    
-    Scaffold(
-        topBar = {
-            ProfileTopBar(
-                isEditing = profileId != null && profileId != "new",
-                completion = uiState.currentProfile.profileCompletion,
-                isSaving = uiState.isSaving,
-                onNavigateBack = onNavigateBack,
-                onSave = { viewModel.saveProfile() },
-                onLoadTier = { tier -> 
-                    when(tier) {
-                        0 -> viewModel.loadTier0Profile()
-                        1 -> viewModel.loadTier1Profile()
-                        2 -> viewModel.loadTier2Profile()
-                        3 -> viewModel.loadTier3Profile()
-                    }
-                },
-                onLoadDemo = { viewModel.loadDemoProfile() },
-                onClear = { viewModel.clearProfile() }
+
+    // Profile creation with spiritual gradient background
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(androidx.compose.ui.graphics.Brush.verticalGradient(SpiritualGradients.cosmicPurple))
+    ) {
+            Scaffold(
+                containerColor = Color.Transparent,
+                topBar = {
+                ProfileTopBar(
+                    isEditing = profileId != null && profileId != "new",
+                    completion = uiState.currentProfile.profileCompletion,
+                    isSaving = uiState.isSaving,
+                    onNavigateBack = onNavigateBack,
+                    onSave = { viewModel.saveProfile() },
+                    onLoadTier = { tier ->
+                        when(tier) {
+                            0 -> viewModel.loadTier0Profile()
+                            1 -> viewModel.loadTier1Profile()
+                            2 -> viewModel.loadTier2Profile()
+                            3 -> viewModel.loadTier3Profile()
+                        }
+                    },
+                    onLoadDemo = { viewModel.loadDemoProfile() },
+                    onClear = { viewModel.clearProfile() }
+                )
+            }
+        ) { paddingValues ->
+            ProfileContent(
+                modifier = Modifier.padding(paddingValues),
+                uiState = uiState,
+                onProfileUpdate = { viewModel.updateProfile(it) },
+                onSectionSelected = { viewModel.setActiveSection(it) },
+                onClearError = { viewModel.clearError() }
             )
         }
-    ) { paddingValues ->
-        ProfileContent(
-            modifier = Modifier.padding(paddingValues),
-            uiState = uiState,
-            onProfileUpdate = { viewModel.updateProfile(it) },
-            onSectionSelected = { viewModel.setActiveSection(it) },
-            onClearError = { viewModel.clearError() }
-        )
     }
 }
 
@@ -104,12 +118,28 @@ fun CoreIdentitySection(
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
+            // NOTE: ProgressiveImage integration example for zodiac/astrological imagery
+            // In production, pass image resources from app module:
+            //
+            // Box(modifier = Modifier.fillMaxWidth().height(120.dp)) {
+            //     ProgressiveImage(
+            //         imageResourceId = birthChartBackgroundResId,     // From app module
+            //         lqipResourceId = birthChartBackgroundLqipResId,  // From app module
+            //         contentDescription = "Astrological birth chart aesthetic",
+            //         modifier = Modifier.fillMaxSize(),
+            //         contentScale = ContentScale.Crop,
+            //         alpha = 0.3f  // Semi-transparent for subtle background effect
+            //     )
+            // }
+            //
+            // This provides progressive loading with blur-up for zodiac imagery
+
             Text(
                 text = "✨ Core Identity (Required - Pick 3 minimum)",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
             
             OutlinedTextField(

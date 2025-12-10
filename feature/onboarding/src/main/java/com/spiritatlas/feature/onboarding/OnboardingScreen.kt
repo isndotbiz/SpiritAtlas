@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.lerp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.spiritatlas.core.ui.components.SimpleSpiritualBackground
 import com.spiritatlas.core.ui.theme.*
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
@@ -54,6 +55,7 @@ fun OnboardingScreen(
         }
     }
 
+    // Onboarding with gradient background
     Box(
         modifier = Modifier
             .fillMaxSize()

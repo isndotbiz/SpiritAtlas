@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- Suppress resource naming errors for generated FLUX images that start with numbers -->
+    <!-- These are auto-generated images and renaming would break references across the codebase -->
+    <issue id="InvalidResourceFolder" severity="ignore" />
+    <issue id="InvalidFileName" severity="ignore" />
+
+    <!-- Only apply to drawable resources starting with digits -->
+    <issue id="AllCaps">
+        <ignore regexp="res/drawable.*/[0-9].*\.webp" />
+    </issue>
+</lint>

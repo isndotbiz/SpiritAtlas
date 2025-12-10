@@ -43,3 +43,9 @@ Thumbs.db
 
 # Archived documentation
 .archive/
+
+# Build optimization artifacts
+.gradle/build-cache/
+gradle-daemon-*.log
+*.hprof
+build/reports/benchmark/

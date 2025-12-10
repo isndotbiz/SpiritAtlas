@@ -1,0 +1,287 @@
+# SpiritAtlas Image Integration - Component Hierarchy
+
+## Resource Management Layer
+┌─────────────────────────────────────────────────────────────────────┐
+│ SpiritualResources.kt                                               │
+│ ┌─────────────────────────────────────────────────────────────────┐ │
+│ │ Central Mapping Object                                          │ │
+│ │ - getZodiacResource(sign) -> R.drawable.zodiac_aries          │ │
+│ │ - getChakraResource(number) -> R.drawable.chakra_root         │ │
+│ │ - getMoonPhaseResource(phase) -> R.drawable.moon_full         │ │
+│ │ - getAvatarResource(id) -> R.drawable.avatar_lotus            │ │
+│ │ - getBackgroundResource(screen) -> R.drawable.bg_home         │ │
+│ │ - getElementResource(element) -> R.drawable.element_fire      │ │
+│ │ - getGeometryResource(type) -> R.drawable.geometry_flower     │ │
+│ │ - getSymbolResource(symbol) -> R.drawable.symbol_om           │ │
+│ └─────────────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    │ Uses
+                                    ▼
+## UI Component Layer
+┌─────────────────────────────────────────────────────────────────────┐
+│ Reusable Composable Components                                      │
+│ ┌───────────────────────────────────────────────────────────────┐   │
+│ │ ImageBackgrounds.kt                                           │   │
+│ │ - SpiritualBackgroundImage(background, alpha, content)       │   │
+│ │ - SacredGeometryOverlay(geometryType, alpha, content)        │   │
+│ └───────────────────────────────────────────────────────────────┘   │
+│                                                                      │
+│ ┌───────────────────────────────────────────────────────────────┐   │
+│ │ AvatarComponents.kt                                           │   │
+│ │ - SpiritualAvatar(avatarId, frameId, size)                   │   │
+│ │ - AvatarSelector(selectedId, onSelect, avatarCount)          │   │
+│ └───────────────────────────────────────────────────────────────┘   │
+│                                                                      │
+│ ┌───────────────────────────────────────────────────────────────┐   │
+│ │ ChakraVisualization.kt                                        │   │
+│ │ - ChakraVisualization(chakras: List<ChakraState>)            │   │
+│ │ - ChakraRow(chakraNumber, activation, modifier)              │   │
+│ └───────────────────────────────────────────────────────────────┘   │
+│                                                                      │
+│ ┌───────────────────────────────────────────────────────────────┐   │
+│ │ ZodiacImageComponents.kt                                      │   │
+│ │ - ZodiacImage(sign, size, modifier)                          │   │
+│ └───────────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    │ Used by
+                                    ▼
+## Screen Layer
+┌─────────────────────────────────────────────────────────────────────┐
+│ Feature Screens                                                      │
+│                                                                      │
+│ ┌────────────────────┐  ┌────────────────────┐  ┌────────────────┐ │
+│ │ SplashScreen.kt    │  │ HomeScreen.kt      │  │ ProfileScreen  │ │
+│ │ Uses:              │  │ Uses:              │  │ Uses:          │ │
+│ │ - bg_splash        │  │ - bg_home          │  │ - bg_profile   │ │
+│ │ - logo_wordmark    │  │ - moon_phase image │  │ - AvatarSelect │ │
+│ └────────────────────┘  │ - zodiac_current   │  │ - zodiac icons │ │
+│                         │ - element_ether    │  └────────────────┘ │
+│                         └────────────────────┘                      │
+│                                                                      │
+│ ┌────────────────────┐  ┌────────────────────┐  ┌────────────────┐ │
+│ │ ProfileLibrary     │  │ Compatibility      │  │ ProfileDetail  │ │
+│ │ Uses:              │  │ Uses:              │  │ Uses:          │ │
+│ │ - bg_library       │  │ - bg_compatibility │  │ - bg_profile   │ │
+│ │ - SpiritualAvatar  │  │ - SacredGeometry   │  │ - ZodiacImage  │ │
+│ │ - zodiac badges    │  │ - ChakraViz        │  │ - ChakraViz    │ │
+│ │ - empty_no_profile │  │ - element icons    │  │ - element icons│ │
+│ └────────────────────┘  └────────────────────┘  └────────────────┘ │
+└─────────────────────────────────────────────────────────────────────┘
+
+## Data Flow
+
+1. Screen requests image
+   Example: HomeScreen wants to show current zodiac sign
+   
+2. Screen calls component with semantic data
+   ZodiacImage(sign = ZodiacSign.ARIES, size = 48.dp)
+   
+3. Component asks SpiritualResources for resource ID
+   val resourceId = SpiritualResources.getZodiacResource(ZodiacSign.ARIES)
+   
+4. SpiritualResources returns mapped resource
+   Returns: R.drawable.zodiac_aries
+   
+5. Coil (image loader) loads from resources
+   - Checks memory cache
+   - Checks disk cache
+   - Decodes from drawable if not cached
+   - Selects appropriate density (xhdpi, xxhdpi, etc.)
+   
+6. Image displayed on screen
+   Composable renders with proper size and alignment
+
+## Resource Directory Structure
+
+app/src/main/res/
+├── drawable/                    # Baseline (fallback)
+│   ├── zodiac_aries.webp
+│   ├── chakra_root.webp
+│   ├── moon_full.webp
+│   └── ... (99 images)
+│
+├── drawable-xhdpi/             # 2x (most common)
+│   ├── zodiac_aries.webp       # 512x512
+│   └── ...
+│
+├── drawable-xxhdpi/            # 3x (high-end phones)
+│   ├── zodiac_aries.webp       # 768x768
+│   └── ...
+│
+├── drawable-xxxhdpi/           # 4x (flagship devices)
+│   ├── zodiac_aries.webp       # 1024x1024
+│   └── ...
+│
+└── drawable-nodpi/             # Density-independent (backgrounds)
+    ├── bg_home.webp            # Full 1080x1920
+    └── ...
+
+## Naming Convention Pattern
+
+{prefix}_{descriptor}_{variant?}.webp
+
+Examples:
+- zodiac_aries.webp          (prefix: zodiac, descriptor: aries)
+- chakra_root.webp           (prefix: chakra, descriptor: root)
+- moon_full.webp             (prefix: moon, descriptor: full)
+- avatar_lotus.webp          (prefix: avatar, descriptor: lotus)
+- bg_home.webp               (prefix: bg, descriptor: home)
+- element_fire.webp          (prefix: element, descriptor: fire)
+- geometry_flower_of_life.webp (prefix: geometry, descriptor: type)
+- btn_primary_pressed.webp   (prefix: btn, descriptor: primary, variant: pressed)
+
+## Integration Points by Screen
+
+SplashScreen
+├── Background: bg_splash
+└── Logo: logo_wordmark
+
+HomeScreen
+├── Background: bg_home
+├── Moon Phase: moon_{current_phase}
+├── Zodiac: zodiac_{current_sign}
+├── Element: element_ether (spiritual weather)
+└── Avatar: avatar_{user_selection} (if logged in)
+
+ProfileScreen (Creation)
+├── Background: bg_profile_creation
+├── Avatar Selector: avatar_1 through avatar_8
+└── Zodiac Preview: zodiac_{sun_sign}
+
+ProfileLibraryScreen
+├── Background: bg_library
+├── Profile Cards:
+│   ├── Avatar: avatar_{profile.avatarId}
+│   ├── Frame: frame_{profile.frameId}
+│   └── Zodiac Badge: zodiac_{profile.sunSign}
+└── Empty State: empty_no_profiles
+
+ProfileDetailScreen
+├── Background: bg_profile_detail
+├── Avatar: avatar_{profile.avatarId} + frame_{frameId}
+├── Zodiac Section:
+│   ├── zodiac_{sunSign}
+│   ├── zodiac_{moonSign}
+│   └── zodiac_{risingSign}
+├── Chakra Section: chakra_1 through chakra_7
+└── Ayurveda Section: element_{dominant_element}
+
+CompatibilityScreen
+├── Background: bg_compatibility
+├── Profile Avatars: avatar_{profile1}, avatar_{profile2}
+└── Connection Symbol: symbol_yin_yang
+
+CompatibilityDetailScreen
+├── Background: bg_compatibility
+├── Sacred Geometry Overlay: geometry_flower_of_life
+├── Hero Avatars: avatar_{p1} + avatar_{p2}
+├── Zodiac Synastry: zodiac_{sign} for both profiles
+├── Chakra Compatibility: chakra_1 through chakra_7 (both)
+└── Elemental Balance: element_{fire/water/earth/air/ether}
+
+OnboardingScreens
+├── Page 1: onboarding_welcome + symbol_om
+├── Page 2: onboarding_profile + symbol_lotus
+├── Page 3: onboarding_insights + symbol_tree_of_life
+├── Page 4: onboarding_compatibility + symbol_yin_yang
+├── Page 5: onboarding_guidance + symbol_mandala
+└── Page 6: onboarding_ready + symbol_infinity
+
+## Component Dependencies
+
+SpiritualResources.kt (no dependencies)
+    ↓
+ImageBackgrounds.kt (depends on SpiritualResources)
+AvatarComponents.kt (depends on SpiritualResources)
+ChakraVisualization.kt (depends on SpiritualResources)
+ZodiacImageComponents.kt (depends on SpiritualResources)
+    ↓
+Feature Screens (depend on all components above)
+
+## Build Process
+
+1. Image Generation (FLUX 1.1 Pro)
+   → 99 PNG images @ high resolution
+
+2. Optimization (optimize_for_android.py)
+   → Convert PNG to WebP
+   → Generate multiple densities
+   → Place in drawable-* folders
+
+3. Build (Gradle)
+   → Compile resources to resources.arsc
+   → Package into APK/Bundle
+   → AAPT2 resource processing
+
+4. Installation (Device)
+   → Android selects appropriate density
+   → Only installs needed densities (with App Bundle)
+
+5. Runtime (Coil)
+   → Load from resources
+   → Decode bitmap
+   → Cache in memory + disk
+   → Display in Composable
+
+## Testing Strategy
+
+Unit Tests (resources)
+├── Test all zodiac resources exist
+├── Test all chakra resources exist
+├── Test all moon phase resources exist
+├── Test all avatar resources exist
+└── Test resource naming consistency
+
+UI Tests (components)
+├── Test backgrounds load correctly
+├── Test avatars display and select
+├── Test chakra visualization renders
+└── Test zodiac images appear
+
+Integration Tests (screens)
+├── Test HomeScreen displays moon + zodiac
+├── Test ProfileScreen avatar selection works
+├── Test ProfileLibrary shows avatars on cards
+└── Test CompatibilityDetail shows all sections
+
+Performance Tests
+├── Measure app launch time
+├── Measure screen load times
+├── Profile memory usage
+├── Check for memory leaks
+└── Verify 60 FPS scrolling
+
+Visual Tests (screenshot)
+├── Generate baseline screenshots
+├── Compare after changes
+├── Verify no regressions
+└── Test on multiple densities
+
+## File Count Summary
+
+Source Files (Kotlin)
+- 1 SpiritualResources.kt
+- 4 Component files
+- 17 Updated screen files
+- 5 Unit test files
+= 27 Kotlin files
+
+Resource Files (Images)
+- 99 unique images
+- 4 densities each (hdpi, xhdpi, xxhdpi, xxxhdpi)
+- 99 × 4 = 396 image files
+- Plus launcher icon mipmaps (5 densities) = 5 files
+= ~400 total image files
+
+Documentation
+- DETAILED_INTEGRATION_PLAN.md
+- INTEGRATION_QUICK_CHECKLIST.md
+- INTEGRATION_SUMMARY.md
+- IMAGE_RESOURCE_MAPPING_TEMPLATE.csv
+- COMPONENT_HIERARCHY.txt (this file)
+= 5 documentation files
+
+Total: ~430 files to manage
+

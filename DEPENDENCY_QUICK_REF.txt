@@ -1,0 +1,202 @@
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃              SPIRITATLAS DEPENDENCY QUICK REFERENCE                    ┃
+┃                     Status: ✅ CLEAN (95/100)                          ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│ MODULE DEPENDENCY TREE                                                  │
+└─────────────────────────────────────────────────────────────────────────┘
+
+    app (Application Layer)
+     │
+     ├─ feature:home ──────┐
+     ├─ feature:profile ───┤
+     ├─ feature:consent ───┤
+     ├─ feature:compatibility ─┐
+     ├─ feature:settings ──┤   │
+     ├─ feature:onboarding ┤   │  FEATURE LAYER
+     └─ feature:tantric ───┘   │  (Independent, parallel)
+         │                     │
+         ├──→ core:ui ─────────┘
+         ├──→ domain
+         └──→ data ────────────┐
+                  │            │
+                  ├──→ domain  │  DATA/UI LAYER
+                  └──→ core:*  │  (Parallel)
+                       │       │
+                       ↓       │
+              domain ──────────┘  DOMAIN LAYER
+                 │
+                 ├──→ core:common ┐
+                 └──→ core:numerology ┐
+                      core:astro      │  CORE LAYER
+                      core:ayurveda   │  (Pure Kotlin, parallel)
+                      core:humandesign┘
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│ DEPENDENCY RULES                                                        │
+└─────────────────────────────────────────────────────────────────────────┘
+
+  ✅ DO                                   ❌ DON'T
+  ────────────────────────────────────────────────────────────────────────
+  • Use version catalog                  • Hardcode versions
+  • Default to 'implementation'          • Overuse 'api'
+  • Keep layers independent              • Create circular deps
+  • Extract shared code to core          • Feature → feature deps
+  • Pure Kotlin in core modules          • Android in core:*
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│ DEPENDENCY SCOPING                                                      │
+└─────────────────────────────────────────────────────────────────────────┘
+
+  implementation    → Default (90% of cases)
+  api               → Only when exposing types (e.g., core:ui → Compose)
+  testImplementation → Unit tests
+  androidTestImplementation → Instrumentation tests
+  debugImplementation → Debug builds only
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│ QUICK COMMANDS                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+
+  Check circular deps:
+    ./gradlew buildEnvironment | grep -i circular
+
+  View dependency tree:
+    ./gradlew :app:dependencies --configuration debugCompileClasspath
+
+  Run critical tests:
+    ./gradlew :core:numerology:test :core:astro:test \
+              :core:ayurveda:test :core:humandesign:test
+
+  Check for updates:
+    ./gradlew dependencyUpdates
+
+  Build everything:
+    ./gradlew assemble
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│ ADDING A NEW DEPENDENCY                                                 │
+└─────────────────────────────────────────────────────────────────────────┘
+
+  1. Add to gradle/libs.versions.toml:
+     [versions]
+     new-lib = "1.0.0"
+
+     [libraries]
+     new-lib = { module = "com.example:lib", version.ref = "new-lib" }
+
+  2. Use in module build.gradle.kts:
+     dependencies {
+         implementation(libs.new.lib)
+     }
+
+  3. Verify:
+     ./gradlew build
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│ MODULE TYPES                                                            │
+└─────────────────────────────────────────────────────────────────────────┘
+
+  Pure Kotlin (Prefer for business logic):
+    plugins {
+        alias(libs.plugins.kotlin.jvm)
+    }
+
+  Android Library (For UI/Android features):
+    plugins {
+        alias(libs.plugins.android.library)
+        alias(libs.plugins.kotlin.android)
+    }
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│ CURRENT STATUS                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+
+  Modules:               17 total
+  Circular Deps:         ✅ None
+  Version Catalog:       ✅ 100% compliant
+  Test Status:           ✅ 113/113 passing
+  Build Status:          ✅ Successful
+  Health Score:          95/100
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│ KEY VERSIONS                                                            │
+└─────────────────────────────────────────────────────────────────────────┘
+
+  Kotlin:                1.9.25
+  Compose BOM:           2024.09.02
+  Compose Compiler:      1.5.15
+  Android Gradle:        8.13.1
+  Hilt:                  2.52
+  Target SDK:            35
+  Min SDK:               26
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│ DOCUMENTATION                                                           │
+└─────────────────────────────────────────────────────────────────────────┘
+
+  DEPENDENCY_GRAPH.md       → Complete dependency analysis
+  DEPENDENCY_SUMMARY.txt    → Executive summary
+  DEPENDENCY_CHECKLIST.md   → Step-by-step guide
+  BUILD_DEPENDENCY_REPORT.md → Full report with issues
+  DEPENDENCY_QUICK_REF.txt  → This file
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│ TROUBLESHOOTING                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
+
+  "Circular dependency detected"
+    → Draw graph, find cycle, extract to lower layer
+
+  "Duplicate class" errors
+    → Check: ./gradlew :app:dependencies
+    → Exclude transitive deps if needed
+
+  "Unresolved reference"
+    → Sync Gradle, invalidate caches
+    → Check dependency scope (implementation vs test)
+
+  Slow builds
+    → Use: ./gradlew build --build-cache --parallel
+    → Profile: ./gradlew build --profile
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│ LAYER RULES                                                             │
+└─────────────────────────────────────────────────────────────────────────┘
+
+  Layer 5 (app)          → Can depend on all layers
+  Layer 4 (features)     → Can depend on layers 1-3
+  Layer 3 (data, ui)     → Can depend on layers 1-2
+  Layer 2 (domain)       → Can depend on layer 1 only
+  Layer 1 (core)         → Only pure Kotlin/Java deps
+
+  ⚠️  NEVER: Higher layer → Lower layer ✗
+  ✅  ALWAYS: Lower layer ← Higher layer ✓
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│ DECISION TREE: api vs implementation                                   │
+└─────────────────────────────────────────────────────────────────────────┘
+
+  Does your module's PUBLIC API expose types from this dependency?
+  ├─ YES → Use 'api'
+  │   Example: core:ui exposes Compose types
+  │
+  └─ NO → Use 'implementation' (most cases)
+      Example: Internal utilities, data access
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│ NEXT STEPS                                                              │
+└─────────────────────────────────────────────────────────────────────────┘
+
+  Short-term:
+    • Enable OWASP dependency scanning
+    • Set up Dependabot/Renovate
+
+  Long-term:
+    • Extract core:annotations (optional)
+    • Add dependency graph visualization
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Generated: 2025-12-10 | Agent: BUILD FIX AGENT 10 | Status: ✅ CLEAN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

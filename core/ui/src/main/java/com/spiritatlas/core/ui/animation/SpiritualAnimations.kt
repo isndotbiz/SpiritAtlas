@@ -27,30 +27,14 @@ import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.random.Random
 
-/**
- * Duration presets for spiritual animations
- */
-object AnimationDurations {
-  const val Quick = 200
-  const val Medium = 400
-  const val Slow = 600
-  const val ExtraSlow = 1000
-  const val Breath = 4000
-  const val Pulse = 2000
-  const val Float = 3000
-  const val Wave = 2500
-}
+// Note: Using AnimationDurations from AnimationConfig.kt
+// Local constants for backward compatibility
+private const val ANIM_BREATH = 4000
+private const val ANIM_PULSE = 2000
+private const val ANIM_FLOAT = 3000
+private const val ANIM_WAVE = 2500
 
-/**
- * Easing functions for spiritual animations
- */
-object SpiritualEasing {
-  val Gentle = FastOutSlowInEasing
-  val Breath = CubicBezierEasing(0.4f, 0.0f, 0.6f, 1.0f)
-  val Float = CubicBezierEasing(0.25f, 0.46f, 0.45f, 0.94f)
-  val Pulse = CubicBezierEasing(0.45f, 0.05f, 0.55f, 0.95f)
-  val Wave = CubicBezierEasing(0.36f, 0.0f, 0.66f, -0.56f)
-}
+// Note: SpiritualEasing is defined in AnimationConfig.kt
 
 // ============================================================================
 // FADE ANIMATIONS
@@ -255,7 +239,7 @@ fun slideFromRight(): EnterTransition {
 fun rememberBreathingAnimation(
   minScale: Float = 0.95f,
   maxScale: Float = 1.05f,
-  durationMillis: Int = AnimationDurations.Breath
+  durationMillis: Int = ANIM_BREATH
 ): Float {
   val infiniteTransition = rememberInfiniteTransition(label = "breathing")
   val scale by infiniteTransition.animateFloat(
@@ -279,7 +263,7 @@ fun rememberBreathingAnimation(
 fun Modifier.breathingAnimation(
   minScale: Float = 0.95f,
   maxScale: Float = 1.05f,
-  durationMillis: Int = AnimationDurations.Breath
+  durationMillis: Int = ANIM_BREATH
 ): Modifier = composed {
   val scale = rememberBreathingAnimation(minScale, maxScale, durationMillis)
   this.scale(scale)
@@ -292,7 +276,7 @@ fun Modifier.breathingAnimation(
 fun rememberPulseAnimation(
   minAlpha: Float = 0.6f,
   maxAlpha: Float = 1.0f,
-  durationMillis: Int = AnimationDurations.Pulse
+  durationMillis: Int = ANIM_PULSE
 ): Float {
   val infiniteTransition = rememberInfiniteTransition(label = "pulse")
   val alpha by infiniteTransition.animateFloat(
@@ -316,7 +300,7 @@ fun rememberPulseAnimation(
 fun Modifier.pulsingAnimation(
   minAlpha: Float = 0.6f,
   maxAlpha: Float = 1.0f,
-  durationMillis: Int = AnimationDurations.Pulse
+  durationMillis: Int = ANIM_PULSE
 ): Modifier = composed {
   val alpha = rememberPulseAnimation(minAlpha, maxAlpha, durationMillis)
   this.alpha(alpha)
@@ -417,7 +401,7 @@ fun Modifier.shimmerEffect(
 @Composable
 fun rememberFloatingAnimation(
   range: Float = 10f,
-  durationMillis: Int = AnimationDurations.Float
+  durationMillis: Int = ANIM_FLOAT
 ): Float {
   val infiniteTransition = rememberInfiniteTransition(label = "floating")
   val offset by infiniteTransition.animateFloat(
@@ -440,7 +424,7 @@ fun rememberFloatingAnimation(
  */
 fun Modifier.floatingAnimation(
   range: Dp = 10.dp,
-  durationMillis: Int = AnimationDurations.Float
+  durationMillis: Int = ANIM_FLOAT
 ): Modifier = composed {
   val offset = rememberFloatingAnimation(range.value, durationMillis)
   this.offset(y = offset.dp)
@@ -719,7 +703,7 @@ fun WaveAnimation(
     targetValue = 2 * PI.toFloat(),
     animationSpec = infiniteRepeatable(
       animation = tween(
-        durationMillis = AnimationDurations.Wave,
+        durationMillis = ANIM_WAVE,
         easing = LinearEasing
       ),
       repeatMode = RepeatMode.Restart

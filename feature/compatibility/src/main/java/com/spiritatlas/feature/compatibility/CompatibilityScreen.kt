@@ -80,7 +80,9 @@ fun CompatibilityScreen(
                 CompatibilityTab.HISTORY -> {
                     HistoryContent(
                         cachedReports = uiState.cachedReports,
-                        onLoadReport = { /* TODO: Implement */ }
+                        onLoadReport = { report ->
+                            viewModel.loadReportFromHistory(report)
+                        }
                     )
                 }
                 CompatibilityTab.SEARCH -> {

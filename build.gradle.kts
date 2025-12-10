@@ -126,6 +126,46 @@ tasks.register("securityAudit") {
     }
 }
 
+// Custom task to verify test coverage across all modules
+tasks.register("verifyCoverage") {
+    group = "verification"
+    description = "Verify that all modules meet 80% coverage threshold"
+
+    val coreModules = listOf(
+        ":core:numerology",
+        ":core:astro",
+        ":core:ayurveda",
+        ":core:humandesign"
+    )
+
+    // Depend on test and coverage tasks
+    dependsOn(coreModules.map { "$it:test" })
+    dependsOn(coreModules.map { "$it:jacocoTestReport" })
+    dependsOn(coreModules.map { "$it:jacocoTestCoverageVerification" })
+
+    doLast {
+        println("✅ All modules meet 80% coverage threshold")
+    }
+}
+
+// Task to generate comprehensive coverage dashboard
+tasks.register<Exec>("coverageDashboard") {
+    group = "reporting"
+    description = "Generate comprehensive coverage dashboard"
+
+    dependsOn("verifyCoverage")
+
+    // Use shell script instead of exec to avoid configuration cache issues
+    commandLine("bash", "-c", """
+        python3 scripts/coverage/parse_coverage.py && \
+        python3 scripts/coverage/generate_dashboard.py && \
+        echo "" && \
+        echo "📊 Coverage dashboard generated!" && \
+        echo "   View at: file://$(pwd)/build/reports/coverage_dashboard.html" && \
+        echo ""
+    """)
+}
+
 tasks.register("clean", Delete::class) {
     delete(rootProject.layout.buildDirectory)
 }

@@ -189,6 +189,21 @@ class CompatibilityViewModel @Inject constructor(
     }
 
     /**
+     * Load a cached compatibility report from history
+     */
+    fun loadReportFromHistory(report: CompatibilityReport) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                compatibilityReport = report,
+                selectedProfileA = report.profileA,
+                selectedProfileB = report.profileB,
+                activeTab = CompatibilityTab.RESULTS,
+                errorMessage = null
+            )
+        }
+    }
+
+    /**
      * Share compatibility report
      */
     fun shareReport(report: CompatibilityReport): String {

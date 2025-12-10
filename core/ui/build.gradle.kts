@@ -37,15 +37,18 @@ dependencies {
     // Icons
     implementation(libs.compose.material.icons.extended)
 
+    // Image loading
+    implementation(libs.coil.compose)
+
     // Core dependencies for WindowCompat
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
     
-    // Project dependencies
-    implementation(project(":core:astro"))
-    implementation(project(":core:numerology"))
-    implementation(project(":core:humandesign"))
-    implementation(project(":domain"))
+    // Project dependencies - using api because UI components expose these types
+    api(project(":core:astro"))
+    api(project(":core:numerology"))
+    api(project(":core:humandesign"))
+    api(project(":domain"))
 
     // Testing dependencies
     testImplementation("junit:junit:4.13.2")

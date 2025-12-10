@@ -21,13 +21,17 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -73,6 +77,7 @@ fun ProfileLibraryScreen(
         }
     }
 
+    // Library/Archive with sacred geometry background
     SacredGeometryBackground {
         Column(
             modifier = Modifier
@@ -544,50 +549,123 @@ fun AnimatedProfileAvatar(
     completionPercentage: Double,
     modifier: Modifier = Modifier
 ) {
-    // Pulsing animation for completion ring
-    val infiniteTransition = rememberInfiniteTransition(label = "pulse")
-    val pulseAlpha by infiniteTransition.animateFloat(
-        initialValue = 0.6f,
-        targetValue = 1f,
+    val infiniteTransition = rememberInfiniteTransition(label = "avatar_animations")
+
+    // Pulsing animation for cosmic glow
+    val glowPulse by infiniteTransition.animateFloat(
+        initialValue = 0.3f,
+        targetValue = 0.8f,
         animationSpec = infiniteRepeatable(
-            animation = tween(1500, easing = FastOutSlowInEasing),
+            animation = tween(2000, easing = FastOutSlowInEasing),
             repeatMode = RepeatMode.Reverse
         ),
-        label = "pulseAlpha"
+        label = "glowPulse"
     )
 
+    // Rotating animation for completion ring
+    val ringRotation by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 360f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(4000, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+        ),
+        label = "ringRotation"
+    )
+
+    // Sparkle rotation (faster than ring)
+    val sparkleRotation by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 360f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(3000, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+        ),
+        label = "sparkleRotation"
+    )
+
+    // Sparkle opacity animation
+    val sparkleAlpha by infiniteTransition.animateFloat(
+        initialValue = 0.4f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(800, easing = FastOutSlowInEasing),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "sparkleAlpha"
+    )
+
+    // Dynamic completion color
     val completionColor = when {
         completionPercentage >= 80 -> CosmicBlue
         completionPercentage >= 60 -> AuraGold
         completionPercentage >= 40 -> TantricRose
-        else -> SpiritualPurple.copy(alpha = 0.5f)
+        else -> SpiritualPurple
+    }
+
+    // Gradient colors for the completion ring
+    val gradientColors = when {
+        completionPercentage >= 80 -> listOf(CosmicBlue, MysticViolet, CosmicBlue)
+        completionPercentage >= 60 -> listOf(AuraGold, CosmicOrange, AuraGold)
+        completionPercentage >= 40 -> listOf(TantricRose, SpiritualPurple, TantricRose)
+        else -> listOf(SpiritualPurple, MysticViolet, SpiritualPurple)
     }
 
     Box(
         modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
-        // Completion ring
+        // Outer cosmic glow (pulsing)
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .scale(1.2f)
+                .blur(16.dp)
+                .alpha(glowPulse)
+                .background(
+                    brush = Brush.radialGradient(
+                        colors = listOf(
+                            completionColor.copy(alpha = 0.4f),
+                            Color.Transparent
+                        )
+                    ),
+                    shape = CircleShape
+                )
+        )
+
+        // Rotating completion ring with gradient
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .rotate(ringRotation)
                 .drawBehind {
                     val strokeWidth = 6.dp.toPx()
                     val radius = (size.minDimension - strokeWidth) / 2
+                    val center = Offset(size.width / 2, size.height / 2)
 
-                    // Background ring
+                    // Background ring (subtle)
                     drawCircle(
                         color = Color.Gray.copy(alpha = 0.1f),
                         radius = radius,
-                        style = Stroke(width = strokeWidth)
+                        center = center,
+                        style = Stroke(width = strokeWidth * 0.5f)
                     )
 
-                    // Progress ring
+                    // Gradient progress ring
+                    val sweepAngle = (completionPercentage / 100 * 360).toFloat()
                     drawArc(
-                        color = completionColor.copy(alpha = pulseAlpha),
+                        brush = Brush.sweepGradient(
+                            colors = gradientColors,
+                            center = center
+                        ),
                         startAngle = -90f,
-                        sweepAngle = (completionPercentage / 100 * 360).toFloat(),
+                        sweepAngle = sweepAngle,
                         useCenter = false,
+                        topLeft = Offset(
+                            x = center.x - radius,
+                            y = center.y - radius
+                        ),
+                        size = Size(radius * 2, radius * 2),
                         style = Stroke(
                             width = strokeWidth,
                             cap = androidx.compose.ui.graphics.StrokeCap.Round
@@ -596,27 +674,125 @@ fun AnimatedProfileAvatar(
                 }
         )
 
-        // Avatar circle with initials
+        // Sparkle particles along the completion ring
+        if (completionPercentage > 0) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .rotate(sparkleRotation)
+                    .drawBehind {
+                        val strokeWidth = 6.dp.toPx()
+                        val radius = (size.minDimension - strokeWidth) / 2
+                        val center = Offset(size.width / 2, size.height / 2)
+
+                        // Draw sparkles at 4 positions along the ring
+                        val sparkleCount = 4
+                        val sweepAngle = (completionPercentage / 100 * 360).toFloat()
+
+                        for (i in 0 until sparkleCount) {
+                            val angle = (-90f + (sweepAngle / sparkleCount) * i) * (Math.PI / 180.0)
+                            val x = center.x + (radius * cos(angle)).toFloat()
+                            val y = center.y + (radius * sin(angle)).toFloat()
+
+                            // Draw sparkle as a small glowing circle
+                            drawCircle(
+                                color = Color.White.copy(alpha = sparkleAlpha * 0.8f),
+                                radius = 3.dp.toPx(),
+                                center = Offset(x, y)
+                            )
+
+                            // Outer glow for sparkle
+                            drawCircle(
+                                color = completionColor.copy(alpha = sparkleAlpha * 0.4f),
+                                radius = 6.dp.toPx(),
+                                center = Offset(x, y)
+                            )
+                        }
+                    }
+            )
+        }
+
+        // Avatar circle with enhanced gradient background
         Box(
             modifier = Modifier
-                .fillMaxSize(0.75f)
+                .fillMaxSize(0.7f)
+                .shadow(
+                    elevation = 8.dp,
+                    shape = CircleShape,
+                    spotColor = completionColor.copy(alpha = 0.5f)
+                )
                 .clip(CircleShape)
                 .background(
                     brush = Brush.radialGradient(
                         colors = listOf(
-                            SpiritualPurple.copy(alpha = 0.8f),
-                            MysticViolet.copy(alpha = 0.6f)
-                        )
+                            completionColor.copy(alpha = 0.9f),
+                            completionColor.copy(alpha = 0.6f),
+                            MysticViolet.copy(alpha = 0.4f)
+                        ),
+                        center = Offset.Unspecified,
+                        radius = 300f
                     )
                 ),
             contentAlignment = Alignment.Center
         ) {
+            // Initials with text shadow
             Text(
                 text = getInitials(profile.profileName),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = Color.White,
+                style = TextStyle(
+                    shadow = Shadow(
+                        color = Color.Black.copy(alpha = 0.3f),
+                        offset = Offset(2f, 2f),
+                        blurRadius = 4f
+                    )
+                )
             )
+        }
+
+        // Completion percentage badge
+        if (completionPercentage < 100) {
+            Box(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .offset(x = 4.dp, y = 4.dp)
+                    .size(24.dp)
+                    .shadow(
+                        elevation = 4.dp,
+                        shape = CircleShape,
+                        spotColor = completionColor.copy(alpha = 0.6f)
+                    )
+                    .clip(CircleShape)
+                    .background(
+                        brush = Brush.radialGradient(
+                            colors = listOf(
+                                completionColor,
+                                completionColor.copy(alpha = 0.8f)
+                            )
+                        )
+                    )
+                    .border(
+                        width = 2.dp,
+                        color = Color.White,
+                        shape = CircleShape
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "${completionPercentage.toInt()}",
+                    fontSize = 9.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                    style = TextStyle(
+                        shadow = Shadow(
+                            color = Color.Black.copy(alpha = 0.3f),
+                            offset = Offset(1f, 1f),
+                            blurRadius = 2f
+                        )
+                    )
+                )
+            }
         }
     }
 }

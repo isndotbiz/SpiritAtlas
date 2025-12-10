@@ -1,0 +1,270 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                 SPIRITATLAS IMAGE INTEGRATION PLAN                           ║
+║                        99 Images → Android App                               ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                           IMAGE CATEGORIES (99 Total)                        │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+    ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐
+    │ Branding │  │  Zodiac  │  │   UI     │  │ Avatars  │  │  Chakras │
+    │    8     │  │    12    │  │   12     │  │    10    │  │    7     │
+    └──────────┘  └──────────┘  └──────────┘  └──────────┘  └──────────┘
+         ⬇             ⬇             ⬇             ⬇             ⬇
+    Launcher      Astrology    Buttons     Profile Pics   Energy Centers
+
+    ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐
+    │   Moon   │  │ Elements │  │ Geometry │  │ Symbols  │  │Onboarding│
+    │    8     │  │    5     │  │    8     │  │    8     │  │    6     │
+    └──────────┘  └──────────┘  └──────────┘  └──────────┘  └──────────┘
+         ⬇             ⬇             ⬇             ⬇             ⬇
+    Lunar Phases  Fire/Water/  Sacred       Om/Lotus/    Tutorial
+                  Earth/Air    Patterns     Hamsa        Screens
+
+    ┌──────────────────────┐
+    │   Backgrounds        │
+    │        15            │
+    └──────────────────────┘
+            ⬇
+    Screen-specific atmospheres
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                          4-WEEK IMPLEMENTATION PLAN                          │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+WEEK 1: Critical Assets                    ┌──────────────────────┐
+━━━━━━━━━━━━━━━━━━━━━━━━━━                 │ 26 images            │
+                                            │ CRITICAL priority    │
+┌─────────────────────────────────┐        │                      │
+│ Generate & Optimize:            │        │ ✓ Launcher icon      │
+│  • App Branding (8)             │───────▶│ ✓ Splash screen      │
+│  • Backgrounds (15)             │        │ ✓ Primary UI         │
+│  • Primary Buttons (3)          │        │ ✓ First impressions  │
+└─────────────────────────────────┘        └──────────────────────┘
+         │
+         ▼
+┌─────────────────────────────────┐
+│ Create Components:              │
+│  • SpiritualResources.kt        │
+│  • ImageBackgrounds.kt          │
+└─────────────────────────────────┘
+         │
+         ▼
+┌─────────────────────────────────┐
+│ Update Screens:                 │
+│  • SplashScreen.kt              │
+│  • HomeScreen.kt                │
+└─────────────────────────────────┘
+
+WEEK 2: Core Features                      ┌──────────────────────┐
+━━━━━━━━━━━━━━━━━━━━━━━                    │ 37 images            │
+                                            │ HIGH priority        │
+┌─────────────────────────────────┐        │                      │
+│ Generate & Optimize:            │        │ ✓ All 12 Zodiac      │
+│  • Zodiac (12)                  │───────▶│ ✓ All 7 Chakras      │
+│  • Chakras (7)                  │        │ ✓ All 8 Moon Phases  │
+│  • Moon Phases (8)              │        │ ✓ 10 Avatar options  │
+│  • Avatars (10)                 │        └──────────────────────┘
+└─────────────────────────────────┘
+         │
+         ▼
+┌─────────────────────────────────┐
+│ Create Components:              │
+│  • AvatarComponents.kt          │
+│  • ChakraVisualization.kt       │
+│  • ZodiacImageComponents.kt     │
+└─────────────────────────────────┘
+         │
+         ▼
+┌─────────────────────────────────┐
+│ Update Screens:                 │
+│  • ProfileScreen.kt             │
+│  • ProfileLibraryScreen.kt      │
+│  • CompatibilityDetailScreen.kt │
+└─────────────────────────────────┘
+
+WEEK 3: Visual Polish                      ┌──────────────────────┐
+━━━━━━━━━━━━━━━━━━━━━━                     │ 33 images            │
+                                            │ MEDIUM priority      │
+┌─────────────────────────────────┐        │                      │
+│ Generate & Optimize:            │        │ ✓ Sacred Geometry    │
+│  • Sacred Geometry (8)          │───────▶│ ✓ Elements           │
+│  • Elements (5)                 │        │ ✓ Spiritual Symbols  │
+│  • Spiritual Symbols (8)        │        │ ✓ Onboarding flow    │
+│  • UI Elements (6)              │        └──────────────────────┘
+│  • Onboarding (6)               │
+└─────────────────────────────────┘
+         │
+         ▼
+┌─────────────────────────────────┐
+│ Update ALL Screens:             │
+│  • All 15 backgrounds replaced  │
+│  • Sacred geometry overlays     │
+│  • Element icons added          │
+│  • Onboarding flow created      │
+└─────────────────────────────────┘
+
+WEEK 4: UX Enhancement & Testing           ┌──────────────────────┐
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━           │ Polish & QA          │
+                                            │                      │
+┌─────────────────────────────────┐        │ ✓ Loading states     │
+│ Final Images:                   │───────▶│ ✓ Empty states       │
+│  • Loading states (3)           │        │ ✓ Success/Error      │
+│  • Empty states (2)             │        │ ✓ Multi-device test  │
+│  • Success/Error (2)            │        └──────────────────────┘
+└─────────────────────────────────┘
+         │
+         ▼
+┌─────────────────────────────────┐
+│ Comprehensive Testing:          │
+│  • 4+ physical devices          │
+│  • Performance profiling        │
+│  • Memory leak detection        │
+│  • APK size verification        │
+└─────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                        TECHNICAL ARCHITECTURE                                │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────────┐
+│                         Android Resources                              │
+│  app/src/main/res/                                                     │
+│  ├── drawable/          (baseline - fallback)                          │
+│  ├── drawable-xhdpi/    (2x - most common phones)                      │
+│  ├── drawable-xxhdpi/   (3x - high-end phones)                         │
+│  ├── drawable-xxxhdpi/  (4x - flagship devices)                        │
+│  └── mipmap-*/          (launcher icons only)                          │
+└────────────────────────────────────────────────────────────────────────┘
+                                    ⬇
+┌────────────────────────────────────────────────────────────────────────┐
+│                      Resource Management Layer                         │
+│                                                                        │
+│  ┌──────────────────────────────────────────────────────────────┐    │
+│  │ SpiritualResources.kt                                        │    │
+│  │ - Maps semantic names to resource IDs                        │    │
+│  │                                                               │    │
+│  │ getZodiacResource(ARIES) → R.drawable.zodiac_aries          │    │
+│  │ getChakraResource(1) → R.drawable.chakra_root               │    │
+│  │ getMoonPhaseResource("full") → R.drawable.moon_full         │    │
+│  └──────────────────────────────────────────────────────────────┘    │
+└────────────────────────────────────────────────────────────────────────┘
+                                    ⬇
+┌────────────────────────────────────────────────────────────────────────┐
+│                      UI Component Layer                                │
+│                                                                        │
+│  ┌─────────────────────┐  ┌─────────────────────┐                    │
+│  │ ImageBackgrounds.kt │  │ AvatarComponents.kt │                    │
+│  │ - Background images │  │ - Avatar system     │                    │
+│  │ - Geometry overlays │  │ - Avatar selector   │                    │
+│  └─────────────────────┘  └─────────────────────┘                    │
+│                                                                        │
+│  ┌─────────────────────┐  ┌─────────────────────┐                    │
+│  │ ChakraViz.kt        │  │ ZodiacImages.kt     │                    │
+│  │ - Chakra display    │  │ - Zodiac icons      │                    │
+│  │ - Energy bars       │  │ - Constellation art │                    │
+│  └─────────────────────┘  └─────────────────────┘                    │
+└────────────────────────────────────────────────────────────────────────┘
+                                    ⬇
+┌────────────────────────────────────────────────────────────────────────┐
+│                         Screen Layer (17 screens)                      │
+│                                                                        │
+│  Home → Profile Library → Profile Detail → Compatibility Detail       │
+│   ⬇        ⬇                ⬇                  ⬇                      │
+│  Splash  Settings       Onboarding         Consent                    │
+└────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                            KEY METRICS                                       │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐
+│  APK Size        │  │  Performance     │  │  Quality         │
+│                  │  │                  │  │                  │
+│  Before: 20 MB   │  │  Launch: <2s     │  │  Format: WebP    │
+│  Target: <60 MB  │  │  Load: <1s       │  │  Quality: 90%    │
+│  Max: 100 MB     │  │  FPS: 60         │  │  Cache: Enabled  │
+└──────────────────┘  └──────────────────┘  └──────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                         SUCCESS CRITERIA                                     │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+Technical                         User Experience                 Business
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ 99 images integrated            ✓ Visually stunning             ✓ Higher ratings
+✓ 17 screens updated              ✓ Smooth performance            ✓ Better conversion
+✓ APK <60 MB                      ✓ No crashes                    ✓ Brand enhanced
+✓ No performance loss             ✓ Professional polish           ✓ User retention
+✓ All tests passing               ✓ Spiritual atmosphere          ✓ Market position
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                      IMPLEMENTATION CHECKLIST                                │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+□ Phase 1 Complete (Week 1)
+  └─ Critical assets integrated, launcher & splash updated
+
+□ Phase 2 Complete (Week 2)
+  └─ Zodiac, chakras, avatars, moon phases working
+
+□ Phase 3 Complete (Week 3)
+  └─ All backgrounds, geometry, symbols integrated
+
+□ Phase 4 Complete (Week 4)
+  └─ States polished, tested on 4+ devices, ready to ship
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                          DOCUMENTATION                                       │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+Start Here                              Technical Details
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+INDEX.md                                DETAILED_INTEGRATION_PLAN.md
+  └─ Navigation hub                       └─ Step-by-step guide
+
+INTEGRATION_SUMMARY.md                  COMPONENT_HIERARCHY.txt
+  └─ Executive overview                   └─ Architecture diagram
+
+OPTIMIZED_FLUX_PRO_PROMPTS_99.md       IMAGE_RESOURCE_MAPPING_TEMPLATE.csv
+  └─ All image prompts                    └─ Filename → Resource ID
+
+INTEGRATION_QUICK_CHECKLIST.md         IMAGE_OPTIMIZATION_GUIDE.md
+  └─ Phase tracking                       └─ Optimization best practices
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                             NEXT STEPS                                       │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+1. Review Plan
+   └─ Read INTEGRATION_SUMMARY.md
+   └─ Get stakeholder approval
+
+2. Generate Images
+   └─ Use FLUX 1.1 Pro with prompts
+   └─ Start with Phase 1 (26 images)
+
+3. Optimize
+   └─ Run optimize_for_android.py
+   └─ Verify WebP conversion
+
+4. Create Components
+   └─ Start with SpiritualResources.kt
+   └─ Build reusable Composables
+
+5. Update Screens
+   └─ Follow priority order
+   └─ Test after each screen
+
+6. Test & Deploy
+   └─ Multi-device testing
+   └─ Performance verification
+   └─ Beta → Production release
+
+═══════════════════════════════════════════════════════════════════════════════
+                     Ready to Transform SpiritAtlas
+                         From Good to World-Class
+═══════════════════════════════════════════════════════════════════════════════

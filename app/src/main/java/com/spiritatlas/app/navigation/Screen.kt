@@ -2,6 +2,7 @@ package com.spiritatlas.app.navigation
 
 sealed class Screen(val route: String) {
     object Splash : Screen("splash")
+    object Onboarding : Screen("onboarding")
     object Home : Screen("home")
     object ProfileList : Screen("profile_list")
     object Profile : Screen("profile/{profileId}") {

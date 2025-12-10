@@ -46,7 +46,7 @@ fun HistoryContent(
                     )
                 }
                 
-                items(cachedReports) { report ->
+                items(cachedReports, key = { "${it.profileA.id}-${it.profileB.id}-${it.generatedAt}" }) { report ->
                     HistoryReportCard(
                         report = report,
                         onLoadReport = onLoadReport
@@ -256,7 +256,7 @@ private fun SearchPlaceholder() {
             )
             
             Button(
-                onClick = { /* TODO: Implement search */ },
+                onClick = { /* Search implementation - requires backend service */ },
                 enabled = false
             ) {
                 Text("Coming Soon")

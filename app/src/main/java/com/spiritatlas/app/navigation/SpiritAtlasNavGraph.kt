@@ -17,6 +17,7 @@ import com.spiritatlas.data.worker.EnrichmentWorker
 import com.spiritatlas.feature.compatibility.CompatibilityScreen
 import com.spiritatlas.feature.consent.ConsentScreen
 import com.spiritatlas.feature.home.HomeScreen
+import com.spiritatlas.feature.onboarding.OnboardingScreen
 import com.spiritatlas.feature.profile.EnrichmentResultScreen
 import com.spiritatlas.feature.profile.ProfileComparisonScreen
 import com.spiritatlas.feature.profile.ProfileListScreen
@@ -44,6 +45,20 @@ fun SpiritAtlasNavGraph(
             transitionType = SpiritTransitions.homeToFeature
         ) {
             SplashScreen(navController = navController)
+        }
+
+        // Onboarding screen - First-time user experience with fade through
+        spiritualComposable(
+            route = Screen.Onboarding.route,
+            transitionType = SpiritTransitions.homeToFeature
+        ) {
+            OnboardingScreen(
+                onComplete = {
+                    navController.navigate(Screen.Home.route) {
+                        popUpTo(Screen.Onboarding.route) { inclusive = true }
+                    }
+                }
+            )
         }
 
         // Home screen - Entry point with fade through transition

@@ -1,11 +1,6 @@
 package com.spiritatlas.feature.settings
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -26,1489 +21,639 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.spiritatlas.core.ui.components.EnhancedGlassmorphCard
+import com.spiritatlas.core.ui.components.GradientText
+import com.spiritatlas.core.ui.components.SpiritualGradients as TextGradients
+import com.spiritatlas.core.ui.theme.SpiritualGradients
+import androidx.compose.foundation.layout.Box
 import com.spiritatlas.core.ui.haptics.HapticFeedbackType
 import com.spiritatlas.core.ui.haptics.rememberHapticFeedback
-import com.spiritatlas.data.tracking.ProviderUsage
+import com.spiritatlas.core.ui.theme.SpiritualPurple
 import com.spiritatlas.domain.ai.AiProviderMode
-import com.spiritatlas.domain.model.ConsentStatus
-import com.spiritatlas.domain.model.HouseSystem
-import com.spiritatlas.domain.model.NumerologySystem
-import com.spiritatlas.domain.repository.ConsentType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
-  onNavigateBack: () -> Unit,
-  onNavigateToConsent: () -> Unit,
-  viewModel: SettingsViewModel = hiltViewModel()
+    onNavigateBack: () -> Unit,
+    onNavigateToConsent: () -> Unit,
+    viewModel: SettingsViewModel = hiltViewModel()
 ) {
-  val context = LocalContext.current
-  val haptic = rememberHapticFeedback()
+    val haptic = rememberHapticFeedback()
 
-  // Collect all states
-  val numerologySystem by viewModel.numerologySystem.collectAsState()
-  val houseSystem by viewModel.houseSystem.collectAsState()
-  val useSidereal by viewModel.useSidereal.collectAsState()
-  val ayanamsa by viewModel.ayanamsa.collectAsState()
+    // Collect AI provider states
+    val aiProviderMode by viewModel.aiProviderMode.collectAsState()
+    val providerStatuses by viewModel.providerStatuses.collectAsState()
+    val testConnectionResult by viewModel.testConnectionResult.collectAsState()
 
-  val aiProviderMode by viewModel.aiProviderMode.collectAsState()
-  val consentMap by viewModel.consentMap.collectAsState()
-  val providerStatuses by viewModel.providerStatuses.collectAsState()
-  val testConnectionResult by viewModel.testConnectionResult.collectAsState()
+    // Collect theme state
+    val themeVariant by viewModel.themeVariant.collectAsState()
 
-  val themeMode by viewModel.themeMode.collectAsState()
-  val useDynamicColors by viewModel.useDynamicColors.collectAsState()
-  val accentColor by viewModel.accentColor.collectAsState()
-  val reduceAnimations by viewModel.reduceAnimations.collectAsState()
-
-  val dailyInsightsEnabled by viewModel.dailyInsightsEnabled.collectAsState()
-  val transitAlertsEnabled by viewModel.transitAlertsEnabled.collectAsState()
-  val notificationTime by viewModel.notificationTime.collectAsState()
-
-  val hapticEnabled by viewModel.hapticEnabled.collectAsState()
-  val soundEnabled by viewModel.soundEnabled.collectAsState()
-
-  val isLoading by viewModel.isLoading.collectAsState()
-  val showClearDataDialog by viewModel.showClearDataDialog.collectAsState()
-
-  // AI Usage Statistics
-  val geminiUsage by viewModel.geminiUsage.collectAsState()
-  val groqUsage by viewModel.groqUsage.collectAsState()
-
-  // Expanded section tracking
-  var expandedSection by remember { mutableStateOf<String?>("Profile") }
-
-  Scaffold(
-    topBar = {
-      TopAppBar(
-        title = {
-          Text(
-            "Settings",
-            style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.Bold
-          )
-        },
-        navigationIcon = {
-          IconButton(onClick = {
-            haptic.performHaptic(HapticFeedbackType.MEDIUM)
-            onNavigateBack()
-          }) {
-            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-          }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-          containerColor = MaterialTheme.colorScheme.surface
-        )
-      )
-    }
-  ) { paddingValues ->
+    // Settings screen with spiritual gradient background
     Box(
-      modifier = Modifier
-        .fillMaxSize()
-        .padding(paddingValues)
-    ) {
-      LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(vertical = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-      ) {
-        // Profile Settings Section
-        item {
-          SettingsSection(
-            title = "Profile Settings",
-            icon = Icons.Filled.Person,
-            isExpanded = expandedSection == "Profile",
-            onToggleExpand = {
-              haptic.performHaptic(HapticFeedbackType.LIGHT)
-              expandedSection = if (expandedSection == "Profile") null else "Profile"
-            }
-          ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-              SettingsDropdown(
-                label = "Numerology System",
-                options = NumerologySystem.values().map { it.name },
-                selectedOption = numerologySystem.name,
-                onOptionSelected = {
-                  haptic.performHaptic(HapticFeedbackType.SELECTION)
-                  viewModel.setNumerologySystem(NumerologySystem.valueOf(it))
-                },
-                description = "Choose calculation method for numerology"
-              )
-
-              SettingsToggle(
-                label = "Use Sidereal Zodiac",
-                description = "Sidereal (Vedic) vs Tropical (Western) astrology",
-                checked = useSidereal,
-                onCheckedChange = {
-                  haptic.performHaptic(HapticFeedbackType.MEDIUM)
-                  viewModel.setUseSidereal(it)
-                },
-                icon = Icons.Filled.Stars
-              )
-
-              SettingsDropdown(
-                label = "House System",
-                options = HouseSystem.values().map { it.name },
-                selectedOption = houseSystem.name,
-                onOptionSelected = {
-                  haptic.performHaptic(HapticFeedbackType.SELECTION)
-                  viewModel.setHouseSystem(HouseSystem.valueOf(it))
-                },
-                description = "Astrological house calculation method"
-              )
-
-              SettingsDropdown(
-                label = "Ayanamsa",
-                options = listOf("Lahiri", "Raman", "Krishnamurti", "Fagan-Bradley"),
-                selectedOption = ayanamsa,
-                onOptionSelected = {
-                  haptic.performHaptic(HapticFeedbackType.SELECTION)
-                  viewModel.setAyanamsa(it)
-                },
-                description = "Precession calculation method for sidereal zodiac"
-              )
-            }
-          }
-        }
-
-        // AI & Privacy Section
-        item {
-          SettingsSection(
-            title = "AI & Privacy",
-            icon = Icons.Filled.Security,
-            isExpanded = expandedSection == "AIPrivacy",
-            onToggleExpand = {
-              haptic.performHaptic(HapticFeedbackType.LIGHT)
-              expandedSection = if (expandedSection == "AIPrivacy") null else "AIPrivacy"
-            }
-          ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-              AiProviderSelector(
-                selectedMode = aiProviderMode,
-                onModeSelected = {
-                  haptic.performHaptic(HapticFeedbackType.MEDIUM)
-                  viewModel.setAiProviderMode(it)
-                }
-              )
-
-              HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
-
-              Text(
-                text = "Provider Configuration",
-                style = MaterialTheme.typography.titleSmall,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
-              )
-
-              ProviderManagementSection(
-                providerStatuses = providerStatuses,
-                testConnectionResult = testConnectionResult,
-                onApiKeyChanged = { provider, key ->
-                  viewModel.setProviderApiKey(provider, key)
-                },
-                onTestConnection = { provider ->
-                  haptic.performHaptic(HapticFeedbackType.MEDIUM)
-                  viewModel.testProviderConnection(provider)
-                },
-                onDismissTestResult = {
-                  viewModel.clearTestConnectionResult()
-                }
-              )
-
-              HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
-
-              Text(
-                text = "Data Permissions",
-                style = MaterialTheme.typography.titleSmall,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
-              )
-
-              SettingsToggle(
-                label = "AI Enrichment",
-                description = "Allow AI to analyze profiles and provide insights",
-                checked = consentMap[ConsentType.AI_ENRICHMENT] == ConsentStatus.GRANTED,
-                onCheckedChange = {
-                  haptic.performHaptic(HapticFeedbackType.MEDIUM)
-                  viewModel.toggleConsent(ConsentType.AI_ENRICHMENT, it)
-                },
-                icon = Icons.Filled.Psychology
-              )
-
-              SettingsToggle(
-                label = "Cloud Sync",
-                description = "Sync profiles using encrypted cloud storage",
-                checked = consentMap[ConsentType.CLOUD_SYNC] == ConsentStatus.GRANTED,
-                onCheckedChange = {
-                  haptic.performHaptic(HapticFeedbackType.MEDIUM)
-                  viewModel.toggleConsent(ConsentType.CLOUD_SYNC, it)
-                },
-                icon = Icons.Filled.Cloud
-              )
-
-              SettingsToggle(
-                label = "Analytics",
-                description = "Help improve the app with anonymous usage data",
-                checked = consentMap[ConsentType.ANALYTICS] == ConsentStatus.GRANTED,
-                onCheckedChange = {
-                  haptic.performHaptic(HapticFeedbackType.MEDIUM)
-                  viewModel.toggleConsent(ConsentType.ANALYTICS, it)
-                },
-                icon = Icons.Filled.Analytics
-              )
-
-              HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
-
-              Text(
-                text = "Free Tier Usage",
-                style = MaterialTheme.typography.titleSmall,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
-              )
-
-              UsageStatsCard(
-                providerName = "Gemini",
-                usage = geminiUsage,
-                onReset = {
-                  haptic.performHaptic(HapticFeedbackType.MEDIUM)
-                  viewModel.resetAiUsage()
-                }
-              )
-
-              UsageStatsCard(
-                providerName = "Groq",
-                usage = groqUsage,
-                onReset = {
-                  haptic.performHaptic(HapticFeedbackType.MEDIUM)
-                  viewModel.resetAiUsage()
-                }
-              )
-
-              HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
-
-              SettingsButton(
-                label = "Clear AI Cache",
-                description = "Remove cached AI responses",
-                icon = Icons.Filled.DeleteSweep,
-                onClick = {
-                  haptic.performHaptic(HapticFeedbackType.HEAVY)
-                  viewModel.clearAiCache()
-                }
-              )
-
-              SettingsButton(
-                label = "Manage Consents",
-                description = "View detailed privacy settings",
-                icon = Icons.Filled.Policy,
-                onClick = {
-                  haptic.performHaptic(HapticFeedbackType.MEDIUM)
-                  onNavigateToConsent()
-                }
-              )
-            }
-          }
-        }
-
-        // Appearance Section
-        item {
-          SettingsSection(
-            title = "Appearance",
-            icon = Icons.Filled.Palette,
-            isExpanded = expandedSection == "Appearance",
-            onToggleExpand = {
-              haptic.performHaptic(HapticFeedbackType.LIGHT)
-              expandedSection = if (expandedSection == "Appearance") null else "Appearance"
-            }
-          ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-              ThemeSelector(
-                selectedMode = themeMode,
-                onModeSelected = {
-                  haptic.performHaptic(HapticFeedbackType.MEDIUM)
-                  viewModel.setThemeMode(it)
-                }
-              )
-
-              SettingsToggle(
-                label = "Dynamic Colors",
-                description = "Use system wallpaper colors (Android 12+)",
-                checked = useDynamicColors,
-                onCheckedChange = {
-                  haptic.performHaptic(HapticFeedbackType.MEDIUM)
-                  viewModel.setUseDynamicColors(it)
-                },
-                icon = Icons.Filled.ColorLens
-              )
-
-              AccentColorPicker(
-                selectedColor = accentColor,
-                onColorSelected = {
-                  haptic.performHaptic(HapticFeedbackType.SELECTION)
-                  viewModel.setAccentColor(it)
-                }
-              )
-
-              SettingsToggle(
-                label = "Reduce Animations",
-                description = "Minimize motion for better performance",
-                checked = reduceAnimations,
-                onCheckedChange = {
-                  haptic.performHaptic(HapticFeedbackType.MEDIUM)
-                  viewModel.setReduceAnimations(it)
-                },
-                icon = Icons.Filled.Animation
-              )
-            }
-          }
-        }
-
-        // Notifications Section
-        item {
-          SettingsSection(
-            title = "Notifications",
-            icon = Icons.Filled.Notifications,
-            isExpanded = expandedSection == "Notifications",
-            onToggleExpand = {
-              haptic.performHaptic(HapticFeedbackType.LIGHT)
-              expandedSection = if (expandedSection == "Notifications") null else "Notifications"
-            }
-          ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-              SettingsToggle(
-                label = "Daily Insights",
-                description = "Receive daily spiritual guidance",
-                checked = dailyInsightsEnabled,
-                onCheckedChange = {
-                  haptic.performHaptic(HapticFeedbackType.MEDIUM)
-                  viewModel.setDailyInsightsEnabled(it)
-                },
-                icon = Icons.Filled.LightMode
-              )
-
-              SettingsToggle(
-                label = "Transit Alerts",
-                description = "Notifications for important astrological transits",
-                checked = transitAlertsEnabled,
-                onCheckedChange = {
-                  haptic.performHaptic(HapticFeedbackType.MEDIUM)
-                  viewModel.setTransitAlertsEnabled(it)
-                },
-                icon = Icons.Filled.TrendingUp
-              )
-
-              SettingsButton(
-                label = "Notification Time",
-                description = "${String.format("%02d:%02d", notificationTime.first, notificationTime.second)}",
-                icon = Icons.Filled.Schedule,
-                onClick = {
-                  haptic.performHaptic(HapticFeedbackType.MEDIUM)
-                  // TODO: Show time picker dialog
-                }
-              )
-            }
-          }
-        }
-
-        // Haptics & Sound Section
-        item {
-          SettingsSection(
-            title = "Haptics & Sound",
-            icon = Icons.Filled.Vibration,
-            isExpanded = expandedSection == "Haptics",
-            onToggleExpand = {
-              haptic.performHaptic(HapticFeedbackType.LIGHT)
-              expandedSection = if (expandedSection == "Haptics") null else "Haptics"
-            }
-          ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-              SettingsToggle(
-                label = "Haptic Feedback",
-                description = "Vibration on interactions",
-                checked = hapticEnabled,
-                onCheckedChange = {
-                  if (it) haptic.performHaptic(HapticFeedbackType.MEDIUM)
-                  viewModel.setHapticEnabled(it)
-                },
-                icon = Icons.Filled.Vibration
-              )
-
-              SettingsToggle(
-                label = "Sound Effects",
-                description = "Audio feedback for interactions",
-                checked = soundEnabled,
-                onCheckedChange = {
-                  haptic.performHaptic(HapticFeedbackType.MEDIUM)
-                  viewModel.setSoundEnabled(it)
-                },
-                icon = Icons.Filled.VolumeUp
-              )
-            }
-          }
-        }
-
-        // Data Section
-        item {
-          SettingsSection(
-            title = "Data",
-            icon = Icons.Filled.Storage,
-            isExpanded = expandedSection == "Data",
-            onToggleExpand = {
-              haptic.performHaptic(HapticFeedbackType.LIGHT)
-              expandedSection = if (expandedSection == "Data") null else "Data"
-            }
-          ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-              SettingsButton(
-                label = "Export All Profiles",
-                description = "Save profiles to file",
-                icon = Icons.Filled.Upload,
-                onClick = {
-                  haptic.performHaptic(HapticFeedbackType.HEAVY)
-                  viewModel.exportAllProfiles()
-                }
-              )
-
-              SettingsButton(
-                label = "Import Profiles",
-                description = "Load profiles from file",
-                icon = Icons.Filled.Download,
-                onClick = {
-                  haptic.performHaptic(HapticFeedbackType.HEAVY)
-                  viewModel.importProfiles()
-                }
-              )
-
-              SettingsButton(
-                label = "Clear All Data",
-                description = "Delete all profiles and settings",
-                icon = Icons.Filled.Delete,
-                iconTint = MaterialTheme.colorScheme.error,
-                onClick = {
-                  haptic.performHaptic(HapticFeedbackType.WARNING)
-                  viewModel.showClearDataDialog()
-                }
-              )
-            }
-          }
-        }
-
-        // About Section
-        item {
-          SettingsSection(
-            title = "About",
-            icon = Icons.Filled.Info,
-            isExpanded = expandedSection == "About",
-            onToggleExpand = {
-              haptic.performHaptic(HapticFeedbackType.LIGHT)
-              expandedSection = if (expandedSection == "About") null else "About"
-            }
-          ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-              SettingsButton(
-                label = "App Version",
-                description = "1.0.0 (Beta)",
-                icon = Icons.Filled.AppSettingsAlt,
-                onClick = { }
-              )
-
-              SettingsButton(
-                label = "Privacy Policy",
-                description = "View our privacy policy",
-                icon = Icons.Filled.PrivacyTip,
-                onClick = {
-                  haptic.performHaptic(HapticFeedbackType.MEDIUM)
-                  context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://spiritatlas.app/privacy")))
-                }
-              )
-
-              SettingsButton(
-                label = "Terms of Service",
-                description = "View terms and conditions",
-                icon = Icons.Filled.Gavel,
-                onClick = {
-                  haptic.performHaptic(HapticFeedbackType.MEDIUM)
-                  context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://spiritatlas.app/terms")))
-                }
-              )
-
-              SettingsButton(
-                label = "Open Source Licenses",
-                description = "Third-party software licenses",
-                icon = Icons.Filled.Code,
-                onClick = {
-                  haptic.performHaptic(HapticFeedbackType.MEDIUM)
-                  // TODO: Show licenses screen
-                }
-              )
-
-              SettingsButton(
-                label = "Rate App",
-                description = "Share your feedback on Google Play",
-                icon = Icons.Filled.Star,
-                onClick = {
-                  haptic.performHaptic(HapticFeedbackType.MEDIUM)
-                  context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=${context.packageName}")))
-                }
-              )
-
-              SettingsButton(
-                label = "Share App",
-                description = "Tell friends about SpiritAtlas",
-                icon = Icons.Filled.Share,
-                onClick = {
-                  haptic.performHaptic(HapticFeedbackType.MEDIUM)
-                  val sendIntent = Intent().apply {
-                    action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_TEXT, "Check out SpiritAtlas - Your comprehensive spiritual companion! https://spiritatlas.app")
-                    type = "text/plain"
-                  }
-                  context.startActivity(Intent.createChooser(sendIntent, "Share SpiritAtlas"))
-                }
-              )
-            }
-          }
-        }
-
-        // Bottom spacing
-        item {
-          Spacer(modifier = Modifier.height(32.dp))
-        }
-      }
-
-      // Loading overlay
-      if (isLoading) {
-        Box(
-          modifier = Modifier
+        modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.8f)),
-          contentAlignment = Alignment.Center
-        ) {
-          CircularProgressIndicator()
-        }
-      }
-    }
-  }
-
-  // Clear Data Confirmation Dialog
-  if (showClearDataDialog) {
-    AlertDialog(
-      onDismissRequest = { viewModel.dismissClearDataDialog() },
-      title = { Text("Clear All Data?") },
-      text = { Text("This will permanently delete all profiles, settings, and cached data. This action cannot be undone.") },
-      confirmButton = {
-        TextButton(
-          onClick = {
-            haptic.performHaptic(HapticFeedbackType.HEAVY)
-            viewModel.clearAllData()
-          },
-          colors = ButtonDefaults.textButtonColors(
-            contentColor = MaterialTheme.colorScheme.error
-          )
-        ) {
-          Text("Clear All")
-        }
-      },
-      dismissButton = {
-        TextButton(onClick = { viewModel.dismissClearDataDialog() }) {
-          Text("Cancel")
-        }
-      }
-    )
-  }
-}
-
-@Composable
-private fun SettingsSection(
-  title: String,
-  icon: ImageVector,
-  isExpanded: Boolean,
-  onToggleExpand: () -> Unit,
-  content: @Composable () -> Unit
-) {
-  val rotationAngle by animateFloatAsState(
-    targetValue = if (isExpanded) 180f else 0f,
-    animationSpec = tween(300), label = "rotation"
-  )
-
-  Card(
-    modifier = Modifier
-      .fillMaxWidth()
-      .padding(horizontal = 16.dp)
-      .animateContentSize(),
-    shape = RoundedCornerShape(16.dp),
-    colors = CardDefaults.cardColors(
-      containerColor = MaterialTheme.colorScheme.surfaceVariant
-    )
-  ) {
-    Column {
-      Row(
-        modifier = Modifier
-          .fillMaxWidth()
-          .clickable(onClick = onToggleExpand)
-          .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-      ) {
-        Row(
-          horizontalArrangement = Arrangement.spacedBy(12.dp),
-          verticalAlignment = Alignment.CenterVertically
-        ) {
-          Icon(
-            imageVector = icon,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(24.dp)
-          )
-          Text(
-            text = title,
-            style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.Bold
-          )
-        }
-        Icon(
-          imageVector = Icons.Filled.KeyboardArrowDown,
-          contentDescription = if (isExpanded) "Collapse" else "Expand",
-          modifier = Modifier.rotate(rotationAngle)
-        )
-      }
-
-      AnimatedVisibility(
-        visible = isExpanded,
-        enter = expandVertically() + fadeIn(),
-        exit = shrinkVertically() + fadeOut()
-      ) {
-        Column(
-          modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
-        ) {
-          HorizontalDivider(modifier = Modifier.padding(bottom = 12.dp))
-          content()
-        }
-      }
-    }
-  }
-}
-
-@Composable
-private fun SettingsToggle(
-  label: String,
-  description: String,
-  checked: Boolean,
-  onCheckedChange: (Boolean) -> Unit,
-  icon: ImageVector,
-  modifier: Modifier = Modifier
-) {
-  Card(
-    modifier = modifier.fillMaxWidth(),
-    colors = CardDefaults.cardColors(
-      containerColor = MaterialTheme.colorScheme.surface
-    ),
-    shape = RoundedCornerShape(12.dp)
-  ) {
-    Row(
-      modifier = Modifier
-        .fillMaxWidth()
-        .padding(16.dp),
-      horizontalArrangement = Arrangement.SpaceBetween,
-      verticalAlignment = Alignment.CenterVertically
+            .background(SpiritualGradients.cosmicNight)
     ) {
-      Row(
-        modifier = Modifier.weight(1f),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        verticalAlignment = Alignment.CenterVertically
-      ) {
-        Icon(
-          imageVector = icon,
-          contentDescription = null,
-          tint = MaterialTheme.colorScheme.onSurfaceVariant,
-          modifier = Modifier.size(20.dp)
-        )
-        Column {
-          Text(
-            text = label,
-            style = MaterialTheme.typography.bodyLarge,
-            fontWeight = FontWeight.Medium
-          )
-          Text(
-            text = description,
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-          )
-        }
-      }
-      Switch(
-        checked = checked,
-        onCheckedChange = onCheckedChange
-      )
-    }
-  }
-}
-
-@Composable
-private fun SettingsButton(
-  label: String,
-  description: String,
-  icon: ImageVector,
-  onClick: () -> Unit,
-  iconTint: Color = MaterialTheme.colorScheme.onSurfaceVariant,
-  modifier: Modifier = Modifier
-) {
-  Card(
-    modifier = modifier.fillMaxWidth(),
-    onClick = onClick,
-    colors = CardDefaults.cardColors(
-      containerColor = MaterialTheme.colorScheme.surface
-    ),
-    shape = RoundedCornerShape(12.dp)
-  ) {
-    Row(
-      modifier = Modifier
-        .fillMaxWidth()
-        .padding(16.dp),
-      horizontalArrangement = Arrangement.spacedBy(12.dp),
-      verticalAlignment = Alignment.CenterVertically
-    ) {
-      Icon(
-        imageVector = icon,
-        contentDescription = null,
-        tint = iconTint,
-        modifier = Modifier.size(20.dp)
-      )
-      Column(modifier = Modifier.weight(1f)) {
-        Text(
-          text = label,
-          style = MaterialTheme.typography.bodyLarge,
-          fontWeight = FontWeight.Medium
-        )
-        Text(
-          text = description,
-          style = MaterialTheme.typography.bodySmall,
-          color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-      }
-      Icon(
-        imageVector = Icons.Filled.ChevronRight,
-        contentDescription = null,
-        tint = MaterialTheme.colorScheme.onSurfaceVariant
-      )
-    }
-  }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun SettingsDropdown(
-  label: String,
-  options: List<String>,
-  selectedOption: String,
-  onOptionSelected: (String) -> Unit,
-  description: String,
-  modifier: Modifier = Modifier
-) {
-  var expanded by remember { mutableStateOf(false) }
-
-  Card(
-    modifier = modifier.fillMaxWidth(),
-    onClick = { expanded = true },
-    colors = CardDefaults.cardColors(
-      containerColor = MaterialTheme.colorScheme.surface
-    ),
-    shape = RoundedCornerShape(12.dp)
-  ) {
-    Column(
-      modifier = Modifier
-        .fillMaxWidth()
-        .padding(16.dp)
-    ) {
-      Text(
-        text = label,
-        style = MaterialTheme.typography.bodyLarge,
-        fontWeight = FontWeight.Medium
-      )
-      Text(
-        text = description,
-        style = MaterialTheme.typography.bodySmall,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-        modifier = Modifier.padding(top = 2.dp)
-      )
-      Row(
-        modifier = Modifier
-          .fillMaxWidth()
-          .padding(top = 8.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-      ) {
-        Text(
-          text = selectedOption.replace("_", " "),
-          style = MaterialTheme.typography.bodyMedium,
-          color = MaterialTheme.colorScheme.primary,
-          fontWeight = FontWeight.SemiBold
-        )
-        Icon(
-          imageVector = Icons.Filled.ArrowDropDown,
-          contentDescription = null,
-          tint = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-      }
-
-      DropdownMenu(
-        expanded = expanded,
-        onDismissRequest = { expanded = false }
-      ) {
-        options.forEach { option ->
-          DropdownMenuItem(
-            text = { Text(option.replace("_", " ")) },
-            onClick = {
-              onOptionSelected(option)
-              expanded = false
-            },
-            leadingIcon = if (option == selectedOption) {
-              { Icon(Icons.Filled.Check, contentDescription = null) }
-            } else null
-          )
-        }
-      }
-    }
-  }
-}
-
-@Composable
-private fun AiProviderSelector(
-  selectedMode: AiProviderMode,
-  onModeSelected: (AiProviderMode) -> Unit
-) {
-  Column(
-    modifier = Modifier.padding(horizontal = 16.dp),
-    verticalArrangement = Arrangement.spacedBy(8.dp)
-  ) {
-    Text(
-      text = "AI Provider",
-      style = MaterialTheme.typography.titleSmall,
-      fontWeight = FontWeight.SemiBold,
-      modifier = Modifier.padding(bottom = 4.dp)
-    )
-
-    AiProviderMode.values().forEach { mode ->
-      val (label, description, icon) = when (mode) {
-        AiProviderMode.LOCAL -> Triple("Local (Ollama)", "Runs on your device - completely private", "🏠")
-        AiProviderMode.AUTO -> Triple("Automatic", "Switches between local and cloud intelligently", "⚡")
-        AiProviderMode.GEMINI -> Triple("Gemini", "Google Gemini 2.5 Flash - fast and free", "💎")
-        AiProviderMode.GROQ -> Triple("Groq", "Groq Llama 3.3 70B - fast and free", "⚡")
-        AiProviderMode.OPENAI -> Triple("OpenAI", "GPT-4o - requires API key", "🤖")
-        AiProviderMode.CLAUDE -> Triple("Claude", "Anthropic Claude - requires API key", "🧠")
-        AiProviderMode.OPENROUTER -> Triple("OpenRouter", "Multiple models available", "☁️")
-      }
-
-      Card(
-        onClick = { onModeSelected(mode) },
-        colors = CardDefaults.cardColors(
-          containerColor = if (selectedMode == mode) {
-            MaterialTheme.colorScheme.primaryContainer
-          } else {
-            MaterialTheme.colorScheme.surface
-          }
-        ),
-        shape = RoundedCornerShape(12.dp)
-      ) {
-        Row(
-          modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-          horizontalArrangement = Arrangement.SpaceBetween,
-          verticalAlignment = Alignment.CenterVertically
-        ) {
-          Row(
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.weight(1f)
-          ) {
-            Text(text = icon, style = MaterialTheme.typography.headlineSmall)
-            Column {
-              Text(
-                text = label,
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Medium
-              )
-              Text(
-                text = description,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-              )
+        Scaffold(
+            containerColor = Color.Transparent,
+            topBar = {
+                TopAppBar(
+                    title = { Text("") }, // Empty, we'll use custom header
+                    navigationIcon = {
+                        IconButton(onClick = {
+                            haptic.performHaptic(HapticFeedbackType.MEDIUM)
+                            onNavigateBack()
+                        }) {
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = Color.Transparent
+                    )
+                )
             }
-          }
-          RadioButton(
-            selected = selectedMode == mode,
-            onClick = { onModeSelected(mode) }
-          )
-        }
-      }
-    }
-  }
-}
-
-@Composable
-private fun ThemeSelector(
-  selectedMode: ThemeMode,
-  onModeSelected: (ThemeMode) -> Unit
-) {
-  Row(
-    modifier = Modifier
-      .fillMaxWidth()
-      .padding(horizontal = 16.dp),
-    horizontalArrangement = Arrangement.spacedBy(8.dp)
-  ) {
-    ThemeMode.values().forEach { mode ->
-      val (label, icon) = when (mode) {
-        ThemeMode.SYSTEM -> "System" to Icons.Filled.PhoneAndroid
-        ThemeMode.LIGHT -> "Light" to Icons.Filled.LightMode
-        ThemeMode.DARK -> "Dark" to Icons.Filled.DarkMode
-      }
-
-      Card(
-        onClick = { onModeSelected(mode) },
-        modifier = Modifier.weight(1f),
-        colors = CardDefaults.cardColors(
-          containerColor = if (selectedMode == mode) {
-            MaterialTheme.colorScheme.primaryContainer
-          } else {
-            MaterialTheme.colorScheme.surface
-          }
-        ),
-        shape = RoundedCornerShape(12.dp)
-      ) {
-        Column(
-          modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-          horizontalAlignment = Alignment.CenterHorizontally,
-          verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-          Icon(
-            imageVector = icon,
-            contentDescription = null,
-            tint = if (selectedMode == mode) {
-              MaterialTheme.colorScheme.primary
-            } else {
-              MaterialTheme.colorScheme.onSurfaceVariant
-            }
-          )
-          Text(
-            text = label,
-            style = MaterialTheme.typography.bodySmall,
-            fontWeight = if (selectedMode == mode) FontWeight.Bold else FontWeight.Normal
-          )
-        }
-      }
-    }
-  }
-}
-
-@Composable
-private fun AccentColorPicker(
-  selectedColor: AccentColor,
-  onColorSelected: (AccentColor) -> Unit
-) {
-  Column(
-    modifier = Modifier.padding(horizontal = 16.dp),
-    verticalArrangement = Arrangement.spacedBy(8.dp)
-  ) {
-    Text(
-      text = "Accent Color",
-      style = MaterialTheme.typography.titleSmall,
-      fontWeight = FontWeight.SemiBold
-    )
-    Row(
-      modifier = Modifier.fillMaxWidth(),
-      horizontalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-      AccentColor.values().forEach { color ->
-        Box(
-          modifier = Modifier
-            .size(48.dp)
-            .clip(CircleShape)
-            .clickable { onColorSelected(color) }
-            .padding(4.dp),
-          contentAlignment = Alignment.Center
-        ) {
-          Box(
+        ) { paddingValues ->
+        LazyColumn(
             modifier = Modifier
-              .fillMaxSize()
-              .clip(CircleShape)
-              .background(Color(color.colorHex)),
-            contentAlignment = Alignment.Center
-          ) {
-            if (selectedColor == color) {
-              Icon(
-                imageVector = Icons.Filled.Check,
-                contentDescription = null,
-                tint = Color.White,
-                modifier = Modifier.size(20.dp)
-              )
+                .fillMaxSize()
+                .padding(paddingValues),
+            contentPadding = PaddingValues(horizontal = 20.dp, vertical = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(24.dp)
+        ) {
+            // Header with gradient text
+            item {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    GradientText(
+                        text = "Settings",
+                        gradient = TextGradients.cosmicPurple,
+                        style = MaterialTheme.typography.headlineLarge.copy(
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                    Text(
+                        text = "Configure your AI provider preferences",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
             }
-          }
-        }
-      }
-    }
-    Text(
-      text = selectedColor.displayName,
-      style = MaterialTheme.typography.bodySmall,
-      color = MaterialTheme.colorScheme.onSurfaceVariant
-    )
-  }
-}
 
-@Composable
-private fun ProviderManagementSection(
-  providerStatuses: Map<AiProviderMode, ProviderStatus>,
-  testConnectionResult: TestConnectionResult?,
-  onApiKeyChanged: (AiProviderMode, String) -> Unit,
-  onTestConnection: (AiProviderMode) -> Unit,
-  onDismissTestResult: () -> Unit
-) {
-  Column(
-    modifier = Modifier.padding(horizontal = 16.dp),
-    verticalArrangement = Arrangement.spacedBy(8.dp)
-  ) {
-    // Show providers that support API keys
-    listOf(
-      Triple(AiProviderMode.GEMINI, "Gemini", "Google AI (app-provided)"),
-      Triple(AiProviderMode.GROQ, "Groq", "Fast inference (app-provided)"),
-      Triple(AiProviderMode.OPENAI, "OpenAI", "GPT-4 (user key required)"),
-      Triple(AiProviderMode.CLAUDE, "Claude", "Anthropic (user key required)"),
-      Triple(AiProviderMode.OPENROUTER, "OpenRouter", "Multi-model (optional user key)"),
-      Triple(AiProviderMode.LOCAL, "Local (Ollama)", "On-device privacy")
-    ).forEach { (provider, name, description) ->
-      ProviderCard(
-        provider = provider,
-        name = name,
-        description = description,
-        status = providerStatuses[provider],
-        testResult = testConnectionResult?.takeIf { it.provider == provider },
-        onApiKeyChanged = { onApiKeyChanged(provider, it) },
-        onTestConnection = { onTestConnection(provider) },
-        onDismissTestResult = onDismissTestResult
-      )
+            // AI Provider Selection Card
+            item {
+                EnhancedGlassmorphCard(
+                    elevation = 2,
+                    glowColor = SpiritualPurple,
+                    enableGlow = true
+                ) {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        // Section header
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.Psychology,
+                                contentDescription = "AI provider configuration icon",
+                                tint = SpiritualPurple,
+                                modifier = Modifier.size(28.dp)
+                            )
+                            Column {
+                                Text(
+                                    text = "AI Provider",
+                                    style = MaterialTheme.typography.titleLarge,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+                                Text(
+                                    text = "Select your preferred AI provider for insights",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        }
+
+                        HorizontalDivider(
+                            modifier = Modifier.padding(vertical = 4.dp),
+                            color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
+                        )
+
+                        // Current selection
+                        Card(
+                            colors = CardDefaults.cardColors(
+                                containerColor = SpiritualPurple.copy(alpha = 0.1f)
+                            ),
+                            shape = RoundedCornerShape(16.dp)
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column {
+                                    Text(
+                                        text = "Currently Selected",
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                    Text(
+                                        text = getProviderDisplayName(aiProviderMode),
+                                        style = MaterialTheme.typography.titleMedium,
+                                        fontWeight = FontWeight.Bold,
+                                        color = SpiritualPurple
+                                    )
+                                }
+                                Icon(
+                                    imageVector = Icons.Filled.CheckCircle,
+                                    contentDescription = "Selected AI provider indicator",
+                                    tint = SpiritualPurple,
+                                    modifier = Modifier.size(32.dp)
+                                )
+                            }
+                        }
+
+                        // Provider list
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            AiProviderMode.values().forEach { provider ->
+                                ProviderListItem(
+                                    provider = provider,
+                                    isSelected = aiProviderMode == provider,
+                                    status = providerStatuses[provider],
+                                    testResult = testConnectionResult?.takeIf { it.provider == provider },
+                                    onSelect = {
+                                        haptic.performHaptic(HapticFeedbackType.MEDIUM)
+                                        viewModel.setAiProviderMode(provider)
+                                    },
+                                    onApiKeyChanged = { key ->
+                                        viewModel.setProviderApiKey(provider, key)
+                                    },
+                                    onTestConnection = {
+                                        haptic.performHaptic(HapticFeedbackType.MEDIUM)
+                                        viewModel.testProviderConnection(provider)
+                                    },
+                                    onDismissTestResult = {
+                                        viewModel.clearTestConnectionResult()
+                                    }
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Theme Selector Card
+            item {
+                ThemeSelector(
+                    currentTheme = themeVariant,
+                    onThemeSelected = { variant ->
+                        haptic.performHaptic(HapticFeedbackType.MEDIUM)
+                        viewModel.setThemeVariant(variant)
+                    }
+                )
+            }
+
+            // Bottom spacing
+            item {
+                Spacer(modifier = Modifier.height(32.dp))
+            }
+        }
     }
-  }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ProviderCard(
-  provider: AiProviderMode,
-  name: String,
-  description: String,
-  status: ProviderStatus?,
-  testResult: TestConnectionResult?,
-  onApiKeyChanged: (String) -> Unit,
-  onTestConnection: () -> Unit,
-  onDismissTestResult: () -> Unit
+private fun ProviderListItem(
+    provider: AiProviderMode,
+    isSelected: Boolean,
+    status: ProviderStatus?,
+    testResult: TestConnectionResult?,
+    onSelect: () -> Unit,
+    onApiKeyChanged: (String) -> Unit,
+    onTestConnection: () -> Unit,
+    onDismissTestResult: () -> Unit
 ) {
-  var expanded by remember { mutableStateOf(false) }
-  var apiKeyInput by remember(status?.apiKey) { mutableStateOf(status?.apiKey ?: "") }
-  var showApiKey by remember { mutableStateOf(false) }
+    var expanded by remember { mutableStateOf(false) }
+    var apiKeyInput by remember(status?.apiKey) { mutableStateOf(status?.apiKey ?: "") }
+    var showApiKey by remember { mutableStateOf(false) }
 
-  val requiresUserKey = provider == AiProviderMode.OPENAI || provider == AiProviderMode.CLAUDE
-  val supportsUserKey = requiresUserKey || provider == AiProviderMode.OPENROUTER
-  val isAvailable = status?.isAvailable ?: false
+    val (displayName, description, emoji) = getProviderInfo(provider)
+    val requiresUserKey = provider == AiProviderMode.OPENAI || provider == AiProviderMode.CLAUDE
+    val supportsUserKey = requiresUserKey || provider == AiProviderMode.OPENROUTER
+    val isAvailable = status?.isAvailable ?: false
 
-  Card(
-    modifier = Modifier.fillMaxWidth(),
-    colors = CardDefaults.cardColors(
-      containerColor = MaterialTheme.colorScheme.surface
-    ),
-    shape = RoundedCornerShape(12.dp)
-  ) {
-    Column(modifier = Modifier.fillMaxWidth()) {
-      Row(
-        modifier = Modifier
-          .fillMaxWidth()
-          .clickable { if (supportsUserKey) expanded = !expanded }
-          .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-      ) {
-        Column(modifier = Modifier.weight(1f)) {
-          Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalAlignment = Alignment.CenterVertically
-          ) {
-            Text(
-              text = name,
-              style = MaterialTheme.typography.bodyLarge,
-              fontWeight = FontWeight.Medium
-            )
-            ProviderStatusBadge(
-              isAvailable = isAvailable,
-              requiresUserKey = requiresUserKey,
-              hasApiKey = status?.hasApiKey ?: false
-            )
-          }
-          Text(
-            text = description,
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-          )
-        }
-        if (supportsUserKey) {
-          Icon(
-            imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
-            contentDescription = if (expanded) "Collapse" else "Expand"
-          )
-        }
-      }
-
-      AnimatedVisibility(
-        visible = expanded && supportsUserKey,
-        enter = expandVertically() + fadeIn(),
-        exit = shrinkVertically() + fadeOut()
-      ) {
-        Column(
-          modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-          verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-          HorizontalDivider()
-
-          OutlinedTextField(
-            value = apiKeyInput,
-            onValueChange = { apiKeyInput = it },
-            label = { Text("API Key") },
-            placeholder = { Text("sk-...") },
-            modifier = Modifier.fillMaxWidth(),
-            visualTransformation = if (showApiKey) VisualTransformation.None else PasswordVisualTransformation(),
-            trailingIcon = {
-              Row {
-                IconButton(onClick = { showApiKey = !showApiKey }) {
-                  Icon(
-                    imageVector = if (showApiKey) Icons.Filled.VisibilityOff else Icons.Filled.Visibility,
-                    contentDescription = if (showApiKey) "Hide" else "Show"
-                  )
-                }
-              }
-            },
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-            keyboardActions = KeyboardActions(
-              onDone = {
-                onApiKeyChanged(apiKeyInput)
-              }
-            ),
-            singleLine = true
-          )
-
-          Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-          ) {
-            Button(
-              onClick = {
-                onApiKeyChanged(apiKeyInput)
-              },
-              modifier = Modifier.weight(1f),
-              enabled = apiKeyInput.isNotBlank()
-            ) {
-              Icon(Icons.Filled.Save, contentDescription = null, modifier = Modifier.size(18.dp))
-              Spacer(modifier = Modifier.width(8.dp))
-              Text("Save Key")
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        onClick = {
+            if (!supportsUserKey) {
+                onSelect()
+            } else {
+                expanded = !expanded
             }
-
-            OutlinedButton(
-              onClick = onTestConnection,
-              modifier = Modifier.weight(1f),
-              enabled = isAvailable
-            ) {
-              Icon(Icons.Filled.Cable, contentDescription = null, modifier = Modifier.size(18.dp))
-              Spacer(modifier = Modifier.width(8.dp))
-              Text("Test")
+        },
+        colors = CardDefaults.cardColors(
+            containerColor = if (isSelected) {
+                SpiritualPurple.copy(alpha = 0.15f)
+            } else {
+                MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
             }
-          }
-
-          if (testResult != null) {
-            TestConnectionResultCard(
-              result = testResult,
-              onDismiss = onDismissTestResult
+        ),
+        shape = RoundedCornerShape(16.dp),
+        border = if (isSelected) {
+            CardDefaults.outlinedCardBorder().copy(
+                width = 2.dp,
+                brush = androidx.compose.ui.graphics.Brush.linearGradient(
+                    listOf(SpiritualPurple, SpiritualPurple.copy(alpha = 0.5f))
+                )
             )
-          }
-
-          if (requiresUserKey && !isAvailable) {
-            Card(
-              colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.errorContainer
-              )
-            ) {
-              Row(
-                modifier = Modifier.padding(12.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+        } else null
+    ) {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            // Main row
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
-              ) {
-                Icon(
-                  Icons.Filled.Info,
-                  contentDescription = null,
-                  tint = MaterialTheme.colorScheme.onErrorContainer
-                )
-                Text(
-                  text = "API key required to use this provider",
-                  style = MaterialTheme.typography.bodySmall,
-                  color = MaterialTheme.colorScheme.onErrorContainer
-                )
-              }
+            ) {
+                Row(
+                    modifier = Modifier.weight(1f),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    // Emoji icon
+                    Box(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .clip(CircleShape)
+                            .background(
+                                if (isSelected) SpiritualPurple.copy(alpha = 0.2f)
+                                else MaterialTheme.colorScheme.surface
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = emoji,
+                            fontSize = 24.sp
+                        )
+                    }
+
+                    // Provider info
+                    Column(modifier = Modifier.weight(1f)) {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = displayName,
+                                style = MaterialTheme.typography.bodyLarge,
+                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+                            // Status badge
+                            ProviderStatusChip(
+                                isAvailable = isAvailable,
+                                requiresUserKey = requiresUserKey,
+                                hasApiKey = status?.hasApiKey ?: false
+                            )
+                        }
+                        Text(
+                            text = description,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+
+                // Selection indicator / expand button
+                if (supportsUserKey) {
+                    Icon(
+                        imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
+                        contentDescription = if (expanded) "Collapse" else "Expand",
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                } else {
+                    RadioButton(
+                        selected = isSelected,
+                        onClick = onSelect,
+                        colors = RadioButtonDefaults.colors(
+                            selectedColor = SpiritualPurple
+                        )
+                    )
+                }
             }
-          }
+
+            // Expanded API key configuration
+            AnimatedVisibility(
+                visible = expanded && supportsUserKey,
+                enter = expandVertically() + fadeIn(),
+                exit = shrinkVertically() + fadeOut()
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+
+                    // API key input
+                    OutlinedTextField(
+                        value = apiKeyInput,
+                        onValueChange = { apiKeyInput = it },
+                        label = { Text("API Key") },
+                        placeholder = { Text("sk-...") },
+                        modifier = Modifier.fillMaxWidth(),
+                        visualTransformation = if (showApiKey) VisualTransformation.None else PasswordVisualTransformation(),
+                        trailingIcon = {
+                            IconButton(onClick = { showApiKey = !showApiKey }) {
+                                Icon(
+                                    imageVector = if (showApiKey) Icons.Filled.VisibilityOff else Icons.Filled.Visibility,
+                                    contentDescription = if (showApiKey) "Hide" else "Show"
+                                )
+                            }
+                        },
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                        keyboardActions = KeyboardActions(
+                            onDone = {
+                                onApiKeyChanged(apiKeyInput)
+                            }
+                        ),
+                        singleLine = true,
+                        shape = RoundedCornerShape(12.dp),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = SpiritualPurple,
+                            focusedLabelColor = SpiritualPurple,
+                            cursorColor = SpiritualPurple
+                        )
+                    )
+
+                    // Action buttons
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Button(
+                            onClick = {
+                                onApiKeyChanged(apiKeyInput)
+                                onSelect()
+                            },
+                            modifier = Modifier.weight(1f),
+                            enabled = apiKeyInput.isNotBlank(),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = SpiritualPurple
+                            ),
+                            shape = RoundedCornerShape(12.dp)
+                        ) {
+                            Icon(Icons.Filled.Save, contentDescription = "Save configuration", modifier = Modifier.size(18.dp))
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text("Save & Select")
+                        }
+
+                        OutlinedButton(
+                            onClick = onTestConnection,
+                            modifier = Modifier.weight(1f),
+                            enabled = isAvailable,
+                            shape = RoundedCornerShape(12.dp),
+                            colors = ButtonDefaults.outlinedButtonColors(
+                                contentColor = SpiritualPurple
+                            )
+                        ) {
+                            Icon(Icons.Filled.Cable, contentDescription = "Test connection", modifier = Modifier.size(18.dp))
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text("Test")
+                        }
+                    }
+
+                    // Test connection result
+                    if (testResult != null) {
+                        TestConnectionResultCard(
+                            result = testResult,
+                            onDismiss = onDismissTestResult
+                        )
+                    }
+
+                    // Warning for required keys
+                    if (requiresUserKey && !isAvailable) {
+                        Card(
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.5f)
+                            ),
+                            shape = RoundedCornerShape(12.dp)
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(12.dp),
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(
+                                    Icons.Filled.Info,
+                                    contentDescription = "Error information",
+                                    tint = MaterialTheme.colorScheme.onErrorContainer
+                                )
+                                Text(
+                                    text = "API key required to use this provider",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onErrorContainer
+                                )
+                            }
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(4.dp))
+                }
+            }
         }
-      }
     }
-  }
 }
 
 @Composable
-private fun ProviderStatusBadge(
-  isAvailable: Boolean,
-  requiresUserKey: Boolean,
-  hasApiKey: Boolean
+private fun ProviderStatusChip(
+    isAvailable: Boolean,
+    requiresUserKey: Boolean,
+    hasApiKey: Boolean
 ) {
-  val (text, color) = when {
-    isAvailable -> "Available" to MaterialTheme.colorScheme.primary
-    requiresUserKey && !hasApiKey -> "Key Required" to MaterialTheme.colorScheme.error
-    !requiresUserKey -> "App-Provided" to MaterialTheme.colorScheme.tertiary
-    else -> "Unavailable" to MaterialTheme.colorScheme.onSurfaceVariant
-  }
+    val (text, containerColor, contentColor) = when {
+        isAvailable -> Triple(
+            "Available",
+            Color(0xFF22C55E).copy(alpha = 0.2f),
+            Color(0xFF22C55E)
+        )
+        requiresUserKey && !hasApiKey -> Triple(
+            "Key Required",
+            MaterialTheme.colorScheme.error.copy(alpha = 0.2f),
+            MaterialTheme.colorScheme.error
+        )
+        !requiresUserKey -> Triple(
+            "App Key",
+            SpiritualPurple.copy(alpha = 0.2f),
+            SpiritualPurple
+        )
+        else -> Triple(
+            "Unavailable",
+            MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.1f),
+            MaterialTheme.colorScheme.onSurfaceVariant
+        )
+    }
 
-  Surface(
-    shape = RoundedCornerShape(4.dp),
-    color = color.copy(alpha = 0.1f)
-  ) {
-    Text(
-      text = text,
-      modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
-      style = MaterialTheme.typography.labelSmall,
-      color = color,
-      fontWeight = FontWeight.Medium
-    )
-  }
+    Surface(
+        shape = RoundedCornerShape(6.dp),
+        color = containerColor
+    ) {
+        Text(
+            text = text,
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+            style = MaterialTheme.typography.labelSmall,
+            color = contentColor,
+            fontWeight = FontWeight.Medium
+        )
+    }
 }
 
 @Composable
 private fun TestConnectionResultCard(
-  result: TestConnectionResult,
-  onDismiss: () -> Unit
+    result: TestConnectionResult,
+    onDismiss: () -> Unit
 ) {
-  val (icon, containerColor, contentColor) = when (result.status) {
-    TestStatus.TESTING -> Triple(
-      Icons.Filled.Sync,
-      MaterialTheme.colorScheme.secondaryContainer,
-      MaterialTheme.colorScheme.onSecondaryContainer
-    )
-    TestStatus.SUCCESS -> Triple(
-      Icons.Filled.CheckCircle,
-      MaterialTheme.colorScheme.primaryContainer,
-      MaterialTheme.colorScheme.onPrimaryContainer
-    )
-    TestStatus.FAILED -> Triple(
-      Icons.Filled.Error,
-      MaterialTheme.colorScheme.errorContainer,
-      MaterialTheme.colorScheme.onErrorContainer
-    )
-  }
-
-  Card(
-    colors = CardDefaults.cardColors(containerColor = containerColor)
-  ) {
-    Row(
-      modifier = Modifier
-        .fillMaxWidth()
-        .padding(12.dp),
-      horizontalArrangement = Arrangement.SpaceBetween,
-      verticalAlignment = Alignment.CenterVertically
-    ) {
-      Row(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.weight(1f)
-      ) {
-        Icon(
-          icon,
-          contentDescription = null,
-          tint = contentColor,
-          modifier = if (result.status == TestStatus.TESTING) {
-            Modifier.size(20.dp)
-          } else {
-            Modifier.size(20.dp)
-          }
+    val (icon, containerColor, contentColor) = when (result.status) {
+        TestStatus.TESTING -> Triple(
+            Icons.Filled.Sync,
+            MaterialTheme.colorScheme.secondaryContainer,
+            MaterialTheme.colorScheme.onSecondaryContainer
         )
-        Column {
-          Text(
-            text = when (result.status) {
-              TestStatus.TESTING -> "Testing connection..."
-              TestStatus.SUCCESS -> "Connection successful"
-              TestStatus.FAILED -> "Connection failed"
-            },
-            style = MaterialTheme.typography.bodySmall,
-            fontWeight = FontWeight.Medium,
-            color = contentColor
-          )
-          if (result.message != null && result.status != TestStatus.TESTING) {
-            Text(
-              text = result.message,
-              style = MaterialTheme.typography.bodySmall,
-              color = contentColor.copy(alpha = 0.8f)
-            )
-          }
-        }
-      }
-      if (result.status != TestStatus.TESTING) {
-        IconButton(onClick = onDismiss) {
-          Icon(
-            Icons.Filled.Close,
-            contentDescription = "Dismiss",
-            tint = contentColor
-          )
-        }
-      }
+        TestStatus.SUCCESS -> Triple(
+            Icons.Filled.CheckCircle,
+            Color(0xFF22C55E).copy(alpha = 0.2f),
+            Color(0xFF22C55E)
+        )
+        TestStatus.FAILED -> Triple(
+            Icons.Filled.Error,
+            MaterialTheme.colorScheme.errorContainer,
+            MaterialTheme.colorScheme.onErrorContainer
+        )
     }
-  }
-}
-@Composable
-private fun UsageStatsCard(
-  providerName: String,
-  usage: com.spiritatlas.data.tracking.ProviderUsage,
-  onReset: () -> Unit
-) {
-  Card(
-    modifier = Modifier
-      .fillMaxWidth()
-      .padding(horizontal = 16.dp, vertical = 4.dp),
-    colors = CardDefaults.cardColors(
-      containerColor = MaterialTheme.colorScheme.surface
-    ),
-    shape = RoundedCornerShape(12.dp)
-  ) {
-    Column(
-      modifier = Modifier
-        .fillMaxWidth()
-        .padding(16.dp),
-      verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-      Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-      ) {
-        Text(
-          text = providerName,
-          style = MaterialTheme.typography.titleMedium,
-          fontWeight = FontWeight.SemiBold
-        )
-        TextButton(onClick = onReset) {
-          Text("Reset", style = MaterialTheme.typography.bodySmall)
-        }
-      }
 
-      // Per-Minute Usage
-      Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+    Card(
+        colors = CardDefaults.cardColors(containerColor = containerColor),
+        shape = RoundedCornerShape(12.dp)
+    ) {
         Row(
-          modifier = Modifier.fillMaxWidth(),
-          horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-          Text(
-            text = "Per Minute",
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-          )
-          Text(
-            text = "${usage.requestsPerMinute} / ${usage.limitPerMinute}",
-            style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.Medium,
-            color = if (usage.isNearLimitPerMinute) {
-              MaterialTheme.colorScheme.error
-            } else {
-              MaterialTheme.colorScheme.onSurface
-            }
-          )
-        }
-        LinearProgressIndicator(
-          progress = { (usage.requestsPerMinute.toFloat() / usage.limitPerMinute).coerceIn(0f, 1f) },
-          modifier = Modifier.fillMaxWidth(),
-          color = if (usage.isNearLimitPerMinute) {
-            MaterialTheme.colorScheme.error
-          } else {
-            MaterialTheme.colorScheme.primary
-          }
-        )
-      }
-
-      // Per-Day Usage (if applicable)
-      usage.limitPerDay?.let { limitPerDay ->
-        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-          Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-          ) {
-            Text(
-              text = "Per Day",
-              style = MaterialTheme.typography.bodyMedium,
-              color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            Text(
-              text = "${usage.requestsPerDay} / $limitPerDay",
-              style = MaterialTheme.typography.bodyMedium,
-              fontWeight = FontWeight.Medium,
-              color = if (usage.isNearLimitPerDay) {
-                MaterialTheme.colorScheme.error
-              } else {
-                MaterialTheme.colorScheme.onSurface
-              }
-            )
-          }
-          LinearProgressIndicator(
-            progress = { (usage.requestsPerDay.toFloat() / limitPerDay).coerceIn(0f, 1f) },
-            modifier = Modifier.fillMaxWidth(),
-            color = if (usage.isNearLimitPerDay) {
-              MaterialTheme.colorScheme.error
-            } else {
-              MaterialTheme.colorScheme.primary
-            }
-          )
-        }
-      }
-
-      // Warning message if near or at limit
-      if (usage.isNearLimitPerMinute || usage.isNearLimitPerDay) {
-        Card(
-          colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)
-          )
-        ) {
-          Row(
-            modifier = Modifier.padding(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
-          ) {
-            Icon(
-              Icons.Filled.Warning,
-              contentDescription = null,
-              tint = MaterialTheme.colorScheme.error,
-              modifier = Modifier.size(16.dp)
-            )
-            Text(
-              text = "Approaching rate limit",
-              style = MaterialTheme.typography.bodySmall,
-              color = MaterialTheme.colorScheme.onSurface
-            )
-          }
+        ) {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.weight(1f)
+            ) {
+                Icon(
+                    icon,
+                    contentDescription = when (result.status) {
+                        TestStatus.TESTING -> "Testing connection"
+                        TestStatus.SUCCESS -> "Connection successful"
+                        TestStatus.FAILED -> "Connection failed"
+                    },
+                    tint = contentColor,
+                    modifier = Modifier.size(20.dp)
+                )
+                Column {
+                    Text(
+                        text = when (result.status) {
+                            TestStatus.TESTING -> "Testing connection..."
+                            TestStatus.SUCCESS -> "Connection successful"
+                            TestStatus.FAILED -> "Connection failed"
+                        },
+                        style = MaterialTheme.typography.bodySmall,
+                        fontWeight = FontWeight.Medium,
+                        color = contentColor
+                    )
+                    if (result.message != null && result.status != TestStatus.TESTING) {
+                        Text(
+                            text = result.message,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = contentColor.copy(alpha = 0.8f)
+                        )
+                    }
+                }
+            }
+            if (result.status != TestStatus.TESTING) {
+                IconButton(onClick = onDismiss) {
+                    Icon(
+                        Icons.Filled.Close,
+                        contentDescription = "Dismiss",
+                        tint = contentColor
+                    )
+                }
+            }
         }
-      }
     }
-  }
+}
+
+// Helper functions
+private fun getProviderDisplayName(provider: AiProviderMode): String = when (provider) {
+    AiProviderMode.LOCAL -> "Local (Ollama)"
+    AiProviderMode.AUTO -> "Automatic"
+    AiProviderMode.GEMINI -> "Gemini"
+    AiProviderMode.GROQ -> "Groq"
+    AiProviderMode.OPENAI -> "OpenAI"
+    AiProviderMode.CLAUDE -> "Claude"
+    AiProviderMode.OPENROUTER -> "OpenRouter"
+}
+
+private fun getProviderInfo(provider: AiProviderMode): Triple<String, String, String> = when (provider) {
+    AiProviderMode.AUTO -> Triple(
+        "Automatic",
+        "Intelligently switches between providers",
+        "⚡"
+    )
+    AiProviderMode.GEMINI -> Triple(
+        "Gemini",
+        "Google Gemini 2.5 Flash - fast and free",
+        "💎"
+    )
+    AiProviderMode.GROQ -> Triple(
+        "Groq",
+        "Groq Llama 3.3 70B - fast and free",
+        "🚀"
+    )
+    AiProviderMode.OPENAI -> Triple(
+        "OpenAI",
+        "GPT-4o - requires API key",
+        "🤖"
+    )
+    AiProviderMode.CLAUDE -> Triple(
+        "Claude",
+        "Anthropic Claude - requires API key",
+        "🧠"
+    )
+    AiProviderMode.OPENROUTER -> Triple(
+        "OpenRouter",
+        "Multiple models available",
+        "☁️"
+    )
+    AiProviderMode.LOCAL -> Triple(
+        "Local (Ollama)",
+        "Runs on your device - completely private",
+        "🏠"
+    )
 }

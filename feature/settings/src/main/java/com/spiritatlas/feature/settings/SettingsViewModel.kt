@@ -1,6 +1,7 @@
 package com.spiritatlas.feature.settings
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.spiritatlas.core.ui.haptics.HapticPreferences
@@ -14,6 +15,7 @@ import com.spiritatlas.domain.model.NumerologySystem
 import com.spiritatlas.domain.repository.ConsentRepository
 import com.spiritatlas.domain.repository.ConsentType
 import com.spiritatlas.domain.repository.UserRepository
+import com.spiritatlas.core.ui.theme.ThemeVariant
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -77,6 +79,9 @@ class SettingsViewModel @Inject constructor(
   // Appearance
   private val _themeMode = MutableStateFlow(settingsPreferences.getThemeMode())
   val themeMode: StateFlow<ThemeMode> = _themeMode.asStateFlow()
+
+  private val _themeVariant = MutableStateFlow(settingsPreferences.getThemeVariant())
+  val themeVariant: StateFlow<ThemeVariant> = _themeVariant.asStateFlow()
 
   private val _useDynamicColors = MutableStateFlow(settingsPreferences.getUseDynamicColors())
   val useDynamicColors: StateFlow<Boolean> = _useDynamicColors.asStateFlow()
@@ -159,8 +164,15 @@ class SettingsViewModel @Inject constructor(
   fun clearAiCache() {
     viewModelScope.launch {
       _isLoading.value = true
-      // TODO: Implement AI cache clearing
-      _isLoading.value = false
+      try {
+        // Clear AI response caches from database
+        aiSettingsRepository.clearAiCache()
+        Log.d("SettingsViewModel", "AI cache cleared successfully")
+      } catch (e: Exception) {
+        Log.e("SettingsViewModel", "Error clearing AI cache", e)
+      } finally {
+        _isLoading.value = false
+      }
     }
   }
 
@@ -236,6 +248,13 @@ class SettingsViewModel @Inject constructor(
     }
   }
 
+  fun setThemeVariant(variant: ThemeVariant) {
+    viewModelScope.launch {
+      settingsPreferences.setThemeVariant(variant)
+      _themeVariant.value = variant
+    }
+  }
+
   fun setUseDynamicColors(enabled: Boolean) {
     viewModelScope.launch {
       settingsPreferences.setUseDynamicColors(enabled)
@@ -295,20 +314,61 @@ class SettingsViewModel @Inject constructor(
   }
 
   // Data Actions
+  private val _exportResult = MutableStateFlow<ExportResult?>(null)
+  val exportResult: StateFlow<ExportResult?> = _exportResult.asStateFlow()
+
+  private val _importResult = MutableStateFlow<ImportResult?>(null)
+  val importResult: StateFlow<ImportResult?> = _importResult.asStateFlow()
+
   fun exportAllProfiles() {
     viewModelScope.launch {
       _isLoading.value = true
-      // TODO: Implement profile export
-      _isLoading.value = false
+      try {
+        val result = userRepository.exportAllProfilesToJson()
+        if (result.isSuccess) {
+          _exportResult.value = ExportResult.Success(result.getOrNull() ?: "")
+          Log.d("SettingsViewModel", "Successfully exported all profiles")
+        } else {
+          _exportResult.value = ExportResult.Error(result.exceptionOrNull()?.message ?: "Export failed")
+          Log.e("SettingsViewModel", "Failed to export profiles", result.exceptionOrNull())
+        }
+      } catch (e: Exception) {
+        _exportResult.value = ExportResult.Error(e.message ?: "Unknown error")
+        Log.e("SettingsViewModel", "Error exporting profiles", e)
+      } finally {
+        _isLoading.value = false
+      }
     }
   }
 
-  fun importProfiles() {
+  fun importProfiles(jsonData: String) {
     viewModelScope.launch {
       _isLoading.value = true
-      // TODO: Implement profile import
-      _isLoading.value = false
+      try {
+        val result = userRepository.importProfilesFromJson(jsonData)
+        if (result.isSuccess) {
+          val count = result.getOrNull() ?: 0
+          _importResult.value = ImportResult.Success(count)
+          Log.d("SettingsViewModel", "Successfully imported $count profiles")
+        } else {
+          _importResult.value = ImportResult.Error(result.exceptionOrNull()?.message ?: "Import failed")
+          Log.e("SettingsViewModel", "Failed to import profiles", result.exceptionOrNull())
+        }
+      } catch (e: Exception) {
+        _importResult.value = ImportResult.Error(e.message ?: "Unknown error")
+        Log.e("SettingsViewModel", "Error importing profiles", e)
+      } finally {
+        _isLoading.value = false
+      }
     }
+  }
+
+  fun clearExportResult() {
+    _exportResult.value = null
+  }
+
+  fun clearImportResult() {
+    _importResult.value = null
   }
 
   fun showClearDataDialog() {
@@ -354,6 +414,7 @@ class SettingsPreferences(context: Context) {
 
     // Appearance
     private const val KEY_THEME_MODE = "theme_mode"
+    private const val KEY_THEME_VARIANT = "theme_variant"
     private const val KEY_USE_DYNAMIC_COLORS = "use_dynamic_colors"
     private const val KEY_ACCENT_COLOR = "accent_color"
     private const val KEY_REDUCE_ANIMATIONS = "reduce_animations"
@@ -411,6 +472,19 @@ class SettingsPreferences(context: Context) {
 
   fun setThemeMode(mode: ThemeMode) {
     prefs.edit().putString(KEY_THEME_MODE, mode.name).apply()
+  }
+
+  fun getThemeVariant(): ThemeVariant {
+    val value = prefs.getString(KEY_THEME_VARIANT, ThemeVariant.MYSTICAL.name)
+    return try {
+      ThemeVariant.valueOf(value ?: ThemeVariant.MYSTICAL.name)
+    } catch (e: IllegalArgumentException) {
+      ThemeVariant.MYSTICAL
+    }
+  }
+
+  fun setThemeVariant(variant: ThemeVariant) {
+    prefs.edit().putString(KEY_THEME_VARIANT, variant.name).apply()
   }
 
   fun getUseDynamicColors(): Boolean {
@@ -510,4 +584,15 @@ enum class TestStatus {
   TESTING,
   SUCCESS,
   FAILED
+}
+
+// Export/Import Results
+sealed class ExportResult {
+  data class Success(val jsonData: String) : ExportResult()
+  data class Error(val message: String) : ExportResult()
+}
+
+sealed class ImportResult {
+  data class Success(val importedCount: Int) : ImportResult()
+  data class Error(val message: String) : ImportResult()
 }

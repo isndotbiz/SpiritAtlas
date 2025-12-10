@@ -8,7 +8,10 @@ import com.spiritatlas.domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import android.util.Log
+import org.json.JSONArray
+import org.json.JSONObject
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -310,5 +313,250 @@ class UserRepositoryImpl @Inject constructor(
             accuracyLevel = accuracyLevel,
             missingCriticalFields = missingCriticalFields
         )
+    }
+
+    // === BULK EXPORT/IMPORT IMPLEMENTATION ===
+
+    override suspend fun exportAllProfilesToJson(): Result<String> {
+        return try {
+            val profiles = getAllProfiles()
+            val jsonArray = JSONArray()
+
+            profiles.forEach { profile ->
+                val profileJson = JSONObject().apply {
+                    put("id", profile.id)
+                    put("profileName", profile.profileName)
+                    put("name", profile.name)
+                    put("displayName", profile.displayName)
+
+                    // Birth info
+                    profile.birthDateTime?.let { put("birthDateTime", it.toString()) }
+                    profile.birthPlace?.let { place ->
+                        val birthPlaceJson = JSONObject().apply {
+                            put("city", place.city)
+                            put("state", place.state)
+                            put("country", place.country)
+                            put("latitude", place.latitude)
+                            put("longitude", place.longitude)
+                            put("timezone", place.timezone)
+                            put("altitude", place.altitude)
+                            put("nearestSacredSite", place.nearestSacredSite)
+                        }
+                        put("birthPlace", birthPlaceJson)
+                    }
+
+                    // Additional names
+                    put("middleName", profile.middleName)
+                    put("nickname", profile.nickname)
+                    put("spiritualName", profile.spiritualName)
+                    put("maidenName", profile.maidenName)
+
+                    // Family
+                    put("motherName", profile.motherName)
+                    put("fatherName", profile.fatherName)
+                    put("ancestry", profile.ancestry)
+                    put("familyTradition", profile.familyTradition)
+
+                    // Physical attributes
+                    profile.gender?.let { put("gender", it.name) }
+                    profile.bloodType?.let { put("bloodType", it.name) }
+                    profile.dominantHand?.let { put("dominantHand", it.name) }
+                    put("eyeColor", profile.eyeColor)
+                    profile.height?.let { put("height", it) }
+                    profile.birthWeight?.let { put("birthWeight", it) }
+
+                    // Timing & cycles
+                    profile.firstBreath?.let { put("firstBreath", it.toString()) }
+                    profile.conceptionDate?.let { put("conceptionDate", it.toString()) }
+                    profile.firstCry?.let { put("firstCry", it.toString()) }
+
+                    // Environmental
+                    put("weatherConditions", profile.weatherConditions)
+                    put("moonPhase", profile.moonPhase)
+                    put("hospitalName", profile.hospitalName)
+                    put("seasonalEnergy", profile.seasonalEnergy)
+
+                    // Life patterns
+                    put("firstWord", profile.firstWord)
+                    profile.firstSteps?.let { put("firstSteps", it.toString()) }
+
+                    // Compatibility fields
+                    profile.loveLanguage?.let { put("loveLanguage", it.name) }
+                    profile.personalityType?.let { put("personalityType", it.name) }
+                    profile.attachmentStyle?.let { put("attachmentStyle", it.name) }
+                    profile.sexualEnergy?.let { put("sexualEnergy", it.name) }
+                    profile.communicationStyle?.let { put("communicationStyle", it.name) }
+                    profile.conflictResolution?.let { put("conflictResolution", it.name) }
+                    profile.intimacyPreference?.let { put("intimacyPreference", it.name) }
+                    profile.spiritualConnection?.let { put("spiritualConnection", it.name) }
+                    put("lifePurposeAlignment", profile.lifePurposeAlignment)
+
+                    // Enrichment
+                    put("enrichmentResult", profile.enrichmentResult)
+                    profile.enrichmentGeneratedAt?.let { put("enrichmentGeneratedAt", it.toString()) }
+
+                    // Metadata
+                    put("createdAt", profile.createdAt.toString())
+                    put("lastModified", profile.lastModified.toString())
+                }
+                jsonArray.put(profileJson)
+            }
+
+            val exportData = JSONObject().apply {
+                put("version", "1.0")
+                put("exportedAt", LocalDateTime.now().toString())
+                put("profileCount", profiles.size)
+                put("profiles", jsonArray)
+            }
+
+            Result.success(exportData.toString(2)) // Pretty print with indent
+        } catch (e: Exception) {
+            Log.e("UserRepositoryImpl", "Error exporting profiles", e)
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun importProfilesFromJson(json: String): Result<Int> {
+        return try {
+            val exportData = JSONObject(json)
+            val profilesArray = exportData.getJSONArray("profiles")
+            var importedCount = 0
+
+            for (i in 0 until profilesArray.length()) {
+                val profileJson = profilesArray.getJSONObject(i)
+
+                try {
+                    val birthPlace = if (profileJson.has("birthPlace")) {
+                        val bpJson = profileJson.getJSONObject("birthPlace")
+                        BirthPlace(
+                            city = bpJson.getString("city"),
+                            state = bpJson.optString("state", null),
+                            country = bpJson.getString("country"),
+                            latitude = bpJson.getDouble("latitude"),
+                            longitude = bpJson.getDouble("longitude"),
+                            timezone = bpJson.optString("timezone", null),
+                            altitude = if (bpJson.has("altitude")) bpJson.optDouble("altitude") else null,
+                            nearestSacredSite = bpJson.optString("nearestSacredSite", null)
+                        )
+                    } else null
+
+                    val profile = UserProfile(
+                        id = profileJson.optString("id", UUID.randomUUID().toString()),
+                        profileName = profileJson.optString("profileName", "Imported Profile"),
+                        name = profileJson.optString("name", null),
+                        displayName = profileJson.optString("displayName", null),
+
+                        // Birth info
+                        birthDateTime = profileJson.optString("birthDateTime", null)?.let {
+                            runCatching { LocalDateTime.parse(it) }.getOrNull()
+                        },
+                        birthPlace = birthPlace,
+
+                        // Additional names
+                        middleName = profileJson.optString("middleName", null),
+                        nickname = profileJson.optString("nickname", null),
+                        spiritualName = profileJson.optString("spiritualName", null),
+                        maidenName = profileJson.optString("maidenName", null),
+
+                        // Family
+                        motherName = profileJson.optString("motherName", null),
+                        fatherName = profileJson.optString("fatherName", null),
+                        ancestry = profileJson.optString("ancestry", null),
+                        familyTradition = profileJson.optString("familyTradition", null),
+
+                        // Physical attributes
+                        gender = profileJson.optString("gender", null)?.let {
+                            runCatching { Gender.valueOf(it) }.getOrNull()
+                        },
+                        bloodType = profileJson.optString("bloodType", null)?.let {
+                            runCatching { BloodType.valueOf(it) }.getOrNull()
+                        },
+                        dominantHand = profileJson.optString("dominantHand", null)?.let {
+                            runCatching { Hand.valueOf(it) }.getOrNull()
+                        },
+                        eyeColor = profileJson.optString("eyeColor", null),
+                        height = if (profileJson.has("height")) profileJson.optDouble("height") else null,
+                        birthWeight = if (profileJson.has("birthWeight")) profileJson.optDouble("birthWeight") else null,
+
+                        // Timing & cycles
+                        firstBreath = profileJson.optString("firstBreath", null)?.let {
+                            runCatching { LocalDateTime.parse(it) }.getOrNull()
+                        },
+                        conceptionDate = profileJson.optString("conceptionDate", null)?.let {
+                            runCatching { LocalDateTime.parse(it) }.getOrNull()
+                        },
+                        firstCry = profileJson.optString("firstCry", null)?.let {
+                            runCatching { LocalDateTime.parse(it) }.getOrNull()
+                        },
+
+                        // Environmental
+                        weatherConditions = profileJson.optString("weatherConditions", null),
+                        moonPhase = profileJson.optString("moonPhase", null),
+                        hospitalName = profileJson.optString("hospitalName", null),
+                        seasonalEnergy = profileJson.optString("seasonalEnergy", null),
+
+                        // Life patterns
+                        firstWord = profileJson.optString("firstWord", null),
+                        firstSteps = profileJson.optString("firstSteps", null)?.let {
+                            runCatching { LocalDateTime.parse(it) }.getOrNull()
+                        },
+
+                        // Compatibility fields
+                        loveLanguage = profileJson.optString("loveLanguage", null)?.let {
+                            runCatching { LoveLanguage.valueOf(it) }.getOrNull()
+                        },
+                        personalityType = profileJson.optString("personalityType", null)?.let {
+                            runCatching { PersonalityType.valueOf(it) }.getOrNull()
+                        },
+                        attachmentStyle = profileJson.optString("attachmentStyle", null)?.let {
+                            runCatching { AttachmentStyle.valueOf(it) }.getOrNull()
+                        },
+                        sexualEnergy = profileJson.optString("sexualEnergy", null)?.let {
+                            runCatching { SexualEnergy.valueOf(it) }.getOrNull()
+                        },
+                        communicationStyle = profileJson.optString("communicationStyle", null)?.let {
+                            runCatching { CommunicationStyle.valueOf(it) }.getOrNull()
+                        },
+                        conflictResolution = profileJson.optString("conflictResolution", null)?.let {
+                            runCatching { ConflictStyle.valueOf(it) }.getOrNull()
+                        },
+                        intimacyPreference = profileJson.optString("intimacyPreference", null)?.let {
+                            runCatching { IntimacyStyle.valueOf(it) }.getOrNull()
+                        },
+                        spiritualConnection = profileJson.optString("spiritualConnection", null)?.let {
+                            runCatching { SpiritualConnection.valueOf(it) }.getOrNull()
+                        },
+                        lifePurposeAlignment = profileJson.optString("lifePurposeAlignment", null),
+
+                        // Enrichment
+                        enrichmentResult = profileJson.optString("enrichmentResult", null),
+                        enrichmentGeneratedAt = profileJson.optString("enrichmentGeneratedAt", null)?.let {
+                            runCatching { LocalDateTime.parse(it) }.getOrNull()
+                        },
+
+                        // Metadata - preserve original timestamps if available
+                        createdAt = profileJson.optString("createdAt", null)?.let {
+                            runCatching { LocalDateTime.parse(it) }.getOrNull()
+                        } ?: LocalDateTime.now(),
+                        lastModified = LocalDateTime.now(),
+
+                        // Profile completion will be calculated on save
+                        profileCompletion = ProfileCompletion(0, 0, 0.0, AccuracyLevel.BASIC, emptyList())
+                    )
+
+                    saveUserProfile(profile)
+                    importedCount++
+                } catch (e: Exception) {
+                    Log.e("UserRepositoryImpl", "Error importing profile at index $i", e)
+                    // Continue with next profile
+                }
+            }
+
+            Log.d("UserRepositoryImpl", "Successfully imported $importedCount profiles")
+            Result.success(importedCount)
+        } catch (e: Exception) {
+            Log.e("UserRepositoryImpl", "Error importing profiles from JSON", e)
+            Result.failure(e)
+        }
     }
 }

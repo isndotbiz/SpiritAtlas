@@ -1,0 +1,2982 @@
+{
+  "xhdpi": [
+    {
+      "name": "083_error_warning_icon",
+      "file": "083_error_warning_icon.webp",
+      "size": 4940,
+      "dimensions": null
+    },
+    {
+      "name": "049_heart_chakra_anahata",
+      "file": "049_heart_chakra_anahata.webp",
+      "size": 48744,
+      "dimensions": null
+    },
+    {
+      "name": "066_flower_of_life",
+      "file": "066_flower_of_life.webp",
+      "size": 70898,
+      "dimensions": null
+    },
+    {
+      "name": "003_splash_screen_background",
+      "file": "003_splash_screen_background.webp",
+      "size": 28770,
+      "dimensions": null
+    },
+    {
+      "name": "058_waning_gibbous_sharing_light",
+      "file": "058_waning_gibbous_sharing_light.webp",
+      "size": 33764,
+      "dimensions": null
+    },
+    {
+      "name": "076_secondary_button_outline_style",
+      "file": "076_secondary_button_outline_style.webp",
+      "size": 7760,
+      "dimensions": null
+    },
+    {
+      "name": "002_alternative_app_icon_dark_mode",
+      "file": "002_alternative_app_icon_dark_mode.webp",
+      "size": 165998,
+      "dimensions": null
+    },
+    {
+      "name": "084_info_tooltip_icon",
+      "file": "084_info_tooltip_icon.webp",
+      "size": 2982,
+      "dimensions": null
+    },
+    {
+      "name": "033_avatar_frame_zodiac_wheel",
+      "file": "033_avatar_frame_zodiac_wheel.webp",
+      "size": 52054,
+      "dimensions": null
+    },
+    {
+      "name": "071_torus_field",
+      "file": "071_torus_field.webp",
+      "size": 151890,
+      "dimensions": null
+    },
+    {
+      "name": "068_sri_yantra",
+      "file": "068_sri_yantra.webp",
+      "size": 101928,
+      "dimensions": null
+    },
+    {
+      "name": "062_water_element_symbol",
+      "file": "062_water_element_symbol.webp",
+      "size": 38516,
+      "dimensions": null
+    },
+    {
+      "name": "022_loading_screen_background",
+      "file": "022_loading_screen_background.webp",
+      "size": 24068,
+      "dimensions": null
+    },
+    {
+      "name": "004_wordmark_logo",
+      "file": "004_wordmark_logo.webp",
+      "size": 250294,
+      "dimensions": null
+    },
+    {
+      "name": "053_new_moon_dark_renewal",
+      "file": "053_new_moon_dark_renewal.webp",
+      "size": 11000,
+      "dimensions": null
+    },
+    {
+      "name": "081_empty_state_illustration_no_compatibility_result",
+      "file": "081_empty_state_illustration_no_compatibility_result.webp",
+      "size": 67166,
+      "dimensions": null
+    },
+    {
+      "name": "092_mandala_spiritual_meditation",
+      "file": "092_mandala_spiritual_meditation.webp",
+      "size": 314180,
+      "dimensions": null
+    },
+    {
+      "name": "072_merkaba_star_tetrahedron",
+      "file": "072_merkaba_star_tetrahedron.webp",
+      "size": 27992,
+      "dimensions": null
+    },
+    {
+      "name": "077_card_background_glassmorphic",
+      "file": "077_card_background_glassmorphic.webp",
+      "size": 9146,
+      "dimensions": null
+    },
+    {
+      "name": "009_home_screen_background",
+      "file": "009_home_screen_background.webp",
+      "size": 5762,
+      "dimensions": null
+    },
+    {
+      "name": "043_capricorn_constellation_art",
+      "file": "043_capricorn_constellation_art.webp",
+      "size": 46140,
+      "dimensions": null
+    },
+    {
+      "name": "014_meditation_chakra_screen_background",
+      "file": "014_meditation_chakra_screen_background.webp",
+      "size": 17558,
+      "dimensions": null
+    },
+    {
+      "name": "097_feature_3_compatibility_analysis",
+      "file": "097_feature_3_compatibility_analysis.webp",
+      "size": 141632,
+      "dimensions": null
+    },
+    {
+      "name": "098_feature_4_personalized_guidance",
+      "file": "098_feature_4_personalized_guidance.webp",
+      "size": 104356,
+      "dimensions": null
+    },
+    {
+      "name": "035_taurus_constellation_art",
+      "file": "035_taurus_constellation_art.webp",
+      "size": 76090,
+      "dimensions": null
+    },
+    {
+      "name": "096_feature_2_spiritual_insights",
+      "file": "096_feature_2_spiritual_insights.webp",
+      "size": 143518,
+      "dimensions": null
+    },
+    {
+      "name": "017_numerology_screen_background",
+      "file": "017_numerology_screen_background.webp",
+      "size": 40374,
+      "dimensions": null
+    },
+    {
+      "name": "015_astrology_chart_background",
+      "file": "015_astrology_chart_background.webp",
+      "size": 50020,
+      "dimensions": null
+    },
+    {
+      "name": "036_gemini_constellation_art",
+      "file": "036_gemini_constellation_art.webp",
+      "size": 53786,
+      "dimensions": null
+    },
+    {
+      "name": "085_dropdown_chevron_icon",
+      "file": "085_dropdown_chevron_icon.webp",
+      "size": 2168,
+      "dimensions": null
+    },
+    {
+      "name": "075_primary_action_button_pressed_state",
+      "file": "075_primary_action_button_pressed_state.webp",
+      "size": 7192,
+      "dimensions": null
+    },
+    {
+      "name": "010_profile_creation_background",
+      "file": "010_profile_creation_background.webp",
+      "size": 36434,
+      "dimensions": null
+    },
+    {
+      "name": "025_default_avatar_constellation_being",
+      "file": "025_default_avatar_constellation_being.webp",
+      "size": 29740,
+      "dimensions": null
+    },
+    {
+      "name": "073_golden_spiral_fibonacci",
+      "file": "073_golden_spiral_fibonacci.webp",
+      "size": 66996,
+      "dimensions": null
+    },
+    {
+      "name": "061_fire_element_symbol",
+      "file": "061_fire_element_symbol.webp",
+      "size": 44618,
+      "dimensions": null
+    },
+    {
+      "name": "067_metatrons_cube",
+      "file": "067_metatrons_cube.webp",
+      "size": 115950,
+      "dimensions": null
+    },
+    {
+      "name": "093_infinity_symbol_with_cosmic_enhancement",
+      "file": "093_infinity_symbol_with_cosmic_enhancement.webp",
+      "size": 28562,
+      "dimensions": null
+    },
+    {
+      "name": "047_sacral_chakra_svadhisthana",
+      "file": "047_sacral_chakra_svadhisthana.webp",
+      "size": 70554,
+      "dimensions": null
+    },
+    {
+      "name": "037_cancer_constellation_art",
+      "file": "037_cancer_constellation_art.webp",
+      "size": 89324,
+      "dimensions": null
+    },
+    {
+      "name": "087_lotus_flower",
+      "file": "087_lotus_flower.webp",
+      "size": 42566,
+      "dimensions": null
+    },
+    {
+      "name": "029_default_avatar_om_symbol",
+      "file": "029_default_avatar_om_symbol.webp",
+      "size": 56878,
+      "dimensions": null
+    },
+    {
+      "name": "006_loading_spinner_icon",
+      "file": "006_loading_spinner_icon.webp",
+      "size": 31400,
+      "dimensions": null
+    },
+    {
+      "name": "044_aquarius_constellation_art",
+      "file": "044_aquarius_constellation_art.webp",
+      "size": 89324,
+      "dimensions": null
+    },
+    {
+      "name": "039_virgo_constellation_art",
+      "file": "039_virgo_constellation_art.webp",
+      "size": 85878,
+      "dimensions": null
+    },
+    {
+      "name": "051_third_eye_chakra_ajna",
+      "file": "051_third_eye_chakra_ajna.webp",
+      "size": 55864,
+      "dimensions": null
+    },
+    {
+      "name": "041_scorpio_constellation_art",
+      "file": "041_scorpio_constellation_art.webp",
+      "size": 59498,
+      "dimensions": null
+    },
+    {
+      "name": "091_yin_yang_symbol",
+      "file": "091_yin_yang_symbol.webp",
+      "size": 64534,
+      "dimensions": null
+    },
+    {
+      "name": "069_seed_of_life",
+      "file": "069_seed_of_life.webp",
+      "size": 79444,
+      "dimensions": null
+    },
+    {
+      "name": "007_app_store_feature_graphic",
+      "file": "007_app_store_feature_graphic.webp",
+      "size": 293708,
+      "dimensions": null
+    },
+    {
+      "name": "020_library_archive_background",
+      "file": "020_library_archive_background.webp",
+      "size": 44950,
+      "dimensions": null
+    },
+    {
+      "name": "032_avatar_frame_gold_sacred_ring",
+      "file": "032_avatar_frame_gold_sacred_ring.webp",
+      "size": 51808,
+      "dimensions": null
+    },
+    {
+      "name": "074_primary_action_button_normal_state",
+      "file": "074_primary_action_button_normal_state.webp",
+      "size": 11526,
+      "dimensions": null
+    },
+    {
+      "name": "001_primary_app_icon",
+      "file": "001_primary_app_icon.webp",
+      "size": 223992,
+      "dimensions": null
+    },
+    {
+      "name": "070_vesica_piscis",
+      "file": "070_vesica_piscis.webp",
+      "size": 68982,
+      "dimensions": null
+    },
+    {
+      "name": "023_success_completion_background",
+      "file": "023_success_completion_background.webp",
+      "size": 51742,
+      "dimensions": null
+    },
+    {
+      "name": "042_sagittarius_constellation_art",
+      "file": "042_sagittarius_constellation_art.webp",
+      "size": 79312,
+      "dimensions": null
+    },
+    {
+      "name": "040_libra_constellation_art",
+      "file": "040_libra_constellation_art.webp",
+      "size": 41804,
+      "dimensions": null
+    },
+    {
+      "name": "048_solar_plexus_chakra_manipura",
+      "file": "048_solar_plexus_chakra_manipura.webp",
+      "size": 55738,
+      "dimensions": null
+    },
+    {
+      "name": "063_earth_element_symbol",
+      "file": "063_earth_element_symbol.webp",
+      "size": 62294,
+      "dimensions": null
+    },
+    {
+      "name": "086_om_aum_symbol",
+      "file": "086_om_aum_symbol.webp",
+      "size": 65168,
+      "dimensions": null
+    },
+    {
+      "name": "012_splash_onboarding_background",
+      "file": "012_splash_onboarding_background.webp",
+      "size": 196750,
+      "dimensions": null
+    },
+    {
+      "name": "011_compatibility_screen_background",
+      "file": "011_compatibility_screen_background.webp",
+      "size": 56724,
+      "dimensions": null
+    },
+    {
+      "name": "005_monogram_icon",
+      "file": "005_monogram_icon.webp",
+      "size": 52204,
+      "dimensions": null
+    },
+    {
+      "name": "094_welcome_screen_cosmic_discovery",
+      "file": "094_welcome_screen_cosmic_discovery.webp",
+      "size": 227180,
+      "dimensions": null
+    },
+    {
+      "name": "064_air_element_symbol",
+      "file": "064_air_element_symbol.webp",
+      "size": 29110,
+      "dimensions": null
+    },
+    {
+      "name": "065_ether_spirit_element_symbol",
+      "file": "065_ether_spirit_element_symbol.webp",
+      "size": 70848,
+      "dimensions": null
+    },
+    {
+      "name": "019_tantric_intimacy_screen_background",
+      "file": "019_tantric_intimacy_screen_background.webp",
+      "size": 86056,
+      "dimensions": null
+    },
+    {
+      "name": "088_hamsa_hand",
+      "file": "088_hamsa_hand.webp",
+      "size": 50154,
+      "dimensions": null
+    },
+    {
+      "name": "080_empty_state_illustration_no_profiles",
+      "file": "080_empty_state_illustration_no_profiles.webp",
+      "size": 18340,
+      "dimensions": null
+    },
+    {
+      "name": "082_success_checkmark_icon",
+      "file": "082_success_checkmark_icon.webp",
+      "size": 8682,
+      "dimensions": null
+    },
+    {
+      "name": "031_default_avatar_yin_yang_cosmic",
+      "file": "031_default_avatar_yin_yang_cosmic.webp",
+      "size": 49880,
+      "dimensions": null
+    },
+    {
+      "name": "038_leo_constellation_art",
+      "file": "038_leo_constellation_art.webp",
+      "size": 68248,
+      "dimensions": null
+    },
+    {
+      "name": "030_default_avatar_moon_phases",
+      "file": "030_default_avatar_moon_phases.webp",
+      "size": 28658,
+      "dimensions": null
+    },
+    {
+      "name": "046_root_chakra_muladhara",
+      "file": "046_root_chakra_muladhara.webp",
+      "size": 60126,
+      "dimensions": null
+    },
+    {
+      "name": "016_moon_phase_tracking_background",
+      "file": "016_moon_phase_tracking_background.webp",
+      "size": 8288,
+      "dimensions": null
+    },
+    {
+      "name": "021_empty_state_background",
+      "file": "021_empty_state_background.webp",
+      "size": 4512,
+      "dimensions": null
+    },
+    {
+      "name": "078_loading_state_circular_progress",
+      "file": "078_loading_state_circular_progress.webp",
+      "size": 16490,
+      "dimensions": null
+    },
+    {
+      "name": "090_ankh_symbol",
+      "file": "090_ankh_symbol.webp",
+      "size": 66902,
+      "dimensions": null
+    },
+    {
+      "name": "054_waxing_crescent_growing_light",
+      "file": "054_waxing_crescent_growing_light.webp",
+      "size": 20962,
+      "dimensions": null
+    },
+    {
+      "name": "052_crown_chakra_sahasrara",
+      "file": "052_crown_chakra_sahasrara.webp",
+      "size": 25998,
+      "dimensions": null
+    },
+    {
+      "name": "056_waxing_gibbous_almost_complete",
+      "file": "056_waxing_gibbous_almost_complete.webp",
+      "size": 37940,
+      "dimensions": null
+    },
+    {
+      "name": "095_feature_1_profile_creation",
+      "file": "095_feature_1_profile_creation.webp",
+      "size": 35946,
+      "dimensions": null
+    },
+    {
+      "name": "099_getting_started_ready_to_begin",
+      "file": "099_getting_started_ready_to_begin.webp",
+      "size": 106322,
+      "dimensions": null
+    },
+    {
+      "name": "050_throat_chakra_vishuddha",
+      "file": "050_throat_chakra_vishuddha.webp",
+      "size": 42484,
+      "dimensions": null
+    },
+    {
+      "name": "079_loading_state_linear_progress_bar",
+      "file": "079_loading_state_linear_progress_bar.webp",
+      "size": 8484,
+      "dimensions": null
+    },
+    {
+      "name": "027_default_avatar_third_eye",
+      "file": "027_default_avatar_third_eye.webp",
+      "size": 59912,
+      "dimensions": null
+    },
+    {
+      "name": "059_last_quarter_release_point",
+      "file": "059_last_quarter_release_point.webp",
+      "size": 47948,
+      "dimensions": null
+    },
+    {
+      "name": "026_default_avatar_chakra_system",
+      "file": "026_default_avatar_chakra_system.webp",
+      "size": 14842,
+      "dimensions": null
+    },
+    {
+      "name": "013_settings_screen_background",
+      "file": "013_settings_screen_background.webp",
+      "size": 4492,
+      "dimensions": null
+    },
+    {
+      "name": "057_full_moon_peak_illumination",
+      "file": "057_full_moon_peak_illumination.webp",
+      "size": 43352,
+      "dimensions": null
+    },
+    {
+      "name": "028_default_avatar_lotus_bloom",
+      "file": "028_default_avatar_lotus_bloom.webp",
+      "size": 28240,
+      "dimensions": null
+    },
+    {
+      "name": "055_first_quarter_decisive_moment",
+      "file": "055_first_quarter_decisive_moment.webp",
+      "size": 26222,
+      "dimensions": null
+    },
+    {
+      "name": "089_tree_of_life",
+      "file": "089_tree_of_life.webp",
+      "size": 90160,
+      "dimensions": null
+    },
+    {
+      "name": "034_aries_constellation_art",
+      "file": "034_aries_constellation_art.webp",
+      "size": 88852,
+      "dimensions": null
+    },
+    {
+      "name": "045_pisces_constellation_art",
+      "file": "045_pisces_constellation_art.webp",
+      "size": 76496,
+      "dimensions": null
+    },
+    {
+      "name": "024_default_avatar_cosmic_soul",
+      "file": "024_default_avatar_cosmic_soul.webp",
+      "size": 52318,
+      "dimensions": null
+    },
+    {
+      "name": "018_human_design_bodygraph_background",
+      "file": "018_human_design_bodygraph_background.webp",
+      "size": 27076,
+      "dimensions": null
+    },
+    {
+      "name": "008_notification_icon",
+      "file": "008_notification_icon.webp",
+      "size": 11282,
+      "dimensions": null
+    },
+    {
+      "name": "060_waning_crescent_rest_and_reflection",
+      "file": "060_waning_crescent_rest_and_reflection.webp",
+      "size": 17612,
+      "dimensions": null
+    }
+  ],
+  "xxhdpi": [
+    {
+      "name": "083_error_warning_icon",
+      "file": "083_error_warning_icon.webp",
+      "size": 8008,
+      "dimensions": null
+    },
+    {
+      "name": "049_heart_chakra_anahata",
+      "file": "049_heart_chakra_anahata.webp",
+      "size": 73832,
+      "dimensions": null
+    },
+    {
+      "name": "066_flower_of_life",
+      "file": "066_flower_of_life.webp",
+      "size": 122928,
+      "dimensions": null
+    },
+    {
+      "name": "003_splash_screen_background",
+      "file": "003_splash_screen_background.webp",
+      "size": 77562,
+      "dimensions": null
+    },
+    {
+      "name": "058_waning_gibbous_sharing_light",
+      "file": "058_waning_gibbous_sharing_light.webp",
+      "size": 54410,
+      "dimensions": null
+    },
+    {
+      "name": "076_secondary_button_outline_style",
+      "file": "076_secondary_button_outline_style.webp",
+      "size": 13316,
+      "dimensions": null
+    },
+    {
+      "name": "002_alternative_app_icon_dark_mode",
+      "file": "002_alternative_app_icon_dark_mode.webp",
+      "size": 377678,
+      "dimensions": null
+    },
+    {
+      "name": "084_info_tooltip_icon",
+      "file": "084_info_tooltip_icon.webp",
+      "size": 4546,
+      "dimensions": null
+    },
+    {
+      "name": "033_avatar_frame_zodiac_wheel",
+      "file": "033_avatar_frame_zodiac_wheel.webp",
+      "size": 83632,
+      "dimensions": null
+    },
+    {
+      "name": "071_torus_field",
+      "file": "071_torus_field.webp",
+      "size": 334632,
+      "dimensions": null
+    },
+    {
+      "name": "068_sri_yantra",
+      "file": "068_sri_yantra.webp",
+      "size": 193792,
+      "dimensions": null
+    },
+    {
+      "name": "062_water_element_symbol",
+      "file": "062_water_element_symbol.webp",
+      "size": 61620,
+      "dimensions": null
+    },
+    {
+      "name": "022_loading_screen_background",
+      "file": "022_loading_screen_background.webp",
+      "size": 40136,
+      "dimensions": null
+    },
+    {
+      "name": "004_wordmark_logo",
+      "file": "004_wordmark_logo.webp",
+      "size": 510142,
+      "dimensions": null
+    },
+    {
+      "name": "053_new_moon_dark_renewal",
+      "file": "053_new_moon_dark_renewal.webp",
+      "size": 18350,
+      "dimensions": null
+    },
+    {
+      "name": "081_empty_state_illustration_no_compatibility_result",
+      "file": "081_empty_state_illustration_no_compatibility_result.webp",
+      "size": 107394,
+      "dimensions": null
+    },
+    {
+      "name": "092_mandala_spiritual_meditation",
+      "file": "092_mandala_spiritual_meditation.webp",
+      "size": 547392,
+      "dimensions": null
+    },
+    {
+      "name": "072_merkaba_star_tetrahedron",
+      "file": "072_merkaba_star_tetrahedron.webp",
+      "size": 48574,
+      "dimensions": null
+    },
+    {
+      "name": "077_card_background_glassmorphic",
+      "file": "077_card_background_glassmorphic.webp",
+      "size": 40778,
+      "dimensions": null
+    },
+    {
+      "name": "009_home_screen_background",
+      "file": "009_home_screen_background.webp",
+      "size": 10734,
+      "dimensions": null
+    },
+    {
+      "name": "043_capricorn_constellation_art",
+      "file": "043_capricorn_constellation_art.webp",
+      "size": 77530,
+      "dimensions": null
+    },
+    {
+      "name": "014_meditation_chakra_screen_background",
+      "file": "014_meditation_chakra_screen_background.webp",
+      "size": 30228,
+      "dimensions": null
+    },
+    {
+      "name": "097_feature_3_compatibility_analysis",
+      "file": "097_feature_3_compatibility_analysis.webp",
+      "size": 240446,
+      "dimensions": null
+    },
+    {
+      "name": "098_feature_4_personalized_guidance",
+      "file": "098_feature_4_personalized_guidance.webp",
+      "size": 179438,
+      "dimensions": null
+    },
+    {
+      "name": "035_taurus_constellation_art",
+      "file": "035_taurus_constellation_art.webp",
+      "size": 127938,
+      "dimensions": null
+    },
+    {
+      "name": "096_feature_2_spiritual_insights",
+      "file": "096_feature_2_spiritual_insights.webp",
+      "size": 240266,
+      "dimensions": null
+    },
+    {
+      "name": "017_numerology_screen_background",
+      "file": "017_numerology_screen_background.webp",
+      "size": 130732,
+      "dimensions": null
+    },
+    {
+      "name": "015_astrology_chart_background",
+      "file": "015_astrology_chart_background.webp",
+      "size": 89404,
+      "dimensions": null
+    },
+    {
+      "name": "036_gemini_constellation_art",
+      "file": "036_gemini_constellation_art.webp",
+      "size": 85820,
+      "dimensions": null
+    },
+    {
+      "name": "085_dropdown_chevron_icon",
+      "file": "085_dropdown_chevron_icon.webp",
+      "size": 3658,
+      "dimensions": null
+    },
+    {
+      "name": "075_primary_action_button_pressed_state",
+      "file": "075_primary_action_button_pressed_state.webp",
+      "size": 12586,
+      "dimensions": null
+    },
+    {
+      "name": "010_profile_creation_background",
+      "file": "010_profile_creation_background.webp",
+      "size": 77932,
+      "dimensions": null
+    },
+    {
+      "name": "025_default_avatar_constellation_being",
+      "file": "025_default_avatar_constellation_being.webp",
+      "size": 51110,
+      "dimensions": null
+    },
+    {
+      "name": "073_golden_spiral_fibonacci",
+      "file": "073_golden_spiral_fibonacci.webp",
+      "size": 163616,
+      "dimensions": null
+    },
+    {
+      "name": "061_fire_element_symbol",
+      "file": "061_fire_element_symbol.webp",
+      "size": 72012,
+      "dimensions": null
+    },
+    {
+      "name": "067_metatrons_cube",
+      "file": "067_metatrons_cube.webp",
+      "size": 226302,
+      "dimensions": null
+    },
+    {
+      "name": "093_infinity_symbol_with_cosmic_enhancement",
+      "file": "093_infinity_symbol_with_cosmic_enhancement.webp",
+      "size": 48072,
+      "dimensions": null
+    },
+    {
+      "name": "047_sacral_chakra_svadhisthana",
+      "file": "047_sacral_chakra_svadhisthana.webp",
+      "size": 115348,
+      "dimensions": null
+    },
+    {
+      "name": "037_cancer_constellation_art",
+      "file": "037_cancer_constellation_art.webp",
+      "size": 152102,
+      "dimensions": null
+    },
+    {
+      "name": "087_lotus_flower",
+      "file": "087_lotus_flower.webp",
+      "size": 65638,
+      "dimensions": null
+    },
+    {
+      "name": "029_default_avatar_om_symbol",
+      "file": "029_default_avatar_om_symbol.webp",
+      "size": 89264,
+      "dimensions": null
+    },
+    {
+      "name": "006_loading_spinner_icon",
+      "file": "006_loading_spinner_icon.webp",
+      "size": 64668,
+      "dimensions": null
+    },
+    {
+      "name": "044_aquarius_constellation_art",
+      "file": "044_aquarius_constellation_art.webp",
+      "size": 141614,
+      "dimensions": null
+    },
+    {
+      "name": "039_virgo_constellation_art",
+      "file": "039_virgo_constellation_art.webp",
+      "size": 137648,
+      "dimensions": null
+    },
+    {
+      "name": "051_third_eye_chakra_ajna",
+      "file": "051_third_eye_chakra_ajna.webp",
+      "size": 91406,
+      "dimensions": null
+    },
+    {
+      "name": "041_scorpio_constellation_art",
+      "file": "041_scorpio_constellation_art.webp",
+      "size": 102548,
+      "dimensions": null
+    },
+    {
+      "name": "091_yin_yang_symbol",
+      "file": "091_yin_yang_symbol.webp",
+      "size": 111800,
+      "dimensions": null
+    },
+    {
+      "name": "069_seed_of_life",
+      "file": "069_seed_of_life.webp",
+      "size": 132018,
+      "dimensions": null
+    },
+    {
+      "name": "007_app_store_feature_graphic",
+      "file": "007_app_store_feature_graphic.webp",
+      "size": 638350,
+      "dimensions": null
+    },
+    {
+      "name": "020_library_archive_background",
+      "file": "020_library_archive_background.webp",
+      "size": 107430,
+      "dimensions": null
+    },
+    {
+      "name": "032_avatar_frame_gold_sacred_ring",
+      "file": "032_avatar_frame_gold_sacred_ring.webp",
+      "size": 85502,
+      "dimensions": null
+    },
+    {
+      "name": "074_primary_action_button_normal_state",
+      "file": "074_primary_action_button_normal_state.webp",
+      "size": 19188,
+      "dimensions": null
+    },
+    {
+      "name": "001_primary_app_icon",
+      "file": "001_primary_app_icon.webp",
+      "size": 481000,
+      "dimensions": null
+    },
+    {
+      "name": "070_vesica_piscis",
+      "file": "070_vesica_piscis.webp",
+      "size": 121526,
+      "dimensions": null
+    },
+    {
+      "name": "023_success_completion_background",
+      "file": "023_success_completion_background.webp",
+      "size": 88944,
+      "dimensions": null
+    },
+    {
+      "name": "042_sagittarius_constellation_art",
+      "file": "042_sagittarius_constellation_art.webp",
+      "size": 131044,
+      "dimensions": null
+    },
+    {
+      "name": "040_libra_constellation_art",
+      "file": "040_libra_constellation_art.webp",
+      "size": 68474,
+      "dimensions": null
+    },
+    {
+      "name": "048_solar_plexus_chakra_manipura",
+      "file": "048_solar_plexus_chakra_manipura.webp",
+      "size": 88226,
+      "dimensions": null
+    },
+    {
+      "name": "063_earth_element_symbol",
+      "file": "063_earth_element_symbol.webp",
+      "size": 104038,
+      "dimensions": null
+    },
+    {
+      "name": "086_om_aum_symbol",
+      "file": "086_om_aum_symbol.webp",
+      "size": 109210,
+      "dimensions": null
+    },
+    {
+      "name": "012_splash_onboarding_background",
+      "file": "012_splash_onboarding_background.webp",
+      "size": 455386,
+      "dimensions": null
+    },
+    {
+      "name": "011_compatibility_screen_background",
+      "file": "011_compatibility_screen_background.webp",
+      "size": 108058,
+      "dimensions": null
+    },
+    {
+      "name": "005_monogram_icon",
+      "file": "005_monogram_icon.webp",
+      "size": 107612,
+      "dimensions": null
+    },
+    {
+      "name": "094_welcome_screen_cosmic_discovery",
+      "file": "094_welcome_screen_cosmic_discovery.webp",
+      "size": 331338,
+      "dimensions": null
+    },
+    {
+      "name": "064_air_element_symbol",
+      "file": "064_air_element_symbol.webp",
+      "size": 48064,
+      "dimensions": null
+    },
+    {
+      "name": "065_ether_spirit_element_symbol",
+      "file": "065_ether_spirit_element_symbol.webp",
+      "size": 115442,
+      "dimensions": null
+    },
+    {
+      "name": "019_tantric_intimacy_screen_background",
+      "file": "019_tantric_intimacy_screen_background.webp",
+      "size": 201938,
+      "dimensions": null
+    },
+    {
+      "name": "088_hamsa_hand",
+      "file": "088_hamsa_hand.webp",
+      "size": 86188,
+      "dimensions": null
+    },
+    {
+      "name": "080_empty_state_illustration_no_profiles",
+      "file": "080_empty_state_illustration_no_profiles.webp",
+      "size": 32174,
+      "dimensions": null
+    },
+    {
+      "name": "082_success_checkmark_icon",
+      "file": "082_success_checkmark_icon.webp",
+      "size": 13230,
+      "dimensions": null
+    },
+    {
+      "name": "031_default_avatar_yin_yang_cosmic",
+      "file": "031_default_avatar_yin_yang_cosmic.webp",
+      "size": 80856,
+      "dimensions": null
+    },
+    {
+      "name": "038_leo_constellation_art",
+      "file": "038_leo_constellation_art.webp",
+      "size": 111536,
+      "dimensions": null
+    },
+    {
+      "name": "030_default_avatar_moon_phases",
+      "file": "030_default_avatar_moon_phases.webp",
+      "size": 44274,
+      "dimensions": null
+    },
+    {
+      "name": "046_root_chakra_muladhara",
+      "file": "046_root_chakra_muladhara.webp",
+      "size": 94548,
+      "dimensions": null
+    },
+    {
+      "name": "016_moon_phase_tracking_background",
+      "file": "016_moon_phase_tracking_background.webp",
+      "size": 16302,
+      "dimensions": null
+    },
+    {
+      "name": "021_empty_state_background",
+      "file": "021_empty_state_background.webp",
+      "size": 10560,
+      "dimensions": null
+    },
+    {
+      "name": "078_loading_state_circular_progress",
+      "file": "078_loading_state_circular_progress.webp",
+      "size": 27118,
+      "dimensions": null
+    },
+    {
+      "name": "090_ankh_symbol",
+      "file": "090_ankh_symbol.webp",
+      "size": 114102,
+      "dimensions": null
+    },
+    {
+      "name": "054_waxing_crescent_growing_light",
+      "file": "054_waxing_crescent_growing_light.webp",
+      "size": 34052,
+      "dimensions": null
+    },
+    {
+      "name": "052_crown_chakra_sahasrara",
+      "file": "052_crown_chakra_sahasrara.webp",
+      "size": 41328,
+      "dimensions": null
+    },
+    {
+      "name": "056_waxing_gibbous_almost_complete",
+      "file": "056_waxing_gibbous_almost_complete.webp",
+      "size": 59250,
+      "dimensions": null
+    },
+    {
+      "name": "095_feature_1_profile_creation",
+      "file": "095_feature_1_profile_creation.webp",
+      "size": 61344,
+      "dimensions": null
+    },
+    {
+      "name": "099_getting_started_ready_to_begin",
+      "file": "099_getting_started_ready_to_begin.webp",
+      "size": 225606,
+      "dimensions": null
+    },
+    {
+      "name": "050_throat_chakra_vishuddha",
+      "file": "050_throat_chakra_vishuddha.webp",
+      "size": 66576,
+      "dimensions": null
+    },
+    {
+      "name": "079_loading_state_linear_progress_bar",
+      "file": "079_loading_state_linear_progress_bar.webp",
+      "size": 15510,
+      "dimensions": null
+    },
+    {
+      "name": "027_default_avatar_third_eye",
+      "file": "027_default_avatar_third_eye.webp",
+      "size": 98170,
+      "dimensions": null
+    },
+    {
+      "name": "059_last_quarter_release_point",
+      "file": "059_last_quarter_release_point.webp",
+      "size": 80014,
+      "dimensions": null
+    },
+    {
+      "name": "026_default_avatar_chakra_system",
+      "file": "026_default_avatar_chakra_system.webp",
+      "size": 23954,
+      "dimensions": null
+    },
+    {
+      "name": "013_settings_screen_background",
+      "file": "013_settings_screen_background.webp",
+      "size": 8632,
+      "dimensions": null
+    },
+    {
+      "name": "057_full_moon_peak_illumination",
+      "file": "057_full_moon_peak_illumination.webp",
+      "size": 69874,
+      "dimensions": null
+    },
+    {
+      "name": "028_default_avatar_lotus_bloom",
+      "file": "028_default_avatar_lotus_bloom.webp",
+      "size": 44038,
+      "dimensions": null
+    },
+    {
+      "name": "055_first_quarter_decisive_moment",
+      "file": "055_first_quarter_decisive_moment.webp",
+      "size": 42348,
+      "dimensions": null
+    },
+    {
+      "name": "089_tree_of_life",
+      "file": "089_tree_of_life.webp",
+      "size": 154806,
+      "dimensions": null
+    },
+    {
+      "name": "034_aries_constellation_art",
+      "file": "034_aries_constellation_art.webp",
+      "size": 146532,
+      "dimensions": null
+    },
+    {
+      "name": "045_pisces_constellation_art",
+      "file": "045_pisces_constellation_art.webp",
+      "size": 130412,
+      "dimensions": null
+    },
+    {
+      "name": "024_default_avatar_cosmic_soul",
+      "file": "024_default_avatar_cosmic_soul.webp",
+      "size": 82712,
+      "dimensions": null
+    },
+    {
+      "name": "018_human_design_bodygraph_background",
+      "file": "018_human_design_bodygraph_background.webp",
+      "size": 42684,
+      "dimensions": null
+    },
+    {
+      "name": "008_notification_icon",
+      "file": "008_notification_icon.webp",
+      "size": 24584,
+      "dimensions": null
+    },
+    {
+      "name": "060_waning_crescent_rest_and_reflection",
+      "file": "060_waning_crescent_rest_and_reflection.webp",
+      "size": 29362,
+      "dimensions": null
+    }
+  ],
+  "hdpi": [
+    {
+      "name": "083_error_warning_icon",
+      "file": "083_error_warning_icon.webp",
+      "size": 3486,
+      "dimensions": null
+    },
+    {
+      "name": "049_heart_chakra_anahata",
+      "file": "049_heart_chakra_anahata.webp",
+      "size": 29864,
+      "dimensions": null
+    },
+    {
+      "name": "066_flower_of_life",
+      "file": "066_flower_of_life.webp",
+      "size": 46110,
+      "dimensions": null
+    },
+    {
+      "name": "003_splash_screen_background",
+      "file": "003_splash_screen_background.webp",
+      "size": 17646,
+      "dimensions": null
+    },
+    {
+      "name": "058_waning_gibbous_sharing_light",
+      "file": "058_waning_gibbous_sharing_light.webp",
+      "size": 19682,
+      "dimensions": null
+    },
+    {
+      "name": "076_secondary_button_outline_style",
+      "file": "076_secondary_button_outline_style.webp",
+      "size": 5010,
+      "dimensions": null
+    },
+    {
+      "name": "002_alternative_app_icon_dark_mode",
+      "file": "002_alternative_app_icon_dark_mode.webp",
+      "size": 98394,
+      "dimensions": null
+    },
+    {
+      "name": "084_info_tooltip_icon",
+      "file": "084_info_tooltip_icon.webp",
+      "size": 2134,
+      "dimensions": null
+    },
+    {
+      "name": "033_avatar_frame_zodiac_wheel",
+      "file": "033_avatar_frame_zodiac_wheel.webp",
+      "size": 34676,
+      "dimensions": null
+    },
+    {
+      "name": "071_torus_field",
+      "file": "071_torus_field.webp",
+      "size": 89068,
+      "dimensions": null
+    },
+    {
+      "name": "068_sri_yantra",
+      "file": "068_sri_yantra.webp",
+      "size": 65368,
+      "dimensions": null
+    },
+    {
+      "name": "062_water_element_symbol",
+      "file": "062_water_element_symbol.webp",
+      "size": 24860,
+      "dimensions": null
+    },
+    {
+      "name": "022_loading_screen_background",
+      "file": "022_loading_screen_background.webp",
+      "size": 16884,
+      "dimensions": null
+    },
+    {
+      "name": "004_wordmark_logo",
+      "file": "004_wordmark_logo.webp",
+      "size": 145760,
+      "dimensions": null
+    },
+    {
+      "name": "053_new_moon_dark_renewal",
+      "file": "053_new_moon_dark_renewal.webp",
+      "size": 6694,
+      "dimensions": null
+    },
+    {
+      "name": "081_empty_state_illustration_no_compatibility_result",
+      "file": "081_empty_state_illustration_no_compatibility_result.webp",
+      "size": 42678,
+      "dimensions": null
+    },
+    {
+      "name": "092_mandala_spiritual_meditation",
+      "file": "092_mandala_spiritual_meditation.webp",
+      "size": 190540,
+      "dimensions": null
+    },
+    {
+      "name": "072_merkaba_star_tetrahedron",
+      "file": "072_merkaba_star_tetrahedron.webp",
+      "size": 18724,
+      "dimensions": null
+    },
+    {
+      "name": "077_card_background_glassmorphic",
+      "file": "077_card_background_glassmorphic.webp",
+      "size": 5614,
+      "dimensions": null
+    },
+    {
+      "name": "009_home_screen_background",
+      "file": "009_home_screen_background.webp",
+      "size": 3894,
+      "dimensions": null
+    },
+    {
+      "name": "043_capricorn_constellation_art",
+      "file": "043_capricorn_constellation_art.webp",
+      "size": 25942,
+      "dimensions": null
+    },
+    {
+      "name": "014_meditation_chakra_screen_background",
+      "file": "014_meditation_chakra_screen_background.webp",
+      "size": 12486,
+      "dimensions": null
+    },
+    {
+      "name": "097_feature_3_compatibility_analysis",
+      "file": "097_feature_3_compatibility_analysis.webp",
+      "size": 86524,
+      "dimensions": null
+    },
+    {
+      "name": "098_feature_4_personalized_guidance",
+      "file": "098_feature_4_personalized_guidance.webp",
+      "size": 70410,
+      "dimensions": null
+    },
+    {
+      "name": "035_taurus_constellation_art",
+      "file": "035_taurus_constellation_art.webp",
+      "size": 48770,
+      "dimensions": null
+    },
+    {
+      "name": "096_feature_2_spiritual_insights",
+      "file": "096_feature_2_spiritual_insights.webp",
+      "size": 95626,
+      "dimensions": null
+    },
+    {
+      "name": "017_numerology_screen_background",
+      "file": "017_numerology_screen_background.webp",
+      "size": 17916,
+      "dimensions": null
+    },
+    {
+      "name": "015_astrology_chart_background",
+      "file": "015_astrology_chart_background.webp",
+      "size": 32878,
+      "dimensions": null
+    },
+    {
+      "name": "036_gemini_constellation_art",
+      "file": "036_gemini_constellation_art.webp",
+      "size": 31854,
+      "dimensions": null
+    },
+    {
+      "name": "085_dropdown_chevron_icon",
+      "file": "085_dropdown_chevron_icon.webp",
+      "size": 1654,
+      "dimensions": null
+    },
+    {
+      "name": "075_primary_action_button_pressed_state",
+      "file": "075_primary_action_button_pressed_state.webp",
+      "size": 5046,
+      "dimensions": null
+    },
+    {
+      "name": "010_profile_creation_background",
+      "file": "010_profile_creation_background.webp",
+      "size": 23094,
+      "dimensions": null
+    },
+    {
+      "name": "025_default_avatar_constellation_being",
+      "file": "025_default_avatar_constellation_being.webp",
+      "size": 18148,
+      "dimensions": null
+    },
+    {
+      "name": "073_golden_spiral_fibonacci",
+      "file": "073_golden_spiral_fibonacci.webp",
+      "size": 39070,
+      "dimensions": null
+    },
+    {
+      "name": "061_fire_element_symbol",
+      "file": "061_fire_element_symbol.webp",
+      "size": 26914,
+      "dimensions": null
+    },
+    {
+      "name": "067_metatrons_cube",
+      "file": "067_metatrons_cube.webp",
+      "size": 72960,
+      "dimensions": null
+    },
+    {
+      "name": "093_infinity_symbol_with_cosmic_enhancement",
+      "file": "093_infinity_symbol_with_cosmic_enhancement.webp",
+      "size": 16310,
+      "dimensions": null
+    },
+    {
+      "name": "047_sacral_chakra_svadhisthana",
+      "file": "047_sacral_chakra_svadhisthana.webp",
+      "size": 40428,
+      "dimensions": null
+    },
+    {
+      "name": "037_cancer_constellation_art",
+      "file": "037_cancer_constellation_art.webp",
+      "size": 58684,
+      "dimensions": null
+    },
+    {
+      "name": "087_lotus_flower",
+      "file": "087_lotus_flower.webp",
+      "size": 26294,
+      "dimensions": null
+    },
+    {
+      "name": "029_default_avatar_om_symbol",
+      "file": "029_default_avatar_om_symbol.webp",
+      "size": 36614,
+      "dimensions": null
+    },
+    {
+      "name": "006_loading_spinner_icon",
+      "file": "006_loading_spinner_icon.webp",
+      "size": 18630,
+      "dimensions": null
+    },
+    {
+      "name": "044_aquarius_constellation_art",
+      "file": "044_aquarius_constellation_art.webp",
+      "size": 53194,
+      "dimensions": null
+    },
+    {
+      "name": "039_virgo_constellation_art",
+      "file": "039_virgo_constellation_art.webp",
+      "size": 50122,
+      "dimensions": null
+    },
+    {
+      "name": "051_third_eye_chakra_ajna",
+      "file": "051_third_eye_chakra_ajna.webp",
+      "size": 34282,
+      "dimensions": null
+    },
+    {
+      "name": "041_scorpio_constellation_art",
+      "file": "041_scorpio_constellation_art.webp",
+      "size": 35630,
+      "dimensions": null
+    },
+    {
+      "name": "091_yin_yang_symbol",
+      "file": "091_yin_yang_symbol.webp",
+      "size": 37272,
+      "dimensions": null
+    },
+    {
+      "name": "069_seed_of_life",
+      "file": "069_seed_of_life.webp",
+      "size": 53172,
+      "dimensions": null
+    },
+    {
+      "name": "007_app_store_feature_graphic",
+      "file": "007_app_store_feature_graphic.webp",
+      "size": 176408,
+      "dimensions": null
+    },
+    {
+      "name": "020_library_archive_background",
+      "file": "020_library_archive_background.webp",
+      "size": 27664,
+      "dimensions": null
+    },
+    {
+      "name": "032_avatar_frame_gold_sacred_ring",
+      "file": "032_avatar_frame_gold_sacred_ring.webp",
+      "size": 31736,
+      "dimensions": null
+    },
+    {
+      "name": "074_primary_action_button_normal_state",
+      "file": "074_primary_action_button_normal_state.webp",
+      "size": 8214,
+      "dimensions": null
+    },
+    {
+      "name": "001_primary_app_icon",
+      "file": "001_primary_app_icon.webp",
+      "size": 133298,
+      "dimensions": null
+    },
+    {
+      "name": "070_vesica_piscis",
+      "file": "070_vesica_piscis.webp",
+      "size": 45792,
+      "dimensions": null
+    },
+    {
+      "name": "023_success_completion_background",
+      "file": "023_success_completion_background.webp",
+      "size": 36856,
+      "dimensions": null
+    },
+    {
+      "name": "042_sagittarius_constellation_art",
+      "file": "042_sagittarius_constellation_art.webp",
+      "size": 44526,
+      "dimensions": null
+    },
+    {
+      "name": "040_libra_constellation_art",
+      "file": "040_libra_constellation_art.webp",
+      "size": 25808,
+      "dimensions": null
+    },
+    {
+      "name": "048_solar_plexus_chakra_manipura",
+      "file": "048_solar_plexus_chakra_manipura.webp",
+      "size": 35532,
+      "dimensions": null
+    },
+    {
+      "name": "063_earth_element_symbol",
+      "file": "063_earth_element_symbol.webp",
+      "size": 37640,
+      "dimensions": null
+    },
+    {
+      "name": "086_om_aum_symbol",
+      "file": "086_om_aum_symbol.webp",
+      "size": 39974,
+      "dimensions": null
+    },
+    {
+      "name": "012_splash_onboarding_background",
+      "file": "012_splash_onboarding_background.webp",
+      "size": 107608,
+      "dimensions": null
+    },
+    {
+      "name": "011_compatibility_screen_background",
+      "file": "011_compatibility_screen_background.webp",
+      "size": 36790,
+      "dimensions": null
+    },
+    {
+      "name": "005_monogram_icon",
+      "file": "005_monogram_icon.webp",
+      "size": 32036,
+      "dimensions": null
+    },
+    {
+      "name": "094_welcome_screen_cosmic_discovery",
+      "file": "094_welcome_screen_cosmic_discovery.webp",
+      "size": 129734,
+      "dimensions": null
+    },
+    {
+      "name": "064_air_element_symbol",
+      "file": "064_air_element_symbol.webp",
+      "size": 18164,
+      "dimensions": null
+    },
+    {
+      "name": "065_ether_spirit_element_symbol",
+      "file": "065_ether_spirit_element_symbol.webp",
+      "size": 38606,
+      "dimensions": null
+    },
+    {
+      "name": "019_tantric_intimacy_screen_background",
+      "file": "019_tantric_intimacy_screen_background.webp",
+      "size": 49334,
+      "dimensions": null
+    },
+    {
+      "name": "088_hamsa_hand",
+      "file": "088_hamsa_hand.webp",
+      "size": 30242,
+      "dimensions": null
+    },
+    {
+      "name": "080_empty_state_illustration_no_profiles",
+      "file": "080_empty_state_illustration_no_profiles.webp",
+      "size": 12568,
+      "dimensions": null
+    },
+    {
+      "name": "082_success_checkmark_icon",
+      "file": "082_success_checkmark_icon.webp",
+      "size": 5568,
+      "dimensions": null
+    },
+    {
+      "name": "031_default_avatar_yin_yang_cosmic",
+      "file": "031_default_avatar_yin_yang_cosmic.webp",
+      "size": 27788,
+      "dimensions": null
+    },
+    {
+      "name": "038_leo_constellation_art",
+      "file": "038_leo_constellation_art.webp",
+      "size": 41742,
+      "dimensions": null
+    },
+    {
+      "name": "030_default_avatar_moon_phases",
+      "file": "030_default_avatar_moon_phases.webp",
+      "size": 17802,
+      "dimensions": null
+    },
+    {
+      "name": "046_root_chakra_muladhara",
+      "file": "046_root_chakra_muladhara.webp",
+      "size": 37204,
+      "dimensions": null
+    },
+    {
+      "name": "016_moon_phase_tracking_background",
+      "file": "016_moon_phase_tracking_background.webp",
+      "size": 5396,
+      "dimensions": null
+    },
+    {
+      "name": "021_empty_state_background",
+      "file": "021_empty_state_background.webp",
+      "size": 2804,
+      "dimensions": null
+    },
+    {
+      "name": "078_loading_state_circular_progress",
+      "file": "078_loading_state_circular_progress.webp",
+      "size": 10520,
+      "dimensions": null
+    },
+    {
+      "name": "090_ankh_symbol",
+      "file": "090_ankh_symbol.webp",
+      "size": 28574,
+      "dimensions": null
+    },
+    {
+      "name": "054_waxing_crescent_growing_light",
+      "file": "054_waxing_crescent_growing_light.webp",
+      "size": 12726,
+      "dimensions": null
+    },
+    {
+      "name": "052_crown_chakra_sahasrara",
+      "file": "052_crown_chakra_sahasrara.webp",
+      "size": 18092,
+      "dimensions": null
+    },
+    {
+      "name": "056_waxing_gibbous_almost_complete",
+      "file": "056_waxing_gibbous_almost_complete.webp",
+      "size": 20836,
+      "dimensions": null
+    },
+    {
+      "name": "095_feature_1_profile_creation",
+      "file": "095_feature_1_profile_creation.webp",
+      "size": 23926,
+      "dimensions": null
+    },
+    {
+      "name": "099_getting_started_ready_to_begin",
+      "file": "099_getting_started_ready_to_begin.webp",
+      "size": 61964,
+      "dimensions": null
+    },
+    {
+      "name": "050_throat_chakra_vishuddha",
+      "file": "050_throat_chakra_vishuddha.webp",
+      "size": 27814,
+      "dimensions": null
+    },
+    {
+      "name": "079_loading_state_linear_progress_bar",
+      "file": "079_loading_state_linear_progress_bar.webp",
+      "size": 4012,
+      "dimensions": null
+    },
+    {
+      "name": "027_default_avatar_third_eye",
+      "file": "027_default_avatar_third_eye.webp",
+      "size": 36282,
+      "dimensions": null
+    },
+    {
+      "name": "059_last_quarter_release_point",
+      "file": "059_last_quarter_release_point.webp",
+      "size": 26520,
+      "dimensions": null
+    },
+    {
+      "name": "026_default_avatar_chakra_system",
+      "file": "026_default_avatar_chakra_system.webp",
+      "size": 10174,
+      "dimensions": null
+    },
+    {
+      "name": "013_settings_screen_background",
+      "file": "013_settings_screen_background.webp",
+      "size": 3016,
+      "dimensions": null
+    },
+    {
+      "name": "057_full_moon_peak_illumination",
+      "file": "057_full_moon_peak_illumination.webp",
+      "size": 25004,
+      "dimensions": null
+    },
+    {
+      "name": "028_default_avatar_lotus_bloom",
+      "file": "028_default_avatar_lotus_bloom.webp",
+      "size": 18320,
+      "dimensions": null
+    },
+    {
+      "name": "055_first_quarter_decisive_moment",
+      "file": "055_first_quarter_decisive_moment.webp",
+      "size": 14802,
+      "dimensions": null
+    },
+    {
+      "name": "089_tree_of_life",
+      "file": "089_tree_of_life.webp",
+      "size": 57988,
+      "dimensions": null
+    },
+    {
+      "name": "034_aries_constellation_art",
+      "file": "034_aries_constellation_art.webp",
+      "size": 48386,
+      "dimensions": null
+    },
+    {
+      "name": "045_pisces_constellation_art",
+      "file": "045_pisces_constellation_art.webp",
+      "size": 45042,
+      "dimensions": null
+    },
+    {
+      "name": "024_default_avatar_cosmic_soul",
+      "file": "024_default_avatar_cosmic_soul.webp",
+      "size": 32676,
+      "dimensions": null
+    },
+    {
+      "name": "018_human_design_bodygraph_background",
+      "file": "018_human_design_bodygraph_background.webp",
+      "size": 18648,
+      "dimensions": null
+    },
+    {
+      "name": "008_notification_icon",
+      "file": "008_notification_icon.webp",
+      "size": 6852,
+      "dimensions": null
+    },
+    {
+      "name": "060_waning_crescent_rest_and_reflection",
+      "file": "060_waning_crescent_rest_and_reflection.webp",
+      "size": 11172,
+      "dimensions": null
+    }
+  ],
+  "mdpi": [
+    {
+      "name": "083_error_warning_icon",
+      "file": "083_error_warning_icon.webp",
+      "size": 2064,
+      "dimensions": null
+    },
+    {
+      "name": "049_heart_chakra_anahata",
+      "file": "049_heart_chakra_anahata.webp",
+      "size": 16242,
+      "dimensions": null
+    },
+    {
+      "name": "066_flower_of_life",
+      "file": "066_flower_of_life.webp",
+      "size": 25616,
+      "dimensions": null
+    },
+    {
+      "name": "003_splash_screen_background",
+      "file": "003_splash_screen_background.webp",
+      "size": 9040,
+      "dimensions": null
+    },
+    {
+      "name": "058_waning_gibbous_sharing_light",
+      "file": "058_waning_gibbous_sharing_light.webp",
+      "size": 10516,
+      "dimensions": null
+    },
+    {
+      "name": "076_secondary_button_outline_style",
+      "file": "076_secondary_button_outline_style.webp",
+      "size": 2862,
+      "dimensions": null
+    },
+    {
+      "name": "002_alternative_app_icon_dark_mode",
+      "file": "002_alternative_app_icon_dark_mode.webp",
+      "size": 48020,
+      "dimensions": null
+    },
+    {
+      "name": "084_info_tooltip_icon",
+      "file": "084_info_tooltip_icon.webp",
+      "size": 1474,
+      "dimensions": null
+    },
+    {
+      "name": "033_avatar_frame_zodiac_wheel",
+      "file": "033_avatar_frame_zodiac_wheel.webp",
+      "size": 18890,
+      "dimensions": null
+    },
+    {
+      "name": "071_torus_field",
+      "file": "071_torus_field.webp",
+      "size": 39278,
+      "dimensions": null
+    },
+    {
+      "name": "068_sri_yantra",
+      "file": "068_sri_yantra.webp",
+      "size": 33568,
+      "dimensions": null
+    },
+    {
+      "name": "062_water_element_symbol",
+      "file": "062_water_element_symbol.webp",
+      "size": 13270,
+      "dimensions": null
+    },
+    {
+      "name": "022_loading_screen_background",
+      "file": "022_loading_screen_background.webp",
+      "size": 10176,
+      "dimensions": null
+    },
+    {
+      "name": "004_wordmark_logo",
+      "file": "004_wordmark_logo.webp",
+      "size": 68210,
+      "dimensions": null
+    },
+    {
+      "name": "053_new_moon_dark_renewal",
+      "file": "053_new_moon_dark_renewal.webp",
+      "size": 3674,
+      "dimensions": null
+    },
+    {
+      "name": "081_empty_state_illustration_no_compatibility_result",
+      "file": "081_empty_state_illustration_no_compatibility_result.webp",
+      "size": 23462,
+      "dimensions": null
+    },
+    {
+      "name": "092_mandala_spiritual_meditation",
+      "file": "092_mandala_spiritual_meditation.webp",
+      "size": 94120,
+      "dimensions": null
+    },
+    {
+      "name": "072_merkaba_star_tetrahedron",
+      "file": "072_merkaba_star_tetrahedron.webp",
+      "size": 10568,
+      "dimensions": null
+    },
+    {
+      "name": "077_card_background_glassmorphic",
+      "file": "077_card_background_glassmorphic.webp",
+      "size": 3264,
+      "dimensions": null
+    },
+    {
+      "name": "009_home_screen_background",
+      "file": "009_home_screen_background.webp",
+      "size": 2142,
+      "dimensions": null
+    },
+    {
+      "name": "043_capricorn_constellation_art",
+      "file": "043_capricorn_constellation_art.webp",
+      "size": 12634,
+      "dimensions": null
+    },
+    {
+      "name": "014_meditation_chakra_screen_background",
+      "file": "014_meditation_chakra_screen_background.webp",
+      "size": 7350,
+      "dimensions": null
+    },
+    {
+      "name": "097_feature_3_compatibility_analysis",
+      "file": "097_feature_3_compatibility_analysis.webp",
+      "size": 45140,
+      "dimensions": null
+    },
+    {
+      "name": "098_feature_4_personalized_guidance",
+      "file": "098_feature_4_personalized_guidance.webp",
+      "size": 39902,
+      "dimensions": null
+    },
+    {
+      "name": "035_taurus_constellation_art",
+      "file": "035_taurus_constellation_art.webp",
+      "size": 25548,
+      "dimensions": null
+    },
+    {
+      "name": "096_feature_2_spiritual_insights",
+      "file": "096_feature_2_spiritual_insights.webp",
+      "size": 52592,
+      "dimensions": null
+    },
+    {
+      "name": "017_numerology_screen_background",
+      "file": "017_numerology_screen_background.webp",
+      "size": 7208,
+      "dimensions": null
+    },
+    {
+      "name": "015_astrology_chart_background",
+      "file": "015_astrology_chart_background.webp",
+      "size": 16852,
+      "dimensions": null
+    },
+    {
+      "name": "036_gemini_constellation_art",
+      "file": "036_gemini_constellation_art.webp",
+      "size": 16272,
+      "dimensions": null
+    },
+    {
+      "name": "085_dropdown_chevron_icon",
+      "file": "085_dropdown_chevron_icon.webp",
+      "size": 1042,
+      "dimensions": null
+    },
+    {
+      "name": "075_primary_action_button_pressed_state",
+      "file": "075_primary_action_button_pressed_state.webp",
+      "size": 2924,
+      "dimensions": null
+    },
+    {
+      "name": "010_profile_creation_background",
+      "file": "010_profile_creation_background.webp",
+      "size": 11694,
+      "dimensions": null
+    },
+    {
+      "name": "025_default_avatar_constellation_being",
+      "file": "025_default_avatar_constellation_being.webp",
+      "size": 9388,
+      "dimensions": null
+    },
+    {
+      "name": "073_golden_spiral_fibonacci",
+      "file": "073_golden_spiral_fibonacci.webp",
+      "size": 17588,
+      "dimensions": null
+    },
+    {
+      "name": "061_fire_element_symbol",
+      "file": "061_fire_element_symbol.webp",
+      "size": 13332,
+      "dimensions": null
+    },
+    {
+      "name": "067_metatrons_cube",
+      "file": "067_metatrons_cube.webp",
+      "size": 36248,
+      "dimensions": null
+    },
+    {
+      "name": "093_infinity_symbol_with_cosmic_enhancement",
+      "file": "093_infinity_symbol_with_cosmic_enhancement.webp",
+      "size": 7976,
+      "dimensions": null
+    },
+    {
+      "name": "047_sacral_chakra_svadhisthana",
+      "file": "047_sacral_chakra_svadhisthana.webp",
+      "size": 20516,
+      "dimensions": null
+    },
+    {
+      "name": "037_cancer_constellation_art",
+      "file": "037_cancer_constellation_art.webp",
+      "size": 29996,
+      "dimensions": null
+    },
+    {
+      "name": "087_lotus_flower",
+      "file": "087_lotus_flower.webp",
+      "size": 13718,
+      "dimensions": null
+    },
+    {
+      "name": "029_default_avatar_om_symbol",
+      "file": "029_default_avatar_om_symbol.webp",
+      "size": 19342,
+      "dimensions": null
+    },
+    {
+      "name": "006_loading_spinner_icon",
+      "file": "006_loading_spinner_icon.webp",
+      "size": 8576,
+      "dimensions": null
+    },
+    {
+      "name": "044_aquarius_constellation_art",
+      "file": "044_aquarius_constellation_art.webp",
+      "size": 26714,
+      "dimensions": null
+    },
+    {
+      "name": "039_virgo_constellation_art",
+      "file": "039_virgo_constellation_art.webp",
+      "size": 23934,
+      "dimensions": null
+    },
+    {
+      "name": "051_third_eye_chakra_ajna",
+      "file": "051_third_eye_chakra_ajna.webp",
+      "size": 17826,
+      "dimensions": null
+    },
+    {
+      "name": "041_scorpio_constellation_art",
+      "file": "041_scorpio_constellation_art.webp",
+      "size": 18320,
+      "dimensions": null
+    },
+    {
+      "name": "091_yin_yang_symbol",
+      "file": "091_yin_yang_symbol.webp",
+      "size": 17720,
+      "dimensions": null
+    },
+    {
+      "name": "069_seed_of_life",
+      "file": "069_seed_of_life.webp",
+      "size": 30048,
+      "dimensions": null
+    },
+    {
+      "name": "007_app_store_feature_graphic",
+      "file": "007_app_store_feature_graphic.webp",
+      "size": 86144,
+      "dimensions": null
+    },
+    {
+      "name": "020_library_archive_background",
+      "file": "020_library_archive_background.webp",
+      "size": 13490,
+      "dimensions": null
+    },
+    {
+      "name": "032_avatar_frame_gold_sacred_ring",
+      "file": "032_avatar_frame_gold_sacred_ring.webp",
+      "size": 15702,
+      "dimensions": null
+    },
+    {
+      "name": "074_primary_action_button_normal_state",
+      "file": "074_primary_action_button_normal_state.webp",
+      "size": 4622,
+      "dimensions": null
+    },
+    {
+      "name": "001_primary_app_icon",
+      "file": "001_primary_app_icon.webp",
+      "size": 64110,
+      "dimensions": null
+    },
+    {
+      "name": "070_vesica_piscis",
+      "file": "070_vesica_piscis.webp",
+      "size": 24762,
+      "dimensions": null
+    },
+    {
+      "name": "023_success_completion_background",
+      "file": "023_success_completion_background.webp",
+      "size": 20746,
+      "dimensions": null
+    },
+    {
+      "name": "042_sagittarius_constellation_art",
+      "file": "042_sagittarius_constellation_art.webp",
+      "size": 20606,
+      "dimensions": null
+    },
+    {
+      "name": "040_libra_constellation_art",
+      "file": "040_libra_constellation_art.webp",
+      "size": 13370,
+      "dimensions": null
+    },
+    {
+      "name": "048_solar_plexus_chakra_manipura",
+      "file": "048_solar_plexus_chakra_manipura.webp",
+      "size": 19110,
+      "dimensions": null
+    },
+    {
+      "name": "063_earth_element_symbol",
+      "file": "063_earth_element_symbol.webp",
+      "size": 18680,
+      "dimensions": null
+    },
+    {
+      "name": "086_om_aum_symbol",
+      "file": "086_om_aum_symbol.webp",
+      "size": 19716,
+      "dimensions": null
+    },
+    {
+      "name": "012_splash_onboarding_background",
+      "file": "012_splash_onboarding_background.webp",
+      "size": 44048,
+      "dimensions": null
+    },
+    {
+      "name": "011_compatibility_screen_background",
+      "file": "011_compatibility_screen_background.webp",
+      "size": 20478,
+      "dimensions": null
+    },
+    {
+      "name": "005_monogram_icon",
+      "file": "005_monogram_icon.webp",
+      "size": 15738,
+      "dimensions": null
+    },
+    {
+      "name": "094_welcome_screen_cosmic_discovery",
+      "file": "094_welcome_screen_cosmic_discovery.webp",
+      "size": 61476,
+      "dimensions": null
+    },
+    {
+      "name": "064_air_element_symbol",
+      "file": "064_air_element_symbol.webp",
+      "size": 9636,
+      "dimensions": null
+    },
+    {
+      "name": "065_ether_spirit_element_symbol",
+      "file": "065_ether_spirit_element_symbol.webp",
+      "size": 18602,
+      "dimensions": null
+    },
+    {
+      "name": "019_tantric_intimacy_screen_background",
+      "file": "019_tantric_intimacy_screen_background.webp",
+      "size": 23202,
+      "dimensions": null
+    },
+    {
+      "name": "088_hamsa_hand",
+      "file": "088_hamsa_hand.webp",
+      "size": 14436,
+      "dimensions": null
+    },
+    {
+      "name": "080_empty_state_illustration_no_profiles",
+      "file": "080_empty_state_illustration_no_profiles.webp",
+      "size": 7140,
+      "dimensions": null
+    },
+    {
+      "name": "082_success_checkmark_icon",
+      "file": "082_success_checkmark_icon.webp",
+      "size": 3330,
+      "dimensions": null
+    },
+    {
+      "name": "031_default_avatar_yin_yang_cosmic",
+      "file": "031_default_avatar_yin_yang_cosmic.webp",
+      "size": 12960,
+      "dimensions": null
+    },
+    {
+      "name": "038_leo_constellation_art",
+      "file": "038_leo_constellation_art.webp",
+      "size": 21602,
+      "dimensions": null
+    },
+    {
+      "name": "030_default_avatar_moon_phases",
+      "file": "030_default_avatar_moon_phases.webp",
+      "size": 9794,
+      "dimensions": null
+    },
+    {
+      "name": "046_root_chakra_muladhara",
+      "file": "046_root_chakra_muladhara.webp",
+      "size": 19568,
+      "dimensions": null
+    },
+    {
+      "name": "016_moon_phase_tracking_background",
+      "file": "016_moon_phase_tracking_background.webp",
+      "size": 3022,
+      "dimensions": null
+    },
+    {
+      "name": "021_empty_state_background",
+      "file": "021_empty_state_background.webp",
+      "size": 1434,
+      "dimensions": null
+    },
+    {
+      "name": "078_loading_state_circular_progress",
+      "file": "078_loading_state_circular_progress.webp",
+      "size": 5658,
+      "dimensions": null
+    },
+    {
+      "name": "090_ankh_symbol",
+      "file": "090_ankh_symbol.webp",
+      "size": 10014,
+      "dimensions": null
+    },
+    {
+      "name": "054_waxing_crescent_growing_light",
+      "file": "054_waxing_crescent_growing_light.webp",
+      "size": 6712,
+      "dimensions": null
+    },
+    {
+      "name": "052_crown_chakra_sahasrara",
+      "file": "052_crown_chakra_sahasrara.webp",
+      "size": 9898,
+      "dimensions": null
+    },
+    {
+      "name": "056_waxing_gibbous_almost_complete",
+      "file": "056_waxing_gibbous_almost_complete.webp",
+      "size": 10558,
+      "dimensions": null
+    },
+    {
+      "name": "095_feature_1_profile_creation",
+      "file": "095_feature_1_profile_creation.webp",
+      "size": 13350,
+      "dimensions": null
+    },
+    {
+      "name": "099_getting_started_ready_to_begin",
+      "file": "099_getting_started_ready_to_begin.webp",
+      "size": 27982,
+      "dimensions": null
+    },
+    {
+      "name": "050_throat_chakra_vishuddha",
+      "file": "050_throat_chakra_vishuddha.webp",
+      "size": 15290,
+      "dimensions": null
+    },
+    {
+      "name": "079_loading_state_linear_progress_bar",
+      "file": "079_loading_state_linear_progress_bar.webp",
+      "size": 2146,
+      "dimensions": null
+    },
+    {
+      "name": "027_default_avatar_third_eye",
+      "file": "027_default_avatar_third_eye.webp",
+      "size": 18552,
+      "dimensions": null
+    },
+    {
+      "name": "059_last_quarter_release_point",
+      "file": "059_last_quarter_release_point.webp",
+      "size": 13064,
+      "dimensions": null
+    },
+    {
+      "name": "026_default_avatar_chakra_system",
+      "file": "026_default_avatar_chakra_system.webp",
+      "size": 5984,
+      "dimensions": null
+    },
+    {
+      "name": "013_settings_screen_background",
+      "file": "013_settings_screen_background.webp",
+      "size": 1670,
+      "dimensions": null
+    },
+    {
+      "name": "057_full_moon_peak_illumination",
+      "file": "057_full_moon_peak_illumination.webp",
+      "size": 12852,
+      "dimensions": null
+    },
+    {
+      "name": "028_default_avatar_lotus_bloom",
+      "file": "028_default_avatar_lotus_bloom.webp",
+      "size": 9972,
+      "dimensions": null
+    },
+    {
+      "name": "055_first_quarter_decisive_moment",
+      "file": "055_first_quarter_decisive_moment.webp",
+      "size": 7462,
+      "dimensions": null
+    },
+    {
+      "name": "089_tree_of_life",
+      "file": "089_tree_of_life.webp",
+      "size": 29218,
+      "dimensions": null
+    },
+    {
+      "name": "034_aries_constellation_art",
+      "file": "034_aries_constellation_art.webp",
+      "size": 21352,
+      "dimensions": null
+    },
+    {
+      "name": "045_pisces_constellation_art",
+      "file": "045_pisces_constellation_art.webp",
+      "size": 22570,
+      "dimensions": null
+    },
+    {
+      "name": "024_default_avatar_cosmic_soul",
+      "file": "024_default_avatar_cosmic_soul.webp",
+      "size": 17196,
+      "dimensions": null
+    },
+    {
+      "name": "018_human_design_bodygraph_background",
+      "file": "018_human_design_bodygraph_background.webp",
+      "size": 10708,
+      "dimensions": null
+    },
+    {
+      "name": "008_notification_icon",
+      "file": "008_notification_icon.webp",
+      "size": 3498,
+      "dimensions": null
+    },
+    {
+      "name": "060_waning_crescent_rest_and_reflection",
+      "file": "060_waning_crescent_rest_and_reflection.webp",
+      "size": 5752,
+      "dimensions": null
+    }
+  ],
+  "xxxhdpi": [
+    {
+      "name": "083_error_warning_icon",
+      "file": "083_error_warning_icon.webp",
+      "size": 11838,
+      "dimensions": null
+    },
+    {
+      "name": "049_heart_chakra_anahata",
+      "file": "049_heart_chakra_anahata.webp",
+      "size": 105716,
+      "dimensions": null
+    },
+    {
+      "name": "066_flower_of_life",
+      "file": "066_flower_of_life.webp",
+      "size": 170608,
+      "dimensions": null
+    },
+    {
+      "name": "003_splash_screen_background",
+      "file": "003_splash_screen_background.webp",
+      "size": 152184,
+      "dimensions": null
+    },
+    {
+      "name": "058_waning_gibbous_sharing_light",
+      "file": "058_waning_gibbous_sharing_light.webp",
+      "size": 74828,
+      "dimensions": null
+    },
+    {
+      "name": "076_secondary_button_outline_style",
+      "file": "076_secondary_button_outline_style.webp",
+      "size": 19756,
+      "dimensions": null
+    },
+    {
+      "name": "002_alternative_app_icon_dark_mode",
+      "file": "002_alternative_app_icon_dark_mode.webp",
+      "size": 584688,
+      "dimensions": null
+    },
+    {
+      "name": "084_info_tooltip_icon",
+      "file": "084_info_tooltip_icon.webp",
+      "size": 6518,
+      "dimensions": null
+    },
+    {
+      "name": "033_avatar_frame_zodiac_wheel",
+      "file": "033_avatar_frame_zodiac_wheel.webp",
+      "size": 114542,
+      "dimensions": null
+    },
+    {
+      "name": "071_torus_field",
+      "file": "071_torus_field.webp",
+      "size": 467688,
+      "dimensions": null
+    },
+    {
+      "name": "068_sri_yantra",
+      "file": "068_sri_yantra.webp",
+      "size": 270516,
+      "dimensions": null
+    },
+    {
+      "name": "062_water_element_symbol",
+      "file": "062_water_element_symbol.webp",
+      "size": 85076,
+      "dimensions": null
+    },
+    {
+      "name": "022_loading_screen_background",
+      "file": "022_loading_screen_background.webp",
+      "size": 60832,
+      "dimensions": null
+    },
+    {
+      "name": "004_wordmark_logo",
+      "file": "004_wordmark_logo.webp",
+      "size": 769736,
+      "dimensions": null
+    },
+    {
+      "name": "053_new_moon_dark_renewal",
+      "file": "053_new_moon_dark_renewal.webp",
+      "size": 27172,
+      "dimensions": null
+    },
+    {
+      "name": "081_empty_state_illustration_no_compatibility_result",
+      "file": "081_empty_state_illustration_no_compatibility_result.webp",
+      "size": 144144,
+      "dimensions": null
+    },
+    {
+      "name": "092_mandala_spiritual_meditation",
+      "file": "092_mandala_spiritual_meditation.webp",
+      "size": 750584,
+      "dimensions": null
+    },
+    {
+      "name": "072_merkaba_star_tetrahedron",
+      "file": "072_merkaba_star_tetrahedron.webp",
+      "size": 68570,
+      "dimensions": null
+    },
+    {
+      "name": "077_card_background_glassmorphic",
+      "file": "077_card_background_glassmorphic.webp",
+      "size": 58044,
+      "dimensions": null
+    },
+    {
+      "name": "009_home_screen_background",
+      "file": "009_home_screen_background.webp",
+      "size": 16846,
+      "dimensions": null
+    },
+    {
+      "name": "043_capricorn_constellation_art",
+      "file": "043_capricorn_constellation_art.webp",
+      "size": 107008,
+      "dimensions": null
+    },
+    {
+      "name": "014_meditation_chakra_screen_background",
+      "file": "014_meditation_chakra_screen_background.webp",
+      "size": 44402,
+      "dimensions": null
+    },
+    {
+      "name": "097_feature_3_compatibility_analysis",
+      "file": "097_feature_3_compatibility_analysis.webp",
+      "size": 336206,
+      "dimensions": null
+    },
+    {
+      "name": "098_feature_4_personalized_guidance",
+      "file": "098_feature_4_personalized_guidance.webp",
+      "size": 240158,
+      "dimensions": null
+    },
+    {
+      "name": "035_taurus_constellation_art",
+      "file": "035_taurus_constellation_art.webp",
+      "size": 180330,
+      "dimensions": null
+    },
+    {
+      "name": "096_feature_2_spiritual_insights",
+      "file": "096_feature_2_spiritual_insights.webp",
+      "size": 337006,
+      "dimensions": null
+    },
+    {
+      "name": "017_numerology_screen_background",
+      "file": "017_numerology_screen_background.webp",
+      "size": 168930,
+      "dimensions": null
+    },
+    {
+      "name": "015_astrology_chart_background",
+      "file": "015_astrology_chart_background.webp",
+      "size": 110328,
+      "dimensions": null
+    },
+    {
+      "name": "036_gemini_constellation_art",
+      "file": "036_gemini_constellation_art.webp",
+      "size": 129166,
+      "dimensions": null
+    },
+    {
+      "name": "085_dropdown_chevron_icon",
+      "file": "085_dropdown_chevron_icon.webp",
+      "size": 5316,
+      "dimensions": null
+    },
+    {
+      "name": "075_primary_action_button_pressed_state",
+      "file": "075_primary_action_button_pressed_state.webp",
+      "size": 18998,
+      "dimensions": null
+    },
+    {
+      "name": "010_profile_creation_background",
+      "file": "010_profile_creation_background.webp",
+      "size": 114026,
+      "dimensions": null
+    },
+    {
+      "name": "025_default_avatar_constellation_being",
+      "file": "025_default_avatar_constellation_being.webp",
+      "size": 71400,
+      "dimensions": null
+    },
+    {
+      "name": "073_golden_spiral_fibonacci",
+      "file": "073_golden_spiral_fibonacci.webp",
+      "size": 219578,
+      "dimensions": null
+    },
+    {
+      "name": "061_fire_element_symbol",
+      "file": "061_fire_element_symbol.webp",
+      "size": 98518,
+      "dimensions": null
+    },
+    {
+      "name": "067_metatrons_cube",
+      "file": "067_metatrons_cube.webp",
+      "size": 325740,
+      "dimensions": null
+    },
+    {
+      "name": "093_infinity_symbol_with_cosmic_enhancement",
+      "file": "093_infinity_symbol_with_cosmic_enhancement.webp",
+      "size": 65544,
+      "dimensions": null
+    },
+    {
+      "name": "047_sacral_chakra_svadhisthana",
+      "file": "047_sacral_chakra_svadhisthana.webp",
+      "size": 157696,
+      "dimensions": null
+    },
+    {
+      "name": "037_cancer_constellation_art",
+      "file": "037_cancer_constellation_art.webp",
+      "size": 210654,
+      "dimensions": null
+    },
+    {
+      "name": "087_lotus_flower",
+      "file": "087_lotus_flower.webp",
+      "size": 90986,
+      "dimensions": null
+    },
+    {
+      "name": "029_default_avatar_om_symbol",
+      "file": "029_default_avatar_om_symbol.webp",
+      "size": 122972,
+      "dimensions": null
+    },
+    {
+      "name": "006_loading_spinner_icon",
+      "file": "006_loading_spinner_icon.webp",
+      "size": 104002,
+      "dimensions": null
+    },
+    {
+      "name": "044_aquarius_constellation_art",
+      "file": "044_aquarius_constellation_art.webp",
+      "size": 194280,
+      "dimensions": null
+    },
+    {
+      "name": "039_virgo_constellation_art",
+      "file": "039_virgo_constellation_art.webp",
+      "size": 187922,
+      "dimensions": null
+    },
+    {
+      "name": "051_third_eye_chakra_ajna",
+      "file": "051_third_eye_chakra_ajna.webp",
+      "size": 127216,
+      "dimensions": null
+    },
+    {
+      "name": "041_scorpio_constellation_art",
+      "file": "041_scorpio_constellation_art.webp",
+      "size": 141262,
+      "dimensions": null
+    },
+    {
+      "name": "091_yin_yang_symbol",
+      "file": "091_yin_yang_symbol.webp",
+      "size": 153154,
+      "dimensions": null
+    },
+    {
+      "name": "069_seed_of_life",
+      "file": "069_seed_of_life.webp",
+      "size": 180576,
+      "dimensions": null
+    },
+    {
+      "name": "007_app_store_feature_graphic",
+      "file": "007_app_store_feature_graphic.webp",
+      "size": 1016958,
+      "dimensions": null
+    },
+    {
+      "name": "020_library_archive_background",
+      "file": "020_library_archive_background.webp",
+      "size": 161650,
+      "dimensions": null
+    },
+    {
+      "name": "032_avatar_frame_gold_sacred_ring",
+      "file": "032_avatar_frame_gold_sacred_ring.webp",
+      "size": 118096,
+      "dimensions": null
+    },
+    {
+      "name": "074_primary_action_button_normal_state",
+      "file": "074_primary_action_button_normal_state.webp",
+      "size": 28112,
+      "dimensions": null
+    },
+    {
+      "name": "001_primary_app_icon",
+      "file": "001_primary_app_icon.webp",
+      "size": 756494,
+      "dimensions": null
+    },
+    {
+      "name": "070_vesica_piscis",
+      "file": "070_vesica_piscis.webp",
+      "size": 167492,
+      "dimensions": null
+    },
+    {
+      "name": "023_success_completion_background",
+      "file": "023_success_completion_background.webp",
+      "size": 126040,
+      "dimensions": null
+    },
+    {
+      "name": "042_sagittarius_constellation_art",
+      "file": "042_sagittarius_constellation_art.webp",
+      "size": 178114,
+      "dimensions": null
+    },
+    {
+      "name": "040_libra_constellation_art",
+      "file": "040_libra_constellation_art.webp",
+      "size": 95874,
+      "dimensions": null
+    },
+    {
+      "name": "048_solar_plexus_chakra_manipura",
+      "file": "048_solar_plexus_chakra_manipura.webp",
+      "size": 120740,
+      "dimensions": null
+    },
+    {
+      "name": "063_earth_element_symbol",
+      "file": "063_earth_element_symbol.webp",
+      "size": 145140,
+      "dimensions": null
+    },
+    {
+      "name": "086_om_aum_symbol",
+      "file": "086_om_aum_symbol.webp",
+      "size": 151780,
+      "dimensions": null
+    },
+    {
+      "name": "012_splash_onboarding_background",
+      "file": "012_splash_onboarding_background.webp",
+      "size": 628588,
+      "dimensions": null
+    },
+    {
+      "name": "011_compatibility_screen_background",
+      "file": "011_compatibility_screen_background.webp",
+      "size": 149046,
+      "dimensions": null
+    },
+    {
+      "name": "005_monogram_icon",
+      "file": "005_monogram_icon.webp",
+      "size": 161712,
+      "dimensions": null
+    },
+    {
+      "name": "094_welcome_screen_cosmic_discovery",
+      "file": "094_welcome_screen_cosmic_discovery.webp",
+      "size": 495020,
+      "dimensions": null
+    },
+    {
+      "name": "064_air_element_symbol",
+      "file": "064_air_element_symbol.webp",
+      "size": 65970,
+      "dimensions": null
+    },
+    {
+      "name": "065_ether_spirit_element_symbol",
+      "file": "065_ether_spirit_element_symbol.webp",
+      "size": 160464,
+      "dimensions": null
+    },
+    {
+      "name": "019_tantric_intimacy_screen_background",
+      "file": "019_tantric_intimacy_screen_background.webp",
+      "size": 282376,
+      "dimensions": null
+    },
+    {
+      "name": "088_hamsa_hand",
+      "file": "088_hamsa_hand.webp",
+      "size": 125250,
+      "dimensions": null
+    },
+    {
+      "name": "080_empty_state_illustration_no_profiles",
+      "file": "080_empty_state_illustration_no_profiles.webp",
+      "size": 46846,
+      "dimensions": null
+    },
+    {
+      "name": "082_success_checkmark_icon",
+      "file": "082_success_checkmark_icon.webp",
+      "size": 18056,
+      "dimensions": null
+    },
+    {
+      "name": "031_default_avatar_yin_yang_cosmic",
+      "file": "031_default_avatar_yin_yang_cosmic.webp",
+      "size": 108862,
+      "dimensions": null
+    },
+    {
+      "name": "038_leo_constellation_art",
+      "file": "038_leo_constellation_art.webp",
+      "size": 158164,
+      "dimensions": null
+    },
+    {
+      "name": "030_default_avatar_moon_phases",
+      "file": "030_default_avatar_moon_phases.webp",
+      "size": 59518,
+      "dimensions": null
+    },
+    {
+      "name": "046_root_chakra_muladhara",
+      "file": "046_root_chakra_muladhara.webp",
+      "size": 130168,
+      "dimensions": null
+    },
+    {
+      "name": "016_moon_phase_tracking_background",
+      "file": "016_moon_phase_tracking_background.webp",
+      "size": 26248,
+      "dimensions": null
+    },
+    {
+      "name": "021_empty_state_background",
+      "file": "021_empty_state_background.webp",
+      "size": 28928,
+      "dimensions": null
+    },
+    {
+      "name": "078_loading_state_circular_progress",
+      "file": "078_loading_state_circular_progress.webp",
+      "size": 36052,
+      "dimensions": null
+    },
+    {
+      "name": "090_ankh_symbol",
+      "file": "090_ankh_symbol.webp",
+      "size": 158098,
+      "dimensions": null
+    },
+    {
+      "name": "054_waxing_crescent_growing_light",
+      "file": "054_waxing_crescent_growing_light.webp",
+      "size": 49228,
+      "dimensions": null
+    },
+    {
+      "name": "052_crown_chakra_sahasrara",
+      "file": "052_crown_chakra_sahasrara.webp",
+      "size": 59528,
+      "dimensions": null
+    },
+    {
+      "name": "056_waxing_gibbous_almost_complete",
+      "file": "056_waxing_gibbous_almost_complete.webp",
+      "size": 82096,
+      "dimensions": null
+    },
+    {
+      "name": "095_feature_1_profile_creation",
+      "file": "095_feature_1_profile_creation.webp",
+      "size": 86728,
+      "dimensions": null
+    },
+    {
+      "name": "099_getting_started_ready_to_begin",
+      "file": "099_getting_started_ready_to_begin.webp",
+      "size": 304326,
+      "dimensions": null
+    },
+    {
+      "name": "050_throat_chakra_vishuddha",
+      "file": "050_throat_chakra_vishuddha.webp",
+      "size": 96452,
+      "dimensions": null
+    },
+    {
+      "name": "079_loading_state_linear_progress_bar",
+      "file": "079_loading_state_linear_progress_bar.webp",
+      "size": 23014,
+      "dimensions": null
+    },
+    {
+      "name": "027_default_avatar_third_eye",
+      "file": "027_default_avatar_third_eye.webp",
+      "size": 134382,
+      "dimensions": null
+    },
+    {
+      "name": "059_last_quarter_release_point",
+      "file": "059_last_quarter_release_point.webp",
+      "size": 106836,
+      "dimensions": null
+    },
+    {
+      "name": "026_default_avatar_chakra_system",
+      "file": "026_default_avatar_chakra_system.webp",
+      "size": 36072,
+      "dimensions": null
+    },
+    {
+      "name": "013_settings_screen_background",
+      "file": "013_settings_screen_background.webp",
+      "size": 14206,
+      "dimensions": null
+    },
+    {
+      "name": "057_full_moon_peak_illumination",
+      "file": "057_full_moon_peak_illumination.webp",
+      "size": 97118,
+      "dimensions": null
+    },
+    {
+      "name": "028_default_avatar_lotus_bloom",
+      "file": "028_default_avatar_lotus_bloom.webp",
+      "size": 59308,
+      "dimensions": null
+    },
+    {
+      "name": "055_first_quarter_decisive_moment",
+      "file": "055_first_quarter_decisive_moment.webp",
+      "size": 58260,
+      "dimensions": null
+    },
+    {
+      "name": "089_tree_of_life",
+      "file": "089_tree_of_life.webp",
+      "size": 216008,
+      "dimensions": null
+    },
+    {
+      "name": "034_aries_constellation_art",
+      "file": "034_aries_constellation_art.webp",
+      "size": 203004,
+      "dimensions": null
+    },
+    {
+      "name": "045_pisces_constellation_art",
+      "file": "045_pisces_constellation_art.webp",
+      "size": 181496,
+      "dimensions": null
+    },
+    {
+      "name": "024_default_avatar_cosmic_soul",
+      "file": "024_default_avatar_cosmic_soul.webp",
+      "size": 113826,
+      "dimensions": null
+    },
+    {
+      "name": "018_human_design_bodygraph_background",
+      "file": "018_human_design_bodygraph_background.webp",
+      "size": 56928,
+      "dimensions": null
+    },
+    {
+      "name": "008_notification_icon",
+      "file": "008_notification_icon.webp",
+      "size": 36166,
+      "dimensions": null
+    },
+    {
+      "name": "060_waning_crescent_rest_and_reflection",
+      "file": "060_waning_crescent_rest_and_reflection.webp",
+      "size": 43080,
+      "dimensions": null
+    }
+  ]
+}

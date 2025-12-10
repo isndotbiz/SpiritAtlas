@@ -24,6 +24,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.spiritatlas.app.navigation.Screen
+import com.spiritatlas.core.ui.R
+import com.spiritatlas.core.ui.components.SimpleSpiritualBackground
 import com.spiritatlas.core.ui.theme.*
 import kotlin.math.PI
 import kotlin.math.cos
@@ -58,9 +60,7 @@ fun SplashScreen(
                     }
                 }
                 is NavigationEvent.NavigateToOnboarding -> {
-                    // For now, navigate to home since we don't have onboarding yet
-                    // TODO: Create onboarding screen and navigate to it
-                    navController.navigate(Screen.Home.route) {
+                    navController.navigate(Screen.Onboarding.route) {
                         popUpTo(Screen.Splash.route) { inclusive = true }
                     }
                 }
@@ -69,75 +69,71 @@ fun SplashScreen(
         }
     }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        Color(0xFF0F0F23),
-                        Color(0xFF1A1A3E),
-                        Color(0xFF0F0F23)
-                    )
-                )
-            ),
-        contentAlignment = Alignment.Center
+    // Use splash screen background image
+    SimpleSpiritualBackground(
+        backgroundResourceId = R.drawable.img_003_splash_screen_background,
+        alpha = 0.4f
     ) {
-        // Background stars (0-500ms)
-        StarField(
+        Box(
             modifier = Modifier.fillMaxSize(),
-            visible = animationProgress >= 0f
-        )
-
-        // Main content
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxSize()
+            contentAlignment = Alignment.Center
         ) {
-            Spacer(modifier = Modifier.weight(1f))
+            // Background stars (0-500ms)
+            StarField(
+                modifier = Modifier.fillMaxSize(),
+                visible = animationProgress >= 0f
+            )
 
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier.size(280.dp)
+            // Main content
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxSize()
             ) {
-                // Sacred geometry circles (1000-1500ms)
-                SacredGeometryCircles(
-                    modifier = Modifier.fillMaxSize(),
-                    progress = ((animationProgress - 1000f) / 500f).coerceIn(0f, 1f)
+                Spacer(modifier = Modifier.weight(1f))
+
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.size(280.dp)
+                ) {
+                    // Sacred geometry circles (1000-1500ms)
+                    SacredGeometryCircles(
+                        modifier = Modifier.fillMaxSize(),
+                        progress = ((animationProgress - 1000f) / 500f).coerceIn(0f, 1f)
+                    )
+
+                    // Logo with scale animation (500-1000ms)
+                    SpiritAtlasLogo(
+                        modifier = Modifier.size(180.dp),
+                        progress = ((animationProgress - 500f) / 500f).coerceIn(0f, 1f)
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(48.dp))
+
+                // App name with gradient (1500-2000ms)
+                GradientAppName(
+                    progress = ((animationProgress - 1500f) / 500f).coerceIn(0f, 1f)
                 )
 
-                // Logo with scale animation (500-1000ms)
-                SpiritAtlasLogo(
-                    modifier = Modifier.size(180.dp),
-                    progress = ((animationProgress - 500f) / 500f).coerceIn(0f, 1f)
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Tagline (2000-2500ms)
+                TaglineText(
+                    alpha = ((animationProgress - 2000f) / 500f).coerceIn(0f, 1f)
                 )
+
+                Spacer(modifier = Modifier.weight(1f))
             }
 
-            Spacer(modifier = Modifier.height(48.dp))
-
-            // App name with gradient (1500-2000ms)
-            GradientAppName(
-                progress = ((animationProgress - 1500f) / 500f).coerceIn(0f, 1f)
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Tagline (2000-2500ms)
-            TaglineText(
-                alpha = ((animationProgress - 2000f) / 500f).coerceIn(0f, 1f)
-            )
-
-            Spacer(modifier = Modifier.weight(1f))
-        }
-
-        // Screen fade out (2500ms+)
-        if (animationProgress >= 2500f) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Black.copy(alpha = ((animationProgress - 2500f) / 300f).coerceIn(0f, 1f)))
-            )
+            // Screen fade out (2500ms+)
+            if (animationProgress >= 2500f) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = ((animationProgress - 2500f) / 300f).coerceIn(0f, 1f)))
+                )
+            }
         }
     }
 }

@@ -31,6 +31,7 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -38,6 +39,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.spiritatlas.core.ui.components.*
 import com.spiritatlas.core.ui.components.CosmicConnectionBackground
+import com.spiritatlas.core.ui.components.SimpleSpiritualBackground
+import com.spiritatlas.core.ui.components.ZodiacImage
+import com.spiritatlas.core.ui.components.ProgressiveBackgroundImage
 import com.spiritatlas.core.ui.theme.*
 import com.spiritatlas.domain.model.*
 import kotlinx.coroutines.delay
@@ -72,6 +76,7 @@ fun CompatibilityDetailScreen(
 ) {
     val context = LocalContext.current
 
+    // Compatibility screen with cosmic connection background
     CosmicConnectionBackground {
         Scaffold(
             topBar = {
@@ -83,20 +88,20 @@ fun CompatibilityDetailScreen(
             },
             containerColor = Color.Transparent
         ) { paddingValues ->
-        when (viewMode) {
-            CompatibilityViewMode.VERTICAL_SCROLL -> {
-                VerticalScrollView(
-                    report = report,
-                    modifier = modifier.padding(paddingValues)
-                )
+            when (viewMode) {
+                CompatibilityViewMode.VERTICAL_SCROLL -> {
+                    VerticalScrollView(
+                        report = report,
+                        modifier = modifier.padding(paddingValues)
+                    )
+                }
+                CompatibilityViewMode.HORIZONTAL_PAGER -> {
+                    HorizontalPagerView(
+                        report = report,
+                        modifier = modifier.padding(paddingValues)
+                    )
+                }
             }
-            CompatibilityViewMode.HORIZONTAL_PAGER -> {
-                HorizontalPagerView(
-                    report = report,
-                    modifier = modifier.padding(paddingValues)
-                )
-            }
-        }
         }
     }
 }
@@ -312,7 +317,20 @@ private fun HeroSection(report: CompatibilityReport) {
         showCelebration = report.overallScore.totalScore >= 80
     }
 
-    GlassmorphCard(
+    // INTEGRATION: ProgressiveBackgroundImage for compatibility hero with blur-up effect
+    // Using spiritual background that progressively loads with LQIP
+    // TODO: Pass drawable resources from app module as parameters
+    /*
+    ProgressiveBackgroundImage(
+        backgroundResourceId = com.spiritatlas.core.ui.R.drawable.img_003_splash_screen_background,
+        lqipResourceId = com.spiritatlas.core.ui.R.drawable.img_006_loading_spinner_icon,
+        modifier = Modifier.fillMaxWidth(),
+        alpha = 0.25f, // Subtle background that doesn't compete with content
+        dimAmount = 0.7f, // Dim for readability
+        contentScale = ContentScale.Crop
+    ) {
+    */
+        GlassmorphCard(
         modifier = Modifier.fillMaxWidth(),
         elevation = 3
     ) {
@@ -350,6 +368,7 @@ private fun HeroSection(report: CompatibilityReport) {
             )
         }
     }
+    // } // End ProgressiveBackgroundImage - TODO: Re-enable when drawable resources are available
 }
 
 @Composable
@@ -1442,7 +1461,7 @@ private fun DoshaDisplay(
 
         Icon(
             imageVector = Icons.Default.Favorite,
-            contentDescription = null,
+            contentDescription = "Doshas connection heart icon",
             tint = TantricRose,
             modifier = Modifier
                 .size(32.dp)
@@ -1519,7 +1538,19 @@ private fun InfoRow(
 
 @Composable
 private fun TantricConnectionSection(report: CompatibilityReport) {
-    GlassmorphCard(
+    // INTEGRATION: ProgressiveBackgroundImage for tantric section with romantic aesthetic
+    // TODO: Pass drawable resources from app module as parameters
+    /*
+    ProgressiveBackgroundImage(
+        backgroundResourceId = com.spiritatlas.core.ui.R.drawable.img_007_app_store_feature_graphic,
+        lqipResourceId = com.spiritatlas.core.ui.R.drawable.img_006_loading_spinner_icon,
+        modifier = Modifier.fillMaxWidth(),
+        alpha = 0.2f, // Very subtle for intimate content
+        dimAmount = 0.8f, // Heavy dim for text readability
+        contentScale = ContentScale.Crop
+    ) {
+    */
+        GlassmorphCard(
         modifier = Modifier.fillMaxWidth(),
         elevation = 2
     ) {
@@ -1604,6 +1635,7 @@ private fun TantricConnectionSection(report: CompatibilityReport) {
             )
         }
     }
+    // } // End ProgressiveBackgroundImage - TODO: Re-enable when drawable resources are available
 }
 
 @Composable

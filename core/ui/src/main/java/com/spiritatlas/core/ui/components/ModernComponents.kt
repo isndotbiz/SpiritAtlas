@@ -23,6 +23,20 @@ import androidx.compose.foundation.shape.CircleShape
 import com.spiritatlas.core.ui.theme.*
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.foundation.border
+import androidx.compose.animation.core.InfiniteTransition
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 
 /**
  * Modern UI Components for SpiritAtlas
@@ -499,14 +513,14 @@ fun GlassmorphCard(
         3 -> 0.2f
         else -> 0.1f
     }
-    
+
     val borderAlpha = when(elevation) {
         1 -> 0.2f
-        2 -> 0.3f  
+        2 -> 0.3f
         3 -> 0.4f
         else -> 0.2f
     }
-    
+
     Card(
         modifier = modifier
             .clip(RoundedCornerShape(20.dp))
@@ -527,6 +541,180 @@ fun GlassmorphCard(
             modifier = Modifier.padding(20.dp),
             content = content
         )
+    }
+}
+
+/**
+ * Enhanced glassmorphism card with multi-layer depth, glow effects, and sophisticated shadows
+ *
+ * Features:
+ * - Multi-layer shadow system for depth perception
+ * - Animated glow effect that pulses
+ * - Gradient backgrounds for visual richness
+ * - Customizable glow color for spiritual theming
+ * - Outer glow ring that creates ethereal presence
+ * - Gradient borders with white fade effect
+ *
+ * @param modifier Modifier to be applied to the card
+ * @param elevation Shadow depth level (1=subtle, 2=medium, 3=high, 4=ultra)
+ * @param glowColor Color of the animated glow effect (default: SpiritualPurple)
+ * @param enableGlow Whether to show the animated glow effect (default: true)
+ * @param enableGradientBorder Whether to show the gradient border (default: true)
+ * @param content Content to be displayed inside the card
+ */
+@Composable
+fun EnhancedGlassmorphCard(
+    modifier: Modifier = Modifier,
+    elevation: Int = 2, // 1=subtle, 2=medium, 3=high, 4=ultra
+    glowColor: Color = SpiritualPurple,
+    enableGlow: Boolean = true,
+    enableGradientBorder: Boolean = true,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    // Animated glow effect
+    val infiniteTransition = rememberInfiniteTransition(label = "glow")
+    val glowAlpha by infiniteTransition.animateFloat(
+        initialValue = 0.3f,
+        targetValue = 0.7f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(2000),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "glowAlpha"
+    )
+
+    val glowSize by infiniteTransition.animateFloat(
+        initialValue = 0.8f,
+        targetValue = 1.2f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(2000),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "glowSize"
+    )
+
+    // Multi-layer shadow and elevation
+    val shadowElevation = when(elevation) {
+        1 -> 4.dp
+        2 -> 8.dp
+        3 -> 16.dp
+        4 -> 24.dp
+        else -> 8.dp
+    }
+
+    val blurRadius = when(elevation) {
+        1 -> 8.dp
+        2 -> 16.dp
+        3 -> 24.dp
+        4 -> 32.dp
+        else -> 16.dp
+    }
+
+    val backgroundAlpha = when(elevation) {
+        1 -> 0.08f
+        2 -> 0.12f
+        3 -> 0.18f
+        4 -> 0.25f
+        else -> 0.12f
+    }
+
+    val borderAlpha = when(elevation) {
+        1 -> 0.25f
+        2 -> 0.35f
+        3 -> 0.45f
+        4 -> 0.55f
+        else -> 0.35f
+    }
+
+    // Gradient for depth
+    val backgroundGradient = Brush.verticalGradient(
+        colors = listOf(
+            MaterialTheme.colorScheme.surfaceVariant.copy(alpha = backgroundAlpha * 1.2f),
+            MaterialTheme.colorScheme.surfaceVariant.copy(alpha = backgroundAlpha * 0.8f)
+        )
+    )
+
+    val borderGradient = Brush.linearGradient(
+        colors = listOf(
+            Color.White.copy(alpha = borderAlpha),
+            Color.White.copy(alpha = borderAlpha * 0.3f),
+            Color.White.copy(alpha = borderAlpha * 0.1f)
+        )
+    )
+
+    Box(
+        modifier = modifier
+    ) {
+        // Outer glow ring (animated)
+        if (enableGlow) {
+            Box(
+                modifier = Modifier
+                    .matchParentSize()
+                    .padding(-4.dp)
+                    .drawBehind {
+                        drawRoundRect(
+                            color = glowColor.copy(alpha = glowAlpha * 0.4f),
+                            size = size * glowSize,
+                            style = Stroke(width = 2.dp.toPx())
+                        )
+                    }
+                    .blur(blurRadius / 2)
+            )
+        }
+
+        // Main card with multi-layer effects
+        Card(
+            modifier = Modifier
+                .shadow(
+                    elevation = shadowElevation,
+                    shape = RoundedCornerShape(24.dp),
+                    ambientColor = if (enableGlow) glowColor.copy(alpha = 0.3f) else Color.Black,
+                    spotColor = if (enableGlow) glowColor.copy(alpha = 0.5f) else Color.Black
+                )
+                .clip(RoundedCornerShape(24.dp))
+                .background(backgroundGradient)
+                .then(
+                    if (enableGradientBorder) {
+                        Modifier.border(
+                            width = 1.5.dp,
+                            brush = borderGradient,
+                            shape = RoundedCornerShape(24.dp)
+                        )
+                    } else {
+                        Modifier.border(
+                            width = 1.dp,
+                            color = MaterialTheme.colorScheme.outline.copy(alpha = borderAlpha),
+                            shape = RoundedCornerShape(24.dp)
+                        )
+                    }
+                ),
+            shape = RoundedCornerShape(24.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = Color.Transparent
+            ),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 0.dp // We handle elevation manually above
+            )
+        ) {
+            // Inner gradient overlay for extra depth
+            Box(
+                modifier = Modifier
+                    .background(
+                        Brush.radialGradient(
+                            colors = listOf(
+                                if (enableGlow) glowColor.copy(alpha = 0.05f) else Color.Transparent,
+                                Color.Transparent
+                            ),
+                            radius = 800f
+                        )
+                    )
+            ) {
+                Column(
+                    modifier = Modifier.padding(20.dp),
+                    content = content
+                )
+            }
+        }
     }
 }
 
@@ -645,6 +833,7 @@ enum class SpiritualButtonStyle {
 
 /**
  * Profile completion indicator with chakra colors
+ * Accessibility: Includes semantic description for screen readers
  */
 @Composable
 fun ProfileCompletionIndicator(
@@ -658,9 +847,17 @@ fun ProfileCompletionIndicator(
         completionPercentage >= 40 -> TantricRose
         else -> MaterialTheme.colorScheme.error
     }
-    
+
     Column(
-        modifier = modifier,
+        modifier = modifier.semantics(mergeDescendants = true) {
+            contentDescription = "Profile completion: ${completionPercentage.toInt()} percent"
+            stateDescription = when {
+                completionPercentage >= 80 -> "Excellent, almost complete"
+                completionPercentage >= 60 -> "Good progress"
+                completionPercentage >= 40 -> "Moderate progress"
+                else -> "Just getting started"
+            }
+        },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         LinearProgressIndicator(
@@ -672,7 +869,7 @@ fun ProfileCompletionIndicator(
             color = color,
             trackColor = MaterialTheme.colorScheme.surfaceVariant
         )
-        
+
         if (showLabel) {
             Spacer(modifier = Modifier.height(8.dp))
             Text(
@@ -687,6 +884,7 @@ fun ProfileCompletionIndicator(
 
 /**
  * Compatibility score display with color coding
+ * Accessibility: Clear semantic description with match quality
  */
 @Composable
 fun CompatibilityScoreDisplay(
@@ -700,21 +898,32 @@ fun CompatibilityScoreDisplay(
         score >= 40 -> TantricRose
         else -> MaterialTheme.colorScheme.error
     }
-    
+
+    val matchQuality = when {
+        score >= 80 -> "excellent match"
+        score >= 60 -> "good match"
+        score >= 40 -> "moderate match"
+        else -> "challenging match"
+    }
+
     val textSize = when (size) {
         CompatibilityDisplaySize.SMALL -> 16.sp
         CompatibilityDisplaySize.MEDIUM -> 24.sp
         CompatibilityDisplaySize.LARGE -> 32.sp
     }
-    
+
     val padding = when (size) {
         CompatibilityDisplaySize.SMALL -> 8.dp
         CompatibilityDisplaySize.MEDIUM -> 12.dp
         CompatibilityDisplaySize.LARGE -> 16.dp
     }
-    
+
     Box(
         modifier = modifier
+            .semantics(mergeDescendants = true) {
+                contentDescription = "Compatibility score: ${score.toInt()} percent, $matchQuality"
+                role = androidx.compose.ui.semantics.Role.Image
+            }
             .background(
                 color.copy(alpha = 0.1f),
                 RoundedCornerShape(50)

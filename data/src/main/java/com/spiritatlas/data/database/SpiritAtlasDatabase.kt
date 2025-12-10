@@ -8,24 +8,33 @@ import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.spiritatlas.data.database.converters.SpiritualTypeConverters
+import com.spiritatlas.data.database.dao.AiResponseCacheDao
+import com.spiritatlas.data.database.dao.CompatibilityReportDao
 import com.spiritatlas.data.database.dao.UserProfileDao
+import com.spiritatlas.data.database.entities.AiResponseCacheEntity
+import com.spiritatlas.data.database.entities.CompatibilityReportEntity
 import com.spiritatlas.data.database.entities.UserProfileEntity
 
 /**
  * Room database for SpiritAtlas spiritual profiles
- * Privacy-first: Data encrypted at app level via EncryptedSharedPreferences 🔒✨
+ * Privacy-first: Data encrypted at app level via EncryptedSharedPreferences
+ * Optimized: Intelligent caching with LRU and TTL strategies
  */
 @Database(
     entities = [
-        UserProfileEntity::class
+        UserProfileEntity::class,
+        CompatibilityReportEntity::class,
+        AiResponseCacheEntity::class
     ],
-    version = 4,
-    exportSchema = false // Set to true for production to track schema changes
+    version = 5,
+    exportSchema = true // Track schema changes for production
 )
 @TypeConverters(SpiritualTypeConverters::class)
 abstract class SpiritAtlasDatabase : RoomDatabase() {
-    
+
     abstract fun userProfileDao(): UserProfileDao
+    abstract fun compatibilityReportDao(): CompatibilityReportDao
+    abstract fun aiResponseCacheDao(): AiResponseCacheDao
     
     companion object {
         private const val DATABASE_NAME = "spirit_atlas.db"
@@ -47,8 +56,9 @@ abstract class SpiritAtlasDatabase : RoomDatabase() {
                 SpiritAtlasDatabase::class.java,
                 DATABASE_NAME
             )
-            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4) // Schema migrations
+            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5) // Schema migrations
             .fallbackToDestructiveMigration() // Only for development
+            .enableMultiInstanceInvalidation() // Support multi-process access
             .build()
         }
         
@@ -80,6 +90,62 @@ abstract class SpiritAtlasDatabase : RoomDatabase() {
                 // Add enrichment result fields for AI-generated reports
                 db.execSQL("ALTER TABLE user_profiles ADD COLUMN enrichmentResult TEXT")
                 db.execSQL("ALTER TABLE user_profiles ADD COLUMN enrichmentGeneratedAt TEXT")
+            }
+        }
+
+        // Migration from v4 to v5 - Add caching tables and optimize indexes
+        private val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                // Create compatibility reports cache table with indexes
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS compatibility_reports (
+                        id TEXT PRIMARY KEY NOT NULL,
+                        profileAId TEXT NOT NULL,
+                        profileBId TEXT NOT NULL,
+                        reportJson TEXT NOT NULL,
+                        generatedAt INTEGER NOT NULL,
+                        expiresAt INTEGER NOT NULL,
+                        accessCount INTEGER NOT NULL,
+                        lastAccessedAt INTEGER NOT NULL,
+                        overallScore REAL NOT NULL,
+                        compatibilityLevel TEXT NOT NULL,
+                        hasAiInsights INTEGER NOT NULL DEFAULT 0
+                    )
+                """.trimIndent())
+
+                // Add indexes for compatibility reports
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_compatibility_reports_profileAId_profileBId ON compatibility_reports (profileAId, profileBId)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_compatibility_reports_profileAId ON compatibility_reports (profileAId)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_compatibility_reports_profileBId ON compatibility_reports (profileBId)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_compatibility_reports_generatedAt ON compatibility_reports (generatedAt)")
+
+                // Create AI response cache table with indexes
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS ai_response_cache (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        requestHash TEXT NOT NULL,
+                        prompt TEXT NOT NULL,
+                        model TEXT NOT NULL,
+                        provider TEXT NOT NULL,
+                        response TEXT NOT NULL,
+                        createdAt INTEGER NOT NULL,
+                        expiresAt INTEGER NOT NULL,
+                        hitCount INTEGER NOT NULL,
+                        lastHitAt INTEGER NOT NULL,
+                        tokensUsed INTEGER NOT NULL
+                    )
+                """.trimIndent())
+
+                // Add indexes for AI cache
+                db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS index_ai_response_cache_requestHash ON ai_response_cache (requestHash)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_ai_response_cache_createdAt ON ai_response_cache (createdAt)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_ai_response_cache_expiresAt ON ai_response_cache (expiresAt)")
+
+                // Add indexes to user_profiles for performance
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_user_profiles_updatedAt ON user_profiles (updatedAt)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_user_profiles_profileName ON user_profiles (profileName)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_user_profiles_name ON user_profiles (name)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_user_profiles_syncStatus ON user_profiles (syncStatus)")
             }
         }
         

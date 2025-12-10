@@ -1,6 +1,7 @@
 package com.spiritatlas.data.database.entities
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.spiritatlas.data.database.converters.SpiritualTypeConverters
@@ -10,8 +11,17 @@ import com.spiritatlas.domain.model.*
  * Room entity for storing UserProfile data with encryption support
  * Supports multiple profiles for relationship matching and comparison
  * Privacy-first: All sensitive data is encrypted at rest ✨
+ * Optimized with indexes for common query patterns
  */
-@Entity(tableName = "user_profiles")
+@Entity(
+    tableName = "user_profiles",
+    indices = [
+        Index(value = ["updatedAt"]),
+        Index(value = ["profileName"]),
+        Index(value = ["name"]),
+        Index(value = ["syncStatus"])
+    ]
+)
 @TypeConverters(SpiritualTypeConverters::class)
 data class UserProfileEntity(
     @PrimaryKey

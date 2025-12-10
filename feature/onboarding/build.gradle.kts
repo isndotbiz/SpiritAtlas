@@ -31,11 +31,16 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:common"))
 
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.ui)
+    implementation(libs.compose.material3)
+    implementation(libs.compose.ui.tooling.preview)
+
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
     kapt(libs.hilt.compiler)
 
     // Compose Foundation for HorizontalPager
-    implementation("androidx.compose.foundation:foundation:1.6.8")
+    implementation(libs.androidx.foundation)
 }

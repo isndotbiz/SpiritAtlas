@@ -1,0 +1,26 @@
+# Baseline Profile for SpiritAtlas
+# Minimal profile to avoid merging corrupted external ART profiles
+
+# Application initialization
+HSPLcom/spiritatlas/app/SpiritAtlasApplication;-><init>()V
+HSPLcom/spiritatlas/app/SpiritAtlasApplication;->onCreate()V
+
+# MainActivity
+HSPLcom/spiritatlas/app/MainActivity;-><init>()V
+HSPLcom/spiritatlas/app/MainActivity;->onCreate(Landroid/os/Bundle;)V
+
+# Splash Screen
+HSPLcom/spiritatlas/app/SplashScreen;->SplashScreen(Landroidx/navigation/NavHostController;Lcom/spiritatlas/app/SplashViewModel;Landroidx/compose/runtime/Composer;I)V
+HSPLcom/spiritatlas/app/SplashViewModel;-><init>()V
+
+# Navigation
+HSPLcom/spiritatlas/app/navigation/SpiritAtlasNavGraphKt;->SpiritAtlasNavGraph(Landroidx/navigation/NavHostController;Landroidx/compose/runtime/Composer;I)V
+
+# Home Screen
+HSPLcom/spiritatlas/feature/home/HomeScreen;->HomeScreen(Landroidx/navigation/NavHostController;Landroidx/compose/runtime/Composer;I)V
+
+# Legend:
+# H = Hot method (always compiled)
+# S = Startup method (compiled during startup)
+# P = Post-startup (compiled after startup)
+# L = Layout (compiled during layout)

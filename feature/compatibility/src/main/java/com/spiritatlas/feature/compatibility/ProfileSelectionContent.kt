@@ -77,7 +77,7 @@ private fun InstructionCard() {
             ) {
                 Icon(
                     imageVector = Icons.Default.Psychology,
-                    contentDescription = null,
+                    contentDescription = "Spiritual compatibility analysis icon",
                     tint = MaterialTheme.colorScheme.onPrimaryContainer
                 )
                 Text(
@@ -232,7 +232,7 @@ private fun ProfileSelection(
                                 } else {
                                     Icon(
                                         imageVector = Icons.Default.Person,
-                                        contentDescription = null
+                                        contentDescription = "Person profile avatar"
                                     )
                                 }
                             }

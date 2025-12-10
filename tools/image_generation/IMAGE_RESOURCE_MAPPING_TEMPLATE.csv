@@ -1,0 +1,100 @@
+Category,Image Number,Original Filename,Android Resource ID,Dimensions,File Format,Usage,Priority,Phase,Screen(s)
+App Branding,1,app_icon_primary_1024.webp,ic_launcher,1024x1024,WebP,Launcher icon (all densities),CRITICAL,1,"All (launcher)"
+App Branding,2,app_icon_dark_mode_1024.webp,ic_launcher_dark,1024x1024,WebP,Dark mode launcher variant,CRITICAL,1,"All (launcher)"
+App Branding,3,splash_background_1080x1920.webp,bg_splash,1080x1920,WebP,Splash screen background,CRITICAL,1,Splash
+App Branding,4,wordmark_logo_2048x512.webp,logo_wordmark,2048x512,WebP,Text logo for marketing,MEDIUM,3,Marketing
+App Branding,5,monogram_icon_512.webp,ic_monogram,512x512,WebP,Compact logo,MEDIUM,3,Various
+App Branding,6,loading_spinner_256.webp,ic_loading_spinner,256x256,WebP,App loading indicator,HIGH,2,All (loading)
+App Branding,7,feature_graphic_1920x1080.webp,banner_feature,1920x1080,WebP,Play Store feature graphic,LOW,4,Marketing
+App Branding,8,notification_icon_192.webp,ic_notification,192x192,WebP,Status bar notification,HIGH,2,Notifications
+Backgrounds,1,bg_home_1080x1920.webp,bg_home,1080x1920,WebP,Home screen,CRITICAL,1,Home
+Backgrounds,2,bg_profile_creation_1080x1920.webp,bg_profile_creation,1080x1920,WebP,Profile creation form,HIGH,2,ProfileCreation
+Backgrounds,3,bg_compatibility_1080x1920.webp,bg_compatibility,1080x1920,WebP,Compatibility screen,HIGH,2,Compatibility
+Backgrounds,4,bg_splash_onboarding_1080x1920.webp,bg_splash_onboarding,1080x1920,WebP,Splash/Onboarding,CRITICAL,1,Splash/Onboarding
+Backgrounds,5,bg_settings_1080x1920.webp,bg_settings,1080x1920,WebP,Settings screen,MEDIUM,3,Settings
+Backgrounds,6,bg_meditation_chakra_1080x1920.webp,bg_meditation,1080x1920,WebP,Chakra/Meditation,MEDIUM,3,Meditation
+Backgrounds,7,bg_astrology_chart_1080x1920.webp,bg_astrology,1080x1920,WebP,Astrology screens,HIGH,2,AstrologyChart
+Backgrounds,8,bg_moon_phase_1080x1920.webp,bg_moon_phase,1080x1920,WebP,Moon phase tracking,MEDIUM,3,MoonPhase
+Backgrounds,9,bg_numerology_1080x1920.webp,bg_numerology,1080x1920,WebP,Numerology screen,MEDIUM,3,Numerology
+Backgrounds,10,bg_human_design_1080x1920.webp,bg_human_design,1080x1920,WebP,Human Design bodygraph,MEDIUM,3,HumanDesign
+Backgrounds,11,bg_tantric_1080x1920.webp,bg_tantric,1080x1920,WebP,Tantric content,MEDIUM,3,Tantric
+Backgrounds,12,bg_library_archive_1080x1920.webp,bg_library,1080x1920,WebP,Profile library,HIGH,2,ProfileLibrary
+Backgrounds,13,bg_empty_state_1080x1920.webp,bg_empty_state,1080x1920,WebP,Empty states,HIGH,2,Various (empty)
+Backgrounds,14,bg_loading_1080x1920.webp,bg_loading,1080x1920,WebP,Loading screens,HIGH,2,Various (loading)
+Backgrounds,15,bg_success_1080x1920.webp,bg_success,1080x1920,WebP,Success/Completion,MEDIUM,3,Various (success)
+Avatars,1,avatar_cosmic_soul_512.webp,avatar_cosmic_soul,512x512,WebP,Default avatar option 1,HIGH,2,Profile/Library/Home
+Avatars,2,avatar_constellation_being_512.webp,avatar_constellation,512x512,WebP,Default avatar option 2,HIGH,2,Profile/Library/Home
+Avatars,3,avatar_chakra_system_512.webp,avatar_chakra_system,512x512,WebP,Default avatar option 3,HIGH,2,Profile/Library/Home
+Avatars,4,avatar_third_eye_512.webp,avatar_third_eye,512x512,WebP,Default avatar option 4,HIGH,2,Profile/Library/Home
+Avatars,5,avatar_lotus_bloom_512.webp,avatar_lotus,512x512,WebP,Default avatar option 5,HIGH,2,Profile/Library/Home
+Avatars,6,avatar_om_symbol_512.webp,avatar_om,512x512,WebP,Default avatar option 6,HIGH,2,Profile/Library/Home
+Avatars,7,avatar_moon_phases_512.webp,avatar_moon_phases,512x512,WebP,Default avatar option 7,HIGH,2,Profile/Library/Home
+Avatars,8,avatar_yin_yang_512.webp,avatar_yin_yang,512x512,WebP,Default avatar option 8,HIGH,2,Profile/Library/Home
+Avatars,9,frame_gold_sacred_ring_600.webp,frame_gold_ring,600x600,WebP,Avatar frame overlay 1,MEDIUM,3,Profile/Library
+Avatars,10,frame_zodiac_wheel_600.webp,frame_zodiac_wheel,600x600,WebP,Avatar frame overlay 2,MEDIUM,3,Profile/Library
+Zodiac,1,zodiac_aries_512.webp,zodiac_aries,512x512,WebP,Aries constellation art,CRITICAL,1,ProfileDetail/Compatibility/Home
+Zodiac,2,zodiac_taurus_512.webp,zodiac_taurus,512x512,WebP,Taurus constellation art,CRITICAL,1,ProfileDetail/Compatibility/Home
+Zodiac,3,zodiac_gemini_512.webp,zodiac_gemini,512x512,WebP,Gemini constellation art,CRITICAL,1,ProfileDetail/Compatibility/Home
+Zodiac,4,zodiac_cancer_512.webp,zodiac_cancer,512x512,WebP,Cancer constellation art,CRITICAL,1,ProfileDetail/Compatibility/Home
+Zodiac,5,zodiac_leo_512.webp,zodiac_leo,512x512,WebP,Leo constellation art,CRITICAL,1,ProfileDetail/Compatibility/Home
+Zodiac,6,zodiac_virgo_512.webp,zodiac_virgo,512x512,WebP,Virgo constellation art,CRITICAL,1,ProfileDetail/Compatibility/Home
+Zodiac,7,zodiac_libra_512.webp,zodiac_libra,512x512,WebP,Libra constellation art,CRITICAL,1,ProfileDetail/Compatibility/Home
+Zodiac,8,zodiac_scorpio_512.webp,zodiac_scorpio,512x512,WebP,Scorpio constellation art,CRITICAL,1,ProfileDetail/Compatibility/Home
+Zodiac,9,zodiac_sagittarius_512.webp,zodiac_sagittarius,512x512,WebP,Sagittarius constellation art,CRITICAL,1,ProfileDetail/Compatibility/Home
+Zodiac,10,zodiac_capricorn_512.webp,zodiac_capricorn,512x512,WebP,Capricorn constellation art,CRITICAL,1,ProfileDetail/Compatibility/Home
+Zodiac,11,zodiac_aquarius_512.webp,zodiac_aquarius,512x512,WebP,Aquarius constellation art,CRITICAL,1,ProfileDetail/Compatibility/Home
+Zodiac,12,zodiac_pisces_512.webp,zodiac_pisces,512x512,WebP,Pisces constellation art,CRITICAL,1,ProfileDetail/Compatibility/Home
+Chakras,1,chakra_root_muladhara_512.webp,chakra_root,512x512,WebP,Root chakra visualization,HIGH,2,ProfileDetail/Compatibility
+Chakras,2,chakra_sacral_svadhisthana_512.webp,chakra_sacral,512x512,WebP,Sacral chakra visualization,HIGH,2,ProfileDetail/Compatibility
+Chakras,3,chakra_solar_plexus_manipura_512.webp,chakra_solar_plexus,512x512,WebP,Solar plexus chakra,HIGH,2,ProfileDetail/Compatibility
+Chakras,4,chakra_heart_anahata_512.webp,chakra_heart,512x512,WebP,Heart chakra visualization,HIGH,2,ProfileDetail/Compatibility
+Chakras,5,chakra_throat_vishuddha_512.webp,chakra_throat,512x512,WebP,Throat chakra visualization,HIGH,2,ProfileDetail/Compatibility
+Chakras,6,chakra_third_eye_ajna_512.webp,chakra_third_eye,512x512,WebP,Third eye chakra,HIGH,2,ProfileDetail/Compatibility
+Chakras,7,chakra_crown_sahasrara_512.webp,chakra_crown,512x512,WebP,Crown chakra visualization,HIGH,2,ProfileDetail/Compatibility
+Moon Phases,1,moon_new_512.webp,moon_new,512x512,WebP,New moon phase,HIGH,2,Home/MoonCalendar
+Moon Phases,2,moon_waxing_crescent_512.webp,moon_waxing_crescent,512x512,WebP,Waxing crescent,HIGH,2,Home/MoonCalendar
+Moon Phases,3,moon_first_quarter_512.webp,moon_first_quarter,512x512,WebP,First quarter,HIGH,2,Home/MoonCalendar
+Moon Phases,4,moon_waxing_gibbous_512.webp,moon_waxing_gibbous,512x512,WebP,Waxing gibbous,HIGH,2,Home/MoonCalendar
+Moon Phases,5,moon_full_512.webp,moon_full,512x512,WebP,Full moon,HIGH,2,Home/MoonCalendar
+Moon Phases,6,moon_waning_gibbous_512.webp,moon_waning_gibbous,512x512,WebP,Waning gibbous,HIGH,2,Home/MoonCalendar
+Moon Phases,7,moon_last_quarter_512.webp,moon_last_quarter,512x512,WebP,Last quarter,HIGH,2,Home/MoonCalendar
+Moon Phases,8,moon_waning_crescent_512.webp,moon_waning_crescent,512x512,WebP,Waning crescent,HIGH,2,Home/MoonCalendar
+Elements,1,element_fire_512.webp,element_fire,512x512,WebP,Fire element symbol,MEDIUM,2,ProfileDetail/Compatibility
+Elements,2,element_water_512.webp,element_water,512x512,WebP,Water element symbol,MEDIUM,2,ProfileDetail/Compatibility
+Elements,3,element_earth_512.webp,element_earth,512x512,WebP,Earth element symbol,MEDIUM,2,ProfileDetail/Compatibility
+Elements,4,element_air_512.webp,element_air,512x512,WebP,Air element symbol,MEDIUM,2,ProfileDetail/Compatibility
+Elements,5,element_ether_512.webp,element_ether,512x512,WebP,Ether/Spirit element,MEDIUM,2,ProfileDetail/Compatibility
+Sacred Geometry,1,geometry_flower_of_life_1024.webp,geometry_flower_of_life,1024x1024,WebP,Background layer,MEDIUM,3,CompatibilityDetail
+Sacred Geometry,2,geometry_metatrons_cube_1024.webp,geometry_metatrons_cube,1024x1024,WebP,Background layer,MEDIUM,3,ProfileCreation
+Sacred Geometry,3,geometry_sri_yantra_1024.webp,geometry_sri_yantra,1024x1024,WebP,Tantric sections,MEDIUM,3,Tantric
+Sacred Geometry,4,geometry_seed_of_life_1024.webp,geometry_seed_of_life,1024x1024,WebP,Loading transitions,MEDIUM,3,Loading
+Sacred Geometry,5,geometry_vesica_piscis_1024.webp,geometry_vesica_piscis,1024x1024,WebP,Connection indicators,MEDIUM,3,Compatibility
+Sacred Geometry,6,geometry_golden_spiral_1024.webp,geometry_golden_spiral,1024x1024,WebP,Decorative element,MEDIUM,3,ProfileDetail
+Sacred Geometry,7,geometry_merkaba_1024.webp,geometry_merkaba,1024x1024,WebP,Human Design background,MEDIUM,3,HumanDesign
+Sacred Geometry,8,geometry_torus_field_1024.webp,geometry_torus_field,1024x1024,WebP,Energy flow visualization,MEDIUM,3,Various
+UI Elements,1,button_primary_normal_800x200.webp,btn_primary,800x200,WebP,Primary action button,HIGH,2,All
+UI Elements,2,button_primary_pressed_800x200.webp,btn_primary_pressed,800x200,WebP,Pressed state,HIGH,2,All
+UI Elements,3,button_secondary_outline_800x200.webp,btn_secondary,800x200,WebP,Secondary button,HIGH,2,All
+UI Elements,4,card_glassmorphic_1000x600.webp,card_glass,1000x600,WebP,Card background,MEDIUM,3,Various
+UI Elements,5,loading_circular_256.webp,loading_circular,256x256,WebP,Circular progress,HIGH,2,Loading states
+UI Elements,6,loading_linear_800x80.webp,loading_linear,800x80,WebP,Linear progress bar,HIGH,2,Loading states
+UI Elements,7,empty_no_profiles_800.webp,empty_no_profiles,800x800,WebP,Empty profile state,HIGH,2,ProfileLibrary
+UI Elements,8,empty_no_results_800.webp,empty_no_results,800x800,WebP,Empty results state,HIGH,2,Search/Filter
+UI Elements,9,success_checkmark_256.webp,ic_success,256x256,WebP,Success icon,HIGH,2,Success states
+UI Elements,10,error_warning_256.webp,ic_error,256x256,WebP,Error icon,HIGH,2,Error states
+UI Elements,11,info_tooltip_128.webp,ic_info,128x128,WebP,Info icon,MEDIUM,3,Tooltips
+UI Elements,12,dropdown_chevron_128.webp,ic_dropdown,128x128,WebP,Dropdown arrow,MEDIUM,3,Dropdowns
+Spiritual Symbols,1,symbol_om_512.webp,symbol_om,512x512,WebP,Om/Aum symbol,MEDIUM,3,Meditation/Spiritual
+Spiritual Symbols,2,symbol_lotus_512.webp,symbol_lotus,512x512,WebP,Lotus flower,MEDIUM,3,Enlightenment sections
+Spiritual Symbols,3,symbol_hamsa_512.webp,symbol_hamsa,512x512,WebP,Hamsa hand,MEDIUM,3,Protection sections
+Spiritual Symbols,4,symbol_tree_of_life_512.webp,symbol_tree_of_life,512x512,WebP,Tree of life,MEDIUM,3,Connection sections
+Spiritual Symbols,5,symbol_ankh_512.webp,symbol_ankh,512x512,WebP,Ankh symbol,MEDIUM,3,Life force sections
+Spiritual Symbols,6,symbol_yin_yang_512.webp,symbol_yin_yang,512x512,WebP,Yin yang,MEDIUM,3,Balance sections
+Spiritual Symbols,7,symbol_mandala_1024.webp,symbol_mandala,1024x1024,WebP,Meditation mandala,MEDIUM,3,Meditation
+Spiritual Symbols,8,symbol_infinity_512.webp,symbol_infinity,512x512,WebP,Infinity symbol,MEDIUM,3,Eternal sections
+Onboarding,1,onboarding_welcome_1080.webp,onboarding_welcome,1080x1080,WebP,Welcome screen,MEDIUM,3,Onboarding
+Onboarding,2,onboarding_profile_creation_1080.webp,onboarding_profile,1080x1080,WebP,Profile feature,MEDIUM,3,Onboarding
+Onboarding,3,onboarding_insights_1080.webp,onboarding_insights,1080x1080,WebP,Insights feature,MEDIUM,3,Onboarding
+Onboarding,4,onboarding_compatibility_1080.webp,onboarding_compatibility,1080x1080,WebP,Compatibility feature,MEDIUM,3,Onboarding
+Onboarding,5,onboarding_guidance_1080.webp,onboarding_guidance,1080x1080,WebP,Guidance feature,MEDIUM,3,Onboarding
+Onboarding,6,onboarding_ready_1080.webp,onboarding_ready,1080x1080,WebP,Ready to begin,MEDIUM,3,Onboarding

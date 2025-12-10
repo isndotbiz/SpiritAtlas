@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SpiritAtlas App Icon - Gradient Lotus Monochrome Layer
+
+  This is the monochrome layer for themed icons (Android 13+).
+  Simple black outline that will be tinted by system theme colors.
+
+  Size: 108x108dp (full canvas)
+  Safe zone: Content stays within 66x66dp center
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Simplified lotus outline - 8 petals around center circle -->
+    <!-- This will be tinted by the user's chosen theme color -->
+
+    <!-- Center circle -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M 54,49 A 5,5 0 1,1 54,59 A 5,5 0 1,1 54,49 Z" />
+
+    <!-- Bottom petal (South) -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M 54,68 Q 48,65 47,58 Q 47,53 50,50 L 54,54 L 58,50 Q 61,53 61,58 Q 60,65 54,68 Z" />
+
+    <!-- Bottom-Right petal (SE) -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M 64,64 Q 68,62 71,57 Q 72,52 70,48 L 58,54 L 64,58 Z" />
+
+    <!-- Right petal (East) -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M 68,54 Q 71,50 75,49 Q 79,49 82,52 Q 83,56 81,60 L 58,54 L 68,54 Z" />
+
+    <!-- Top-Right petal (NE) -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M 64,44 Q 68,46 71,51 Q 72,56 70,60 L 58,54 L 64,50 Z" />
+
+    <!-- Top petal (North) -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M 54,40 Q 48,43 47,50 Q 47,55 50,58 L 54,54 L 58,58 Q 61,55 61,50 Q 60,43 54,40 Z" />
+
+    <!-- Top-Left petal (NW) -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M 44,44 Q 40,46 37,51 Q 36,56 38,60 L 50,54 L 44,50 Z" />
+
+    <!-- Left petal (West) -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M 40,54 Q 37,50 33,49 Q 29,49 26,52 Q 25,56 27,60 L 50,54 L 40,54 Z" />
+
+    <!-- Bottom-Left petal (SW) -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M 44,64 Q 40,62 37,57 Q 36,52 38,48 L 50,54 L 44,58 Z" />
+
+</vector>

@@ -1,0 +1,175 @@
+{
+  "additional_images_100_119": {
+    "tantric_sacred_union": {
+      "100_sacred_union_divine_masculine_feminine": {
+        "id": 100,
+        "title": "Sacred Union - Divine Masculine & Feminine",
+        "category": "tantric",
+        "usage": "Compatibility screen header, Twin Flame analysis, Sacred relationship content",
+        "dimensions": "1024x1024",
+        "colors": ["#D97706", "#7C3AED"]
+      },
+      "101_kundalini_rising": {
+        "id": 101,
+        "title": "Kundalini Rising",
+        "category": "tantric",
+        "usage": "Energy awakening visualization, Chakra activation screen, Meditation guide",
+        "dimensions": "512x1536",
+        "colors": ["#EF4444", "#7C3AED"]
+      },
+      "102_tantric_yantra_shri_yantra_3d": {
+        "id": 102,
+        "title": "Tantric Yantra - Shri Yantra 3D",
+        "category": "tantric",
+        "usage": "Meditation focus point, Sacred geometry section, Tantric practices",
+        "dimensions": "1024x1024",
+        "colors": ["#D97706", "#7C3AED"]
+      },
+      "103_divine_feminine_shakti": {
+        "id": 103,
+        "title": "Divine Feminine Shakti",
+        "category": "tantric",
+        "usage": "Feminine profile enhancements, Goddess energy section, Sacred feminine content",
+        "dimensions": "1024x1024",
+        "colors": ["#7C3AED", "#EC4899"]
+      },
+      "104_divine_masculine_shiva": {
+        "id": 104,
+        "title": "Divine Masculine Shiva",
+        "category": "tantric",
+        "usage": "Masculine profile enhancements, Divine masculine section, Sacred masculine content",
+        "dimensions": "1024x1024",
+        "colors": ["#D97706", "#FFFFFF"]
+      }
+    },
+    "relationship_dynamics": {
+      "105_soul_connection_visualization": {
+        "id": 105,
+        "title": "Soul Connection Visualization",
+        "category": "relationship",
+        "usage": "Compatibility results header, Soul mate connection screen, Relationship insights",
+        "dimensions": "1080x1920",
+        "colors": ["#7C3AED", "#D97706"]
+      },
+      "106_karmic_bond_visualization": {
+        "id": 106,
+        "title": "Karmic Bond Visualization",
+        "category": "relationship",
+        "usage": "Past life connection analysis, Karmic relationship insights, Destiny bond section",
+        "dimensions": "1024x1024",
+        "colors": ["#D97706", "#6B21A8"]
+      },
+      "107_twin_flame_union": {
+        "id": 107,
+        "title": "Twin Flame Union",
+        "category": "relationship",
+        "usage": "Twin flame analysis screen, Ultimate compatibility visualization, Mirror soul content",
+        "dimensions": "1024x1024",
+        "colors": ["#7C3AED", "#D97706"]
+      },
+      "108_aura_interaction_love_connection": {
+        "id": 108,
+        "title": "Aura Interaction - Love Connection",
+        "category": "relationship",
+        "usage": "Aura compatibility section, Energy field analysis, Love connection visualization",
+        "dimensions": "1024x1024",
+        "colors": ["#7C3AED", "#D97706"]
+      },
+      "109_relationship_chakra_alignment": {
+        "id": 109,
+        "title": "Relationship Chakra Alignment",
+        "category": "relationship",
+        "usage": "Chakra compatibility analysis, Energy harmony visualization, Relationship balance",
+        "dimensions": "1080x1920",
+        "colors": ["#6B21A8"]
+      }
+    },
+    "energy_flow_diagrams": {
+      "110_meridian_energy_map": {
+        "id": 110,
+        "title": "Meridian Energy Map",
+        "category": "energy",
+        "usage": "Energy flow education, Meridian system visualization, Traditional medicine section",
+        "dimensions": "1024x1536",
+        "colors": ["#D97706", "#1E1B4B"]
+      },
+      "111_chakra_energy_flow_giving_receiving": {
+        "id": 111,
+        "title": "Chakra Energy Flow - Giving & Receiving",
+        "category": "energy",
+        "usage": "Energy balance education, Chakra circulation diagram, Energy exchange tutorial",
+        "dimensions": "1024x1024",
+        "colors": ["chakra_colors"]
+      },
+      "112_cosmic_energy_download": {
+        "id": 112,
+        "title": "Cosmic Energy Download",
+        "category": "energy",
+        "usage": "Channeling visualization, Light worker content, Divine energy connection",
+        "dimensions": "1024x1536",
+        "colors": ["#FFFFFF", "#D97706"]
+      },
+      "113_aura_layers_anatomy": {
+        "id": 113,
+        "title": "Aura Layers Anatomy",
+        "category": "energy",
+        "usage": "Aura education screen, Multidimensional body explanation, Energy anatomy",
+        "dimensions": "1024x1024",
+        "colors": ["aura_gradient"]
+      }
+    },
+    "meditation_states": {
+      "114_deep_meditation_theta_state": {
+        "id": 114,
+        "title": "Deep Meditation - Theta State",
+        "category": "meditation",
+        "usage": "Meditation guide, Consciousness state education, Deep trance visualization",
+        "dimensions": "1080x1920",
+        "colors": ["#7C3AED", "#6366F1"]
+      },
+      "115_spiritual_awakening_moment": {
+        "id": 115,
+        "title": "Spiritual Awakening Moment",
+        "category": "meditation",
+        "usage": "Enlightenment content, Spiritual breakthrough visualization, Awakening guide",
+        "dimensions": "1024x1024",
+        "colors": ["#FFFFFF", "#D97706"]
+      },
+      "116_astral_projection_journey": {
+        "id": 116,
+        "title": "Astral Projection Journey",
+        "category": "meditation",
+        "usage": "Out of body experience education, Astral travel guide, Consciousness exploration",
+        "dimensions": "1080x1920",
+        "colors": ["#8B5CF6", "#E2E8F0"]
+      },
+      "117_transcendent_unity_consciousness": {
+        "id": 117,
+        "title": "Transcendent Unity Consciousness",
+        "category": "meditation",
+        "usage": "Oneness experience, Universal connection visualization, Cosmic unity content",
+        "dimensions": "1024x1024",
+        "colors": ["#6B21A8", "#D97706", "#FFFFFF"]
+      }
+    },
+    "spiritual_practices": {
+      "118_yoga_asana_tree_pose_with_energy_overlay": {
+        "id": 118,
+        "title": "Yoga Asana - Tree Pose with Energy Overlay",
+        "category": "practice",
+        "usage": "Yoga practice guide, Grounding visualization, As above so below concept",
+        "dimensions": "1024x1536",
+        "colors": ["#78350F", "#6B21A8"]
+      },
+      "119_crystal_healing_meditation_setup": {
+        "id": 119,
+        "title": "Crystal Healing Meditation Setup",
+        "category": "practice",
+        "usage": "Crystal healing guide, Meditation setup tutorial, Energy healing practices",
+        "dimensions": "1080x1920",
+        "colors": ["#8B5CF6"],
+        "note": "Image may have quality issues (small file size - 20KB)"
+      }
+    }
+  }
+}

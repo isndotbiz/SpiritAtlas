@@ -28,6 +28,10 @@ interface UserRepository {
     suspend fun searchProfileLibrary(query: String): List<ProfileLibraryEntry>
     suspend fun addProfileTags(profileId: String, tags: List<String>)
     suspend fun getProfilesByTag(tag: String): List<ProfileLibraryEntry>
+
+    // === BULK EXPORT/IMPORT ===
+    suspend fun exportAllProfilesToJson(): Result<String>
+    suspend fun importProfilesFromJson(json: String): Result<Int>
 }
 
 

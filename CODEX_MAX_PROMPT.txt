@@ -1,0 +1,152 @@
+===============================================
+CODEX MAX PARALLEL WORK INSTRUCTIONS
+Copy this entire prompt to Codex Max
+===============================================
+
+MISSION: Work in parallel with Claude Code's 21-agent swarm to build supporting infrastructure for SpiritAtlas.
+
+CRITICAL RULES:
+❌ DO NOT touch any Kotlin (.kt) files
+❌ DO NOT modify Android build files (build.gradle.kts)
+❌ DO NOT touch /app, /core, /feature, /domain, or /data directories
+❌ Claude Code agents are actively working on the Android app - STAY OUT OF THEIR WAY
+
+✅ YOU CAN WORK ON:
+- /tools/** - Tooling and automation scripts
+- /scripts/** - Build and deployment scripts
+- /docs/** - Documentation
+- *.md files - Markdown documentation
+- *.py files - Python utilities
+- *.sh files - Shell scripts
+
+YOUR TASKS (Priority Order):
+
+1. DEVELOPER ONBOARDING DOCS (HIGH PRIORITY)
+   Create: /docs/DEVELOPER_ONBOARDING.md
+   - Environment setup guide
+   - Build process walkthrough
+   - Architecture overview
+   - Contributing guidelines
+   - Code style guide
+
+2. API REFERENCE DOCUMENTATION (HIGH PRIORITY)
+   Create: /docs/API_REFERENCE.md
+   - All spiritual calculation APIs
+   - Claude AI integration guide
+   - fal.ai image generation guide
+   - OpenRouter integration details
+
+3. TESTING AUTOMATION (HIGH PRIORITY)
+   Create: /scripts/testing/continuous_test.sh
+   - Watch for file changes
+   - Run relevant tests automatically
+   - Provide immediate feedback
+
+   Create: /scripts/testing/coverage_report.py
+   - Parse JaCoCo XML reports
+   - Generate HTML coverage dashboard
+   - Track coverage trends
+
+4. BUILD AUTOMATION (HIGH PRIORITY)
+   Create: /scripts/build/fast_build.sh
+   - Parallel module compilation
+   - Cached dependency resolution
+   - Incremental build optimization
+
+   Create: /scripts/build/release.sh
+   - Automated versioning
+   - Build release APK
+   - Generate release notes
+   - Sign APK
+
+5. HEALTH SCORE AUTOMATION (MEDIUM PRIORITY)
+   Create: /scripts/health/check_health.sh
+   - Automated health score calculation
+   - Run on every commit
+   - Track score over time
+
+   Create: /scripts/health/dashboard.py
+   - Generate HTML dashboard
+   - Visualize health trends
+   - Show progress to 95/100
+
+6. IMAGE GENERATION TOOLS (MEDIUM PRIORITY)
+   Create: /tools/image_generation/batch_generate.py
+   - Generate multiple images in parallel
+   - Automatic quality validation
+   - Cost tracking
+
+   Create: /tools/image_generation/generate_catalog.py
+   - Generate visual catalog of all images
+   - HTML gallery with metadata
+
+7. PERFORMANCE MONITORING (LOW PRIORITY)
+   Create: /scripts/performance/startup_profiler.sh
+   - Measure app startup time
+   - Track over time
+
+   Create: /scripts/performance/memory_monitor.py
+   - Analyze heap dumps
+   - Identify potential leaks
+
+8. MARKET RESEARCH TOOLS (LOW PRIORITY)
+   Create: /tools/research/scrape_reviews.py
+   - Scrape reviews from spiritual apps
+   - Sentiment analysis
+   - Feature request extraction
+
+COORDINATION:
+- Create all your work in a separate branch: codex-max-tooling
+- Document all scripts in /tools/README.md
+- Add usage examples
+- Test all scripts before committing
+- DO NOT merge to main until Claude Code agents complete
+
+FILE NAMING:
+- Scripts: lowercase_with_underscores.sh
+- Make executable: chmod +x script.sh
+- Include shebang: #!/bin/bash or #!/usr/bin/env python3
+- Docs: SCREAMING_SNAKE_CASE.md
+
+QUALITY STANDARDS:
+- All scripts must have usage documentation
+- All scripts must handle errors gracefully
+- All Python scripts must use type hints
+- Include clear comments explaining logic
+
+YOUR TIMELINE:
+- Expected work time: 4-6 hours
+- Claude Code agents: 6 hours
+- You should finish around same time
+
+CURRENT PROJECT STATE:
+- Location: /Users/jonathanmallinger/Workspace/SpiritAtlas
+- Current health score: 77/100
+- Target: 95/100
+- Build status: Passing
+- Test status: 113 tests passing in core modules
+
+READ FIRST:
+1. /AGENT_SWARM_MASTER_PLAN.md - Overall mission plan
+2. /CODEX_MAX_PARALLEL_WORK.md - Your detailed instructions
+3. /FINAL_HEALTH_SCORE_REPORT.md - Current state assessment
+
+COMMUNICATION:
+- Create /tools/STATUS.md with your progress
+- Update every hour
+- Use clear commit messages: feat(tools): Add health checker script
+
+START WITH:
+1. Create /tools/STATUS.md (document your plan)
+2. Create developer onboarding docs
+3. Create testing automation infrastructure
+4. Create build automation
+5. Work through remaining tasks by priority
+
+REMEMBER: You are building the INFRASTRUCTURE and TOOLING that supports the app. Claude Code agents are building the APP itself. Work in parallel, never conflict.
+
+LET'S BUILD THE MOST ADVANCED SPIRITUAL APP INFRASTRUCTURE! 🚀
+
+===============================================
+END CODEX MAX INSTRUCTIONS
+===============================================

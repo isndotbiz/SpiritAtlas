@@ -1,5 +1,6 @@
 package com.spiritatlas.domain.model
 
+import androidx.compose.runtime.Immutable
 import java.time.LocalDateTime
 
 /**
@@ -8,6 +9,7 @@ import java.time.LocalDateTime
  * Minimum requirement: Only 3 fields needed for Tier 0 (300 words)
  * Up to 36 fields for Tier 3 Master analysis (2700 words) ✨
  */
+@Immutable
 data class UserProfile(
     val id: String, // Unique profile identifier
     val profileName: String, // Display name for this profile (e.g., "John's Profile", "Sarah", etc.)

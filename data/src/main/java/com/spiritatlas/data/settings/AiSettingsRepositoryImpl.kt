@@ -10,6 +10,8 @@ import com.spiritatlas.data.ai.GroqProvider
 import com.spiritatlas.data.ai.OllamaProvider
 import com.spiritatlas.data.ai.OpenAIProvider
 import com.spiritatlas.data.ai.OpenRouterProvider
+import com.spiritatlas.data.cache.CacheManager
+import com.spiritatlas.data.cache.CacheType
 import com.spiritatlas.domain.ai.AiProviderMode
 import com.spiritatlas.domain.ai.AiSettingsRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -25,7 +27,8 @@ class AiSettingsRepositoryImpl @Inject constructor(
     private val claudeProvider: ClaudeProvider,
     private val geminiProvider: GeminiProvider,
     private val groqProvider: GroqProvider,
-    private val ollamaProvider: OllamaProvider
+    private val ollamaProvider: OllamaProvider,
+    private val cacheManager: CacheManager
 ) : AiSettingsRepository {
     private val masterKey = MasterKey.Builder(context)
         .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
@@ -117,6 +120,10 @@ class AiSettingsRepositoryImpl @Inject constructor(
                 !prefs.getString(keyOpenRouterApiKey, null).isNullOrBlank()
             AiProviderMode.LOCAL -> ollamaProvider.isAvailable()
         }
+    }
+
+    override suspend fun clearAiCache() {
+        cacheManager.clearCache(CacheType.AI_RESPONSES)
     }
 
     private fun readMode(): AiProviderMode {

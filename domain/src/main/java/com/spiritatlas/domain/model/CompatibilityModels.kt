@@ -1,5 +1,6 @@
 package com.spiritatlas.domain.model
 
+import androidx.compose.runtime.Immutable
 import com.spiritatlas.domain.ai.AiCompatibilityInsights
 
 /**
@@ -7,6 +8,7 @@ import com.spiritatlas.domain.ai.AiCompatibilityInsights
  * Integrates numerology, astrology, and tantric insights
  */
 
+@Immutable
 data class CompatibilityReport(
     val profileA: UserProfile,
     val profileB: UserProfile,
@@ -33,6 +35,7 @@ data class CompatibilityReport(
         get() = aiInsights != null
 }
 
+@Immutable
 data class CompatibilityScores(
     val numerologyScore: Double,
     val astrologyScore: Double,
